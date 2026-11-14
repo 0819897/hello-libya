@@ -107,10 +107,10 @@ export function buildQuestions(lesson: Lesson, spec: GameSpec, rng: Rng): Questi
       if (pool.length < 2) return [];
       return take(pool, spec, 5, rng).map((w, i) => {
         const truth = rng() < 0.5;
-        const named = truth ? w : shuffle(words.filter(x => x.en !== w.en), rng)[0];
+        const named = truth ? w : shuffle(words.filter(x => x.en !== w.en && !x.abstract && x.emoji !== w.emoji), rng)[0] ?? w;
         return {
           id: qid(i, w.en), type, wordEn: w.en, promptWord: w, promptText: thisIs(named.en),
-          answer: truth ? 'true' : 'false', explainAr: thisIs(w.en),
+          answer: truth || named === w ? 'true' : 'false', explainAr: thisIs(w.en),
           options: [{ id: 'true', text: 'صح' }, { id: 'false', text: 'خطأ' }],
         };
       });

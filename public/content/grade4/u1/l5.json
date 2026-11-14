@@ -1,0 +1,50 @@
+{
+  "id": "g4-u1-l5",
+  "title": "School subjects",
+  "titleAr": "المواد الدراسية",
+  "words": [
+    { "en": "English", "ar": "الإنجليزية", "emoji": "🔤" },
+    { "en": "maths", "ar": "الرياضيات", "emoji": "🔢" },
+    { "en": "Arabic", "ar": "العربية" },
+    { "en": "science", "ar": "العلوم", "emoji": "🔬" },
+    { "en": "PE", "ar": "التربية البدنية", "emoji": "⚽" },
+    { "en": "RE", "ar": "التربية الإسلامية", "emoji": "🕌" },
+    { "en": "art", "ar": "الرسم", "emoji": "🎨" },
+    { "en": "music", "ar": "الموسيقى", "emoji": "🎵" },
+    { "en": "lesson", "ar": "حصة", "emoji": "🧑‍🏫" },
+    { "en": "timetable", "ar": "جدول الحصص", "emoji": "🗓️" },
+    { "en": "classroom", "ar": "فصل", "emoji": "🏫" },
+    { "en": "next door", "ar": "المجاور", "emoji": "🚪", "abstract": true },
+    { "en": "favourite", "ar": "المفضّل", "emoji": "❤️", "abstract": true },
+    { "en": "after", "ar": "بعد", "emoji": "⏭️", "abstract": true },
+    { "en": "tomorrow", "ar": "غداً", "emoji": "📅", "abstract": true }
+  ],
+  "grammar": {
+    "explainAr": "نقول المادة المفضّلة: My favourite subject is art. أو I like art best.\nونرتّب الحصص: First, it's maths. After that, it's science.",
+    "examples": ["My favourite lesson is music.", "First, it's English.", "After that, it's RE.", "I like science best."]
+  },
+  "sentences": [
+    "My favourite lesson is science.",
+    "First, it's English.",
+    "After that, it's art.",
+    "I like music best.",
+    "The classroom next door is big.",
+    "We have maths tomorrow."
+  ],
+  "blanks": [
+    { "text": "My ___ subject is PE.", "answer": "favourite", "distractors": ["after", "tomorrow"] },
+    { "text": "First, it's maths. ___ that, it's RE.", "answer": "After", "distractors": ["Tomorrow", "Favourite"] },
+    { "text": "Look at the ___. First, it's music.", "answer": "timetable", "distractors": ["classroom", "art"] },
+    { "text": "Our ___ is next door.", "answer": "classroom", "distractors": ["timetable", "after"] },
+    { "text": "We have English ___.", "answer": "tomorrow", "distractors": ["favourite", "next door"] },
+    { "text": "I like ___ best. I love numbers.", "answer": "maths", "distractors": ["music", "art"] }
+  ],
+  "games": [
+    { "type": "pick-image", "count": 6 },
+    { "type": "listen-pick", "count": 5 },
+    { "type": "match", "count": 5 },
+    { "type": "true-false", "count": 4 },
+    { "type": "order-sentence", "count": 4 }
+  ],
+  "challenge": { "count": 8, "types": ["fill-blank", "true-false", "listen-pick"] }
+}

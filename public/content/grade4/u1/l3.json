@@ -1,0 +1,48 @@
+{
+  "id": "g4-u1-l3",
+  "title": "My school things",
+  "titleAr": "أدواتي المدرسية",
+  "words": [
+    { "en": "rubber", "ar": "ممحاة" },
+    { "en": "pencil", "ar": "قلم رصاص", "emoji": "✏️" },
+    { "en": "pen", "ar": "قلم حبر", "emoji": "🖊️" },
+    { "en": "book", "ar": "كتاب", "emoji": "📕" },
+    { "en": "notebook", "ar": "دفتر", "emoji": "📓" },
+    { "en": "paper", "ar": "ورقة", "emoji": "📄" },
+    { "en": "ruler", "ar": "مسطرة", "emoji": "📏" },
+    { "en": "pencil case", "ar": "مقلمة", "emoji": "👝" },
+    { "en": "pencil sharpener", "ar": "برّاية" },
+    { "en": "crayon", "ar": "قلم تلوين شمعي", "emoji": "🖍️" },
+    { "en": "marker", "ar": "قلم تخطيط" },
+    { "en": "trainers", "ar": "حذاء رياضي", "emoji": "👟" },
+    { "en": "whose", "ar": "لمن", "emoji": "❓", "abstract": true }
+  ],
+  "grammar": {
+    "explainAr": "نسأل عن صاحب الشيء بـ Whose: Whose pen is this?\nونجيب بإضافة 's إلى الاسم: It's Ali's. (قلم علي)",
+    "examples": ["Whose ruler is this?", "It's Reem's.", "This is Kareem's notebook."]
+  },
+  "sentences": [
+    "Whose pencil is this?",
+    "It's Kareem's pen.",
+    "This is Sarah's notebook.",
+    "Whose trainers are these?",
+    "The ruler is Ali's.",
+    "Lina's crayons are in the pencil case."
+  ],
+  "blanks": [
+    { "text": "___ book is this? It's Reem's.", "answer": "Whose", "distractors": ["What", "Where"] },
+    { "text": "This is ___ notebook.", "answer": "Nadia's", "distractors": ["Nadia", "Nadias"] },
+    { "text": "Whose ___ is this? It's Ali's rubber.", "answer": "rubber", "distractors": ["trainers", "paper"] },
+    { "text": "These are Yousif's ___.", "answer": "trainers", "distractors": ["ruler", "book"] },
+    { "text": "Put the pencil in the pencil ___.", "answer": "case", "distractors": ["book", "paper"] },
+    { "text": "It's ___ pen. (Khaled)", "answer": "Khaled's", "distractors": ["Khaled", "whose"] }
+  ],
+  "games": [
+    { "type": "pick-image", "count": 6 },
+    { "type": "true-false", "count": 5 },
+    { "type": "match", "count": 5 },
+    { "type": "listen-pick", "count": 5 },
+    { "type": "order-sentence", "count": 4 }
+  ],
+  "challenge": { "count": 8, "types": ["fill-blank", "true-false", "spell"] }
+}

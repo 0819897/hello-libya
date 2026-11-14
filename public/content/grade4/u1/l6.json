@@ -1,0 +1,59 @@
+{
+  "id": "g4-u1-l6",
+  "title": "At the shop",
+  "titleAr": "في الدكان",
+  "words": [
+    { "en": "shop", "ar": "دكان", "emoji": "🏪" },
+    { "en": "lemonade", "ar": "عصير ليمون", "emoji": "🍋" },
+    { "en": "apples", "ar": "تفاح", "emoji": "🍎" },
+    { "en": "sweets", "ar": "حلوى", "emoji": "🍬" },
+    { "en": "milk", "ar": "حليب", "emoji": "🥛" },
+    { "en": "cookies", "ar": "بسكويت", "emoji": "🍪" },
+    { "en": "top", "ar": "الأعلى", "emoji": "⬆️", "abstract": true },
+    { "en": "middle", "ar": "الأوسط", "emoji": "↔️", "abstract": true },
+    { "en": "bottom", "ar": "الأسفل", "emoji": "⬇️", "abstract": true },
+    { "en": "shelf", "ar": "رف" },
+    { "en": "lots of", "ar": "الكثير من", "abstract": true }
+  ],
+  "grammar": {
+    "explainAr": "للمفرد نقول: There is a … (أو an قبل الحرف المتحرّك) مثل There is an apple.\nوللجمع نقول: There are some … مثل There are some cookies.",
+    "examples": ["There is some milk.", "There are some sweets.", "Let's put the cookies on the top shelf."]
+  },
+  "sentences": [
+    "There are lots of apples.",
+    "There is some milk on the shelf.",
+    "Let's put the cookies on the bottom shelf.",
+    "There are some sweets on the middle shelf.",
+    "There is lemonade in the shop.",
+    "There is an apple on the top shelf."
+  ],
+  "blanks": [
+    { "text": "There ___ some apples on the shelf.", "answer": "are", "distractors": ["is", "am"] },
+    { "text": "There ___ a shop next to my school.", "answer": "is", "distractors": ["are", "am"] },
+    { "text": "Put the milk on the ___ shelf.", "answer": "top", "distractors": ["shop", "sweets"] },
+    { "text": "There are ___ of cookies.", "answer": "lots", "distractors": ["shelf", "milk"] },
+    { "text": "Let's put the sweets on the ___.", "answer": "shelf", "distractors": ["shop", "lemonade"] },
+    { "text": "Let's buy apples at the ___.", "answer": "shop", "distractors": ["shelf", "top"] }
+  ],
+  "games": [
+    { "type": "pick-image", "count": 5 },
+    { "type": "true-false", "count": 4 },
+    { "type": "listen-pick", "count": 5 },
+    { "type": "drag-order", "config": { "mode": "place", "slots": ["top", "middle", "bottom"],
+      "items": [
+        { "id": "milk", "label": "milk", "emoji": "🥛" },
+        { "id": "apples", "label": "apples", "emoji": "🍎" },
+        { "id": "cookies", "label": "cookies", "emoji": "🍪" },
+        { "id": "lemonade", "label": "lemonade", "emoji": "🍋" }
+      ],
+      "rounds": [
+        { "instruction": "Put the milk on the top shelf.", "itemId": "milk", "slot": "top" },
+        { "instruction": "Put the apples on the bottom shelf.", "itemId": "apples", "slot": "bottom" },
+        { "instruction": "Put the cookies on the middle shelf.", "itemId": "cookies", "slot": "middle" },
+        { "instruction": "Put the lemonade on the top shelf.", "itemId": "lemonade", "slot": "top" }
+      ] } },
+    { "type": "fill-blank", "count": 4 },
+    { "type": "order-sentence", "count": 3 }
+  ],
+  "challenge": { "count": 8, "types": ["fill-blank", "listen-pick", "true-false"] }
+}

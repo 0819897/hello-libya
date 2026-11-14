@@ -7,6 +7,7 @@ import OrderSentence from './OrderSentence';
 import FillBlank from './FillBlank';
 import Spell from './Spell';
 import TrueFalse from './TrueFalse';
+import DragOrder from './special/DragOrder';
 
 export const registry: Partial<Record<GameType, FC<GameProps>>> = {
   'pick-image': PickImage,
@@ -16,4 +17,5 @@ export const registry: Partial<Record<GameType, FC<GameProps>>> = {
   'fill-blank': FillBlank,
   spell: Spell,
   'true-false': TrueFalse,
+  'drag-order': DragOrder,
 };

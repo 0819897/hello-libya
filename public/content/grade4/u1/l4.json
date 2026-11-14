@@ -1,0 +1,54 @@
+{
+  "id": "g4-u1-l4",
+  "title": "Taller and bigger",
+  "titleAr": "أطول وأكبر",
+  "words": [
+    { "en": "young", "ar": "صغير السن", "emoji": "👶" },
+    { "en": "younger", "ar": "أصغر سناً", "emoji": "👶", "abstract": true },
+    { "en": "old", "ar": "كبير السن", "emoji": "👴" },
+    { "en": "older", "ar": "أكبر سناً", "emoji": "👴", "abstract": true },
+    { "en": "big", "ar": "كبير", "emoji": "🐘" },
+    { "en": "bigger", "ar": "أكبر", "emoji": "🐘", "abstract": true },
+    { "en": "small", "ar": "صغير", "emoji": "🐭" },
+    { "en": "smaller", "ar": "أصغر", "emoji": "🐭", "abstract": true },
+    { "en": "tall", "ar": "طويل (للأشخاص)", "emoji": "🦒" },
+    { "en": "taller", "ar": "أطول (للأشخاص)", "emoji": "🦒", "abstract": true },
+    { "en": "short", "ar": "قصير", "emoji": "🐧" },
+    { "en": "shorter", "ar": "أقصر", "emoji": "🐧", "abstract": true },
+    { "en": "long", "ar": "طويل (للأشياء)", "emoji": "🐍" },
+    { "en": "longer", "ar": "أطول (للأشياء)", "emoji": "🐍", "abstract": true }
+  ],
+  "grammar": {
+    "explainAr": "للمقارنة بين شيئين نضيف er إلى الصفة ثم than: Ali is taller than Reem.\nانتبه: big تصبح bigger (نكرّر الحرف الأخير).",
+    "examples": ["Kareem is taller than Ali.", "An elephant is bigger than a mouse.", "I am older than my sister."]
+  },
+  "sentences": [
+    "Kareem is taller than Ali.",
+    "My mum is older than my sister.",
+    "An elephant is bigger than a mouse.",
+    "Lina is younger than Reem.",
+    "My ruler is longer than my pencil.",
+    "Yousif is shorter than his dad."
+  ],
+  "blanks": [
+    { "text": "An elephant is ___ than a mouse.", "answer": "bigger", "distractors": ["big", "biger"] },
+    { "text": "Reem is 9. Nadia is 7. Reem is ___ than Nadia.", "answer": "older", "distractors": ["old", "younger"] },
+    { "text": "A snake is ___ than a pencil.", "answer": "longer", "distractors": ["long", "shorter"] },
+    { "text": "Ali is 140 cm. Kareem is 130 cm. Kareem is ___ than Ali.", "answer": "shorter", "distractors": ["short", "taller"] },
+    { "text": "My sister is 6. I'm 9. My sister is ___ than me.", "answer": "younger", "distractors": ["young", "older"] },
+    { "text": "A mouse is ___ than a camel.", "answer": "smaller", "distractors": ["small", "bigger"] }
+  ],
+  "games": [
+    { "type": "pick-image", "count": 5 },
+    { "type": "match", "count": 5 },
+    { "type": "drag-order", "config": { "mode": "sequence", "promptAr": "رتّب من الأقصر إلى الأطول", "items": [
+      { "id": "reem", "label": "Reem", "emoji": "🧒", "scale": 0.6 },
+      { "id": "ali", "label": "Ali", "emoji": "🧒", "scale": 0.85 },
+      { "id": "nadia", "label": "Nadia", "emoji": "🧒", "scale": 1.1 },
+      { "id": "kareem", "label": "Kareem", "emoji": "🧒", "scale": 1.4 }
+    ] } },
+    { "type": "fill-blank", "count": 4 },
+    { "type": "order-sentence", "count": 4 }
+  ],
+  "challenge": { "count": 8, "types": ["fill-blank", "listen-pick", "spell"] }
+}

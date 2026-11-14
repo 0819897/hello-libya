@@ -1,0 +1,50 @@
+{
+  "id": "g4-u1-l2",
+  "title": "In the playground",
+  "titleAr": "في ساحة اللعب",
+  "words": [
+    { "en": "playground", "ar": "ساحة اللعب", "emoji": "🏞️" },
+    { "en": "swings", "ar": "أرجوحة" },
+    { "en": "slide", "ar": "زحليقة", "emoji": "🛝" },
+    { "en": "tunnel", "ar": "نفق", "emoji": "🚇" },
+    { "en": "bars", "ar": "قضبان التسلق" },
+    { "en": "roundabout", "ar": "دوّامة", "emoji": "🎠" },
+    { "en": "ladder", "ar": "سلّم", "emoji": "🪜" },
+    { "en": "climb", "ar": "يتسلق", "emoji": "🧗" },
+    { "en": "crawl", "ar": "يزحف", "emoji": "🐢" },
+    { "en": "spin", "ar": "يدور", "emoji": "🌀" },
+    { "en": "push", "ar": "يدفع", "emoji": "🫸" },
+    { "en": "hold", "ar": "يمسك", "emoji": "✊" },
+    { "en": "stand", "ar": "يقف", "emoji": "🧍" },
+    { "en": "balance", "ar": "يتوازن", "emoji": "🤸" },
+    { "en": "fast", "ar": "سريع", "emoji": "⚡" },
+    { "en": "rules", "ar": "قواعد", "emoji": "📋", "abstract": true }
+  ],
+  "grammar": {
+    "explainAr": "لنقول ما نفعله الآن نستعمل: I'm + الفعل + ing مثل I'm climbing.\nوللنهي نستعمل: Don't + الفعل مثل Don't push.",
+    "examples": ["I'm crawling in the tunnel.", "Kareem is spinning.", "Don't go too fast.", "Hold on, Lina!"]
+  },
+  "sentences": [
+    "Reem is climbing the bars.",
+    "I'm crawling in the tunnel.",
+    "Don't push your friends.",
+    "Kareem is spinning on the roundabout.",
+    "Lina is going up the ladder.",
+    "Sarah is on the swings."
+  ],
+  "blanks": [
+    { "text": "I'm ___ in the tunnel.", "answer": "crawling", "distractors": ["crawl", "tunnel"] },
+    { "text": "Don't ___ your sister.", "answer": "push", "distractors": ["slide", "fast"] },
+    { "text": "Khaled is ___ the ladder.", "answer": "climbing", "distractors": ["climb", "swings"] },
+    { "text": "Lina is ___ on the roundabout.", "answer": "spinning", "distractors": ["spin", "tunnel"] },
+    { "text": "Ali, don't go too ___!", "answer": "fast", "distractors": ["ladder", "rules"] },
+    { "text": "Nadia is going down the ___.", "answer": "slide", "distractors": ["push", "hold"] }
+  ],
+  "games": [
+    { "type": "pick-image", "count": 6 },
+    { "type": "listen-pick", "count": 5 },
+    { "type": "match", "count": 5 },
+    { "type": "order-sentence", "count": 4 }
+  ],
+  "challenge": { "count": 8, "types": ["fill-blank", "listen-pick", "pick-image"] }
+}
