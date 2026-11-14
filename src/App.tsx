@@ -8,6 +8,8 @@ import Profile from './screens/Profile';
 import Dictionary from './screens/Dictionary';
 import Settings from './screens/Settings';
 import About from './screens/About';
+import BigChallenge from './screens/BigChallenge';
+import Certificate from './screens/Certificate';
 
 function AppRoutes() {
   const { progress } = useProgress();
@@ -24,6 +26,8 @@ function AppRoutes() {
       <Route path="/grades" element={<GradeMap />} />
       <Route path="/grade/:gradeId" element={<UnitPath />} />
       <Route path="/lesson/:gradeId/:lessonId" element={<LessonPlayer />} />
+      <Route path="/big/:gradeId" element={<BigChallenge />} />
+      <Route path="/certificate" element={<Certificate />} />
       <Route path="/dictionary" element={<Dictionary />} />
       <Route path="/profile" element={<Profile />} />
       <Route path="/settings" element={<Settings />} />

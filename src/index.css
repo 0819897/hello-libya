@@ -4,3 +4,19 @@
 body { margin: 0; background: #fdf8ef; color: #1f2937; overflow-x: hidden; }
 .en { direction: ltr; unicode-bidi: isolate; font-family: "Comic Sans MS", "Trebuchet MS", Verdana, system-ui, sans-serif; }
 :focus-visible { outline: 3px solid #f59e0b; outline-offset: 2px; }
+
+@media print {
+  @page { size: A4 landscape; margin: 0; }
+  html, body { background: #fff; }
+  body * { visibility: hidden; }
+  .no-print { display: none !important; }
+  .certificate, .certificate * { visibility: visible; }
+  .certificate {
+    position: fixed; inset: 0; width: 297mm; height: 210mm; aspect-ratio: auto;
+    margin: 0; padding: 18mm; border-radius: 0; box-shadow: none; box-sizing: border-box;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+  }
+  .certificate h1 { font-size: 40pt; }
+  .certificate p, .certificate span { font-size: 18pt; }
+  .certificate .cert-name { font-size: 40pt; max-width: 250mm; }
+}
