@@ -1,0 +1,41 @@
+{
+  "id": "g4-u2-l3",
+  "title": "The weather",
+  "titleAr": "الطقس",
+  "words": [
+    { "en": "weather", "ar": "الطقس", "emoji": "🌦️" },
+    { "en": "hot and dry", "ar": "حار وجاف", "emoji": "☀️" },
+    { "en": "mild and wet", "ar": "معتدل وممطر", "emoji": "🌧️" },
+    { "en": "snow", "ar": "ثلج", "emoji": "❄️" },
+    { "en": "Libya", "ar": "ليبيا", "emoji": "🐪" },
+    { "en": "England", "ar": "إنجلترا", "emoji": "💂" }
+  ],
+  "grammar": {
+    "explainAr": "نسأل عن الطقس: What's the weather like in Libya?\nونجيب: It's hot and dry. أو It's mild and wet.",
+    "examples": ["What's the weather like in England?", "It's mild and wet.", "It's hot and dry in Sabha."]
+  },
+  "sentences": [
+    "What's the weather like in England?",
+    "It's mild and wet.",
+    "In Libya it's hot and dry.",
+    "There is snow in Russia.",
+    "The weather in Sabha is hot and dry.",
+    "It's mild and wet in London."
+  ],
+  "blanks": [
+    { "text": "What's the ___ like in Libya?", "answer": "weather", "distractors": ["snow", "London"] },
+    { "text": "In England the weather is mild and ___.", "answer": "wet", "distractors": ["dry", "hot"] },
+    { "text": "In Libya it's hot and ___.", "answer": "dry", "distractors": ["wet", "mild"] },
+    { "text": "There is lots of ___ in Russia.", "answer": "snow", "distractors": ["weather", "wet"] },
+    { "text": "What's the weather ___ in England?", "answer": "like", "distractors": ["from", "speak"] },
+    { "text": "It's ___ and wet in London.", "answer": "mild", "distractors": ["hot", "dry"] }
+  ],
+  "games": [
+    { "type": "pick-image", "count": 4 },
+    { "type": "listen-pick", "count": 4 },
+    { "type": "match", "count": 4 },
+    { "type": "fill-blank", "count": 4 },
+    { "type": "order-sentence", "count": 4 }
+  ],
+  "challenge": { "count": 8, "types": ["fill-blank", "listen-pick", "pick-image"] }
+}

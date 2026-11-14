@@ -1,0 +1,50 @@
+{
+  "id": "g4-u2-l5",
+  "title": "Our land",
+  "titleAr": "أرضنا",
+  "words": [
+    { "en": "mountains", "ar": "جبال", "emoji": "⛰️" },
+    { "en": "stream", "ar": "جدول ماء", "emoji": "💧" },
+    { "en": "river", "ar": "نهر", "emoji": "🌊" },
+    { "en": "lake", "ar": "بحيرة", "emoji": "🛶" },
+    { "en": "desert", "ar": "صحراء", "emoji": "🏜️" },
+    { "en": "oil field", "ar": "حقل نفط", "emoji": "🛢️" },
+    { "en": "village", "ar": "قرية", "emoji": "🏘️" },
+    { "en": "city", "ar": "مدينة", "emoji": "🏙️" },
+    { "en": "field", "ar": "حقل", "emoji": "🌾" },
+    { "en": "high", "ar": "مرتفع", "emoji": "🔝", "abstract": true },
+    { "en": "dry", "ar": "جاف", "emoji": "🌵", "abstract": true },
+    { "en": "big", "ar": "كبير", "abstract": true },
+    { "en": "small", "ar": "صغير", "abstract": true },
+    { "en": "long", "ar": "طويل", "abstract": true },
+    { "en": "green", "ar": "أخضر", "emoji": "🟢", "abstract": true }
+  ],
+  "grammar": {
+    "explainAr": "نصف المكان بصفة: The mountains are high. / Libya is a big country.\nونقارن: A stream is smaller than a river.",
+    "examples": ["The mountains are very high.", "There is an oil field in the desert.", "A river is longer than a stream."]
+  },
+  "sentences": [
+    "The mountains are very high.",
+    "Libya has a big desert.",
+    "A river is longer than a stream.",
+    "There is an oil field in the desert.",
+    "My village is small and green.",
+    "Benghazi is a big city."
+  ],
+  "blanks": [
+    { "text": "The mountains are very ___.", "answer": "high", "distractors": ["lake", "village"] },
+    { "text": "There is an oil ___ in the desert.", "answer": "field", "distractors": ["river", "city"] },
+    { "text": "The ___ is hot and dry.", "answer": "desert", "distractors": ["lake", "river"] },
+    { "text": "A stream is ___ than a river.", "answer": "smaller", "distractors": ["bigger", "small"] },
+    { "text": "Tripoli is a big ___.", "answer": "city", "distractors": ["village", "stream"] },
+    { "text": "My village is small and ___.", "answer": "green", "distractors": ["high", "desert"] }
+  ],
+  "games": [
+    { "type": "pick-image", "count": 6 },
+    { "type": "listen-pick", "count": 5 },
+    { "type": "match", "count": 5 },
+    { "type": "true-false", "count": 5 },
+    { "type": "order-sentence", "count": 4 }
+  ],
+  "challenge": { "count": 8, "types": ["fill-blank", "true-false", "spell"] }
+}

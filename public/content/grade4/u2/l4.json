@@ -1,0 +1,46 @@
+{
+  "id": "g4-u2-l4",
+  "title": "Big numbers",
+  "titleAr": "الأعداد الكبيرة",
+  "words": [
+    { "en": "one hundred", "ar": "مئة", "emoji": "100" },
+    { "en": "two hundred", "ar": "مئتان", "emoji": "200" },
+    { "en": "three hundred", "ar": "ثلاثمئة", "emoji": "300" },
+    { "en": "four hundred", "ar": "أربعمئة", "emoji": "400" },
+    { "en": "five hundred", "ar": "خمسمئة", "emoji": "500" },
+    { "en": "six hundred", "ar": "ستمئة", "emoji": "600" },
+    { "en": "seven hundred", "ar": "سبعمئة", "emoji": "700" },
+    { "en": "eight hundred", "ar": "ثمانمئة", "emoji": "800" },
+    { "en": "nine hundred", "ar": "تسعمئة", "emoji": "900" },
+    { "en": "one thousand", "ar": "ألف", "emoji": "1000" },
+    { "en": "count", "ar": "يعدّ", "emoji": "🔢", "abstract": true }
+  ],
+  "grammar": {
+    "explainAr": "نقرأ المئات هكذا: 100 = one hundred و 300 = three hundred.\nوبعد nine hundred يأتي one thousand (ألف). لاحظ أن hundred لا تأخذ s بعد الرقم.",
+    "examples": ["one hundred, two hundred, three hundred", "Nadia can count to one thousand.", "Six hundred is bigger than two hundred."]
+  },
+  "sentences": [
+    "Nadia can count to one thousand.",
+    "Six hundred is bigger than two hundred.",
+    "There are five hundred cookies in the shop.",
+    "Can you count to nine hundred?",
+    "Ali can count in English.",
+    "Three hundred is smaller than four hundred."
+  ],
+  "blanks": [
+    { "text": "100 = one ___", "answer": "hundred", "distractors": ["thousand", "count"] },
+    { "text": "1000 = one ___", "answer": "thousand", "distractors": ["hundred", "count"] },
+    { "text": "Can you ___ to one hundred?", "answer": "count", "distractors": ["hundred", "thousand"] },
+    { "text": "500 = ___ hundred", "answer": "five", "distractors": ["four", "six"] },
+    { "text": "Seven hundred is ___ than three hundred.", "answer": "bigger", "distractors": ["smaller", "big"] },
+    { "text": "800 = eight ___", "answer": "hundred", "distractors": ["hundreds", "thousand"] }
+  ],
+  "games": [
+    { "type": "pick-image", "count": 6 },
+    { "type": "listen-pick", "count": 6, "config": { "show": "picture" } },
+    { "type": "match", "count": 5 },
+    { "type": "fill-blank", "count": 4 },
+    { "type": "order-sentence", "count": 3 }
+  ],
+  "challenge": { "count": 8, "types": ["pick-image", "listen-pick", "fill-blank"] }
+}

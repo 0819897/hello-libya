@@ -65,3 +65,7 @@ test('special games pass config through, one question per round', () => {
   expect(buildQuestions(lesson4, { type: 'drag-order', config: { mode: 'sequence', items: [] } }, makeRng(1))).toHaveLength(1);
   expect(buildQuestions(lesson4, { type: 'stall' }, makeRng(1))).toEqual([]);
 });
+test('listen-pick with config.show = picture uses the word pictures (e.g. numerals) as options', () => {
+  const q = buildQuestions(lesson10, { type: 'listen-pick', count: 1, config: { show: 'picture' } }, makeRng(1))[0];
+  expect(q.options!.every(o => o.emoji && !o.text)).toBe(true);
+});

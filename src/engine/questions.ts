@@ -59,10 +59,12 @@ export function buildQuestions(lesson: Lesson, spec: GameSpec, rng: Rng): Questi
       }));
     }
     case 'listen-pick': {
-      if (words.length < 2) return [];
-      return take(words, spec, 5, rng).map((w, i) => ({
+      const pics = spec.config?.show === 'picture';
+      const pool = pics ? words.filter(w => w.emoji || w.image) : words;
+      if (pool.length < 2) return [];
+      return take(pool, spec, 5, rng).map((w, i) => ({
         id: qid(i, w.en), type, wordEn: w.en, promptWord: w, listen: true, answer: w.en, explainAr: explain(w),
-        options: withDistractors(w, words, 4, rng).map(x => ({ id: x.en, text: x.en })),
+        options: withDistractors(w, pool, 4, rng).map(x => (pics ? picOpt(x) : { id: x.en, text: x.en })),
       }));
     }
     case 'match': {

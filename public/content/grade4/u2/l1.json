@@ -1,0 +1,48 @@
+{
+  "id": "g4-u2-l1",
+  "title": "Where are you from?",
+  "titleAr": "من أين أنت؟",
+  "words": [
+    { "en": "Libya", "ar": "ليبيا", "emoji": "🐪" },
+    { "en": "England", "ar": "إنجلترا", "emoji": "💂" },
+    { "en": "America", "ar": "أمريكا", "emoji": "🗽" },
+    { "en": "Russia", "ar": "روسيا", "emoji": "🪆" },
+    { "en": "Brazil", "ar": "البرازيل", "emoji": "🦜" },
+    { "en": "China", "ar": "الصين", "emoji": "🐼" },
+    { "en": "country", "ar": "دولة", "abstract": true },
+    { "en": "world", "ar": "العالم", "emoji": "🌍" },
+    { "en": "map", "ar": "خريطة", "emoji": "🗺️" },
+    { "en": "north", "ar": "شمال", "emoji": "⬆️", "abstract": true },
+    { "en": "south", "ar": "جنوب", "emoji": "⬇️", "abstract": true },
+    { "en": "east", "ar": "شرق", "emoji": "➡️", "abstract": true },
+    { "en": "west", "ar": "غرب", "emoji": "⬅️", "abstract": true }
+  ],
+  "grammar": {
+    "explainAr": "نسأل: Where are you from? ونجيب: I'm from Libya.\nونقول المدينة التي نسكنها: I live in Misratah.",
+    "examples": ["Where are you from?", "I'm from Libya.", "I live in Benghazi.", "Russia is in the north."]
+  },
+  "sentences": [
+    "I'm from Libya.",
+    "Where are you from?",
+    "I live in Misratah.",
+    "Russia is in the north.",
+    "China is a big country.",
+    "Look at the map of the world."
+  ],
+  "blanks": [
+    { "text": "Where are you ___?", "answer": "from", "distractors": ["in", "north"] },
+    { "text": "I'm from ___. I live in Tripoli.", "answer": "Libya", "distractors": ["China", "Brazil"] },
+    { "text": "I ___ in Sabha.", "answer": "live", "distractors": ["from", "map"] },
+    { "text": "Russia is in the ___.", "answer": "north", "distractors": ["south", "west"] },
+    { "text": "Look at the ___ of the world.", "answer": "map", "distractors": ["north", "country"] },
+    { "text": "Libya is a big ___.", "answer": "country", "distractors": ["map", "east"] }
+  ],
+  "games": [
+    { "type": "world-map", "config": { "countries": ["Libya", "China", "England", "Brazil", "Russia", "America"] } },
+    { "type": "pick-image", "count": 6 },
+    { "type": "listen-pick", "count": 5 },
+    { "type": "match", "count": 5 },
+    { "type": "order-sentence", "count": 4 }
+  ],
+  "challenge": { "count": 8, "types": ["fill-blank", "listen-pick", "pick-image"] }
+}

@@ -2,10 +2,10 @@ import { speak } from '../audio/speak';
 import { useProgress } from '../state/ProgressContext';
 
 /** An English word or sentence the learner can tap to hear. */
-export function WordChip({ en, audio, className = '' }: { en: string; audio?: string; className?: string }) {
+export function WordChip({ en, audio, say, className = '' }: { en: string; audio?: string; say?: string; className?: string }) {
   const { progress } = useProgress();
   return (
-    <button type="button" onClick={() => speak({ en, audio }, progress.sound)} aria-label={`استمع: ${en}`}
+    <button type="button" onClick={() => speak({ en: say ?? en, audio }, progress.sound)} aria-label={`استمع: ${en}`}
       className={`en inline-flex min-h-12 items-center gap-2 rounded-xl px-2 hover:bg-amber-50 ${className}`}>
       <span>{en}</span><span aria-hidden className="text-base">🔊</span>
     </button>

@@ -1,0 +1,41 @@
+{
+  "id": "g4-u2-l6",
+  "title": "Going to school",
+  "titleAr": "الذهاب إلى المدرسة",
+  "words": [
+    { "en": "by bus", "ar": "بالحافلة", "emoji": "🚌" },
+    { "en": "by car", "ar": "بالسيارة", "emoji": "🚗" },
+    { "en": "on foot", "ar": "مشياً", "emoji": "🚶" },
+    { "en": "time", "ar": "الوقت", "emoji": "⏰" },
+    { "en": "o'clock", "ar": "الساعة (تماماً)", "emoji": "🕐" },
+    { "en": "minute", "ar": "دقيقة", "emoji": "⏱️", "abstract": true }
+  ],
+  "grammar": {
+    "explainAr": "نقول كيف نذهب: I go to school by bus / by car / on foot.\nونقول الوقت: I go to school at 7 o'clock. ونسأل: What's the time? It's 3.30.",
+    "examples": ["I go to school by bus.", "I go to school at 7 o'clock.", "What's the time?", "It's 8.30."]
+  },
+  "sentences": [
+    "I go to school by bus.",
+    "Khaled goes to school on foot.",
+    "I go to school at seven o'clock.",
+    "What's the time?",
+    "It's 8.30.",
+    "Reem goes to school by car."
+  ],
+  "blanks": [
+    { "text": "I go to school ___ bus.", "answer": "by", "distractors": ["on", "at"] },
+    { "text": "I go to school ___ foot.", "answer": "on", "distractors": ["by", "at"] },
+    { "text": "I go to school ___ 7 o'clock.", "answer": "at", "distractors": ["by", "on"] },
+    { "text": "What's the ___? It's 3.30.", "answer": "time", "distractors": ["minute", "bus"] },
+    { "text": "It's 8 ___.", "answer": "o'clock", "distractors": ["minute", "time"] },
+    { "text": "One ___ is not a long time.", "answer": "minute", "distractors": ["o'clock", "bus"] }
+  ],
+  "games": [
+    { "type": "pick-image", "count": 4 },
+    { "type": "listen-pick", "count": 5 },
+    { "type": "clock", "config": { "times": ["7.00", "3.30", "12.00", "8.30"] } },
+    { "type": "fill-blank", "count": 4 },
+    { "type": "order-sentence", "count": 4 }
+  ],
+  "challenge": { "count": 8, "types": ["fill-blank", "listen-pick", "pick-image"] }
+}

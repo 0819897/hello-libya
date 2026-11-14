@@ -1,0 +1,44 @@
+{
+  "id": "g4-u2-l2",
+  "title": "Capitals and languages",
+  "titleAr": "العواصم واللغات",
+  "words": [
+    { "en": "capital city", "ar": "العاصمة", "emoji": "🏛️" },
+    { "en": "language", "ar": "لغة", "emoji": "🗣️" },
+    { "en": "speak", "ar": "يتكلم", "emoji": "💬", "abstract": true },
+    { "en": "Tripoli", "ar": "طرابلس" },
+    { "en": "London", "ar": "لندن" },
+    { "en": "Libya", "ar": "ليبيا", "emoji": "🐪" },
+    { "en": "England", "ar": "إنجلترا", "emoji": "💂" },
+    { "en": "Arabic", "ar": "العربية" },
+    { "en": "English", "ar": "الإنجليزية", "emoji": "🔤" }
+  ],
+  "grammar": {
+    "explainAr": "نسأل عن العاصمة: What's the capital of Libya? It's Tripoli.\nونسأل عن اللغة: What language do you speak? I speak Arabic.",
+    "examples": ["What's the capital of England?", "It's London.", "What language do you speak?", "I speak Arabic."]
+  },
+  "sentences": [
+    "What's the capital of England?",
+    "It's London.",
+    "I speak Arabic.",
+    "What language do you speak?",
+    "I live in Misratah.",
+    "The capital of Libya is Tripoli."
+  ],
+  "blanks": [
+    { "text": "What's the ___ of Libya? It's Tripoli.", "answer": "capital", "distractors": ["language", "speak"] },
+    { "text": "The capital of England is ___.", "answer": "London", "distractors": ["Tripoli", "Sabha"] },
+    { "text": "In England they speak ___.", "answer": "English", "distractors": ["Arabic", "London"] },
+    { "text": "What ___ do you speak?", "answer": "language", "distractors": ["capital", "city"] },
+    { "text": "I ___ Arabic.", "answer": "speak", "distractors": ["live", "capital"] },
+    { "text": "I'm from Libya. I live in ___.", "answer": "Benghazi", "distractors": ["London", "English"] }
+  ],
+  "games": [
+    { "type": "pick-image", "count": 4 },
+    { "type": "listen-pick", "count": 5 },
+    { "type": "match", "count": 4 },
+    { "type": "fill-blank", "count": 4 },
+    { "type": "order-sentence", "count": 4 }
+  ],
+  "challenge": { "count": 8, "types": ["fill-blank", "listen-pick", "spell"] }
+}
