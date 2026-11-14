@@ -1,14 +1,14 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import type { GameResult, Lesson, Question, Word } from '../types';
+import type { GameResult, GradeIndex, Lesson, Question, Word } from '../types';
 import { buildChallenge, buildQuestions } from '../engine/questions';
 import { makeRng } from '../engine/rng';
 import { pointsFor, starsFor } from '../engine/scoring';
 import { registry } from '../games/registry';
 import { chime, speak } from '../audio/speak';
-import { completeLesson, orderedLessonIds, todayStr } from '../state/progress';
+import { awardBadges, BADGES, completeLesson, isUnlocked, orderedLessonIds, todayStr } from '../state/progress';
 import { useProgress } from '../state/ProgressContext';
-import { loadGradeIndex, loadLesson } from '../content/loader';
+import { loadGradeIndex, loadGradeLessons, loadLesson } from '../content/loader';
 import { Button } from '../ui/Button';
 import { Card } from '../ui/Card';
 import { ProgressBar } from '../ui/ProgressBar';
@@ -23,8 +23,8 @@ const findWord = (lesson: Lesson, q: Question): Word | undefined => {
   return lesson.words.find(w => w.en.toLowerCase() === key);
 };
 
-export function LessonRun({ lesson, rng: rngProp, onFinish, onNext }: {
-  lesson: Lesson; rng?: () => number; onFinish?: (p: { lessonId: string; correct: number; total: number }) => void; onNext?: () => void;
+export function LessonRun({ lesson, grade, rng: rngProp, onFinish, onNext }: {
+  lesson: Lesson; grade?: GradeIndex; rng?: () => number; onFinish?: (p: { lessonId: string; correct: number; total: number }) => void; onNext?: () => void;
 }) {
   const { progress, update } = useProgress();
   const rng = useMemo(() => rngProp ?? makeRng(Date.now() & 0xffffffff), [rngProp]);
@@ -42,6 +42,7 @@ export function LessonRun({ lesson, rng: rngProp, onFinish, onNext }: {
   const firstRight = useRef(0);
   const missed = useRef<string[]>([]);
   const saved = useRef(false);
+  const badgesBefore = useRef(progress.badges);
 
   const startPlay = () => {
     if (rounds.length === 0) return setPhase('challenge-intro');
@@ -68,8 +69,11 @@ export function LessonRun({ lesson, rng: rngProp, onFinish, onNext }: {
     if (!saved.current) {
       saved.current = true;
       const miss = [...new Set(missed.current)];
-      update(p => completeLesson(p, { lessonId: lesson.id, correct: firstRight.current, total, points: points.current,
-        learned: lesson.words.map(w => w.en).filter(en => !miss.includes(en)), missed: miss, today: todayStr() }));
+      update(p => {
+        const n = completeLesson(p, { lessonId: lesson.id, correct: firstRight.current, total, points: points.current,
+          learned: lesson.words.map(w => w.en).filter(en => !miss.includes(en)), missed: miss, today: todayStr() });
+        return grade ? { ...n, badges: awardBadges(n, grade) } : n;
+      });
       onFinish?.({ lessonId: lesson.id, correct: firstRight.current, total });
     }
     setPhase('result');
@@ -94,7 +98,8 @@ export function LessonRun({ lesson, rng: rngProp, onFinish, onNext }: {
     const miss = [...new Set(missed.current)];
     return <Result stars={starsFor(firstRight.current, challenge.length)} points={points.current} correct={firstRight.current}
       total={challenge.length} missed={lesson.words.filter(w => miss.includes(w.en))} onNext={onNext}
-      onRetry={() => { saved.current = false; points.current = 0; firstRight.current = 0; missed.current = []; setCard(0); setQi(0); setPhase('learn'); }} />;
+      newBadges={BADGES.filter(b => progress.badges.includes(b.id) && !badgesBefore.current.includes(b.id))}
+      onRetry={() => { saved.current = false; badgesBefore.current = progress.badges; points.current = 0; firstRight.current = 0; missed.current = []; setCard(0); setQi(0); setPhase('learn'); }} />;
   }
 
   const Game = current ? registry[current.type] : undefined;
@@ -161,11 +166,18 @@ export function LessonRun({ lesson, rng: rngProp, onFinish, onNext }: {
   );
 }
 
+export function reviewLesson(words: Word[]): Lesson {
+  return { id: 'review', title: 'Review', titleAr: 'راجع أخطاءك', words,
+    games: [{ type: 'pick-image', count: 6 }, { type: 'listen-pick', count: 6 }, { type: 'spell', count: 4 }],
+    challenge: { count: 8, types: ['listen-pick', 'pick-image', 'spell'] } };
+}
+
 export default function LessonPlayer() {
   const { gradeId = '', lessonId = '' } = useParams();
   const { progress } = useProgress();
   const navigate = useNavigate();
   const [lesson, setLesson] = useState<Lesson | null>(null);
+  const [grade, setGrade] = useState<GradeIndex | undefined>();
   const [nextId, setNextId] = useState<string | null>(null);
   const [error, setError] = useState('');
 
@@ -173,10 +185,20 @@ export default function LessonPlayer() {
     let live = true;
     setLesson(null); setError('');
     const imported = progress.imported.find(l => l.id === lessonId);
-    if (imported) { setLesson(imported); setNextId(null); return; }
     loadGradeIndex(gradeId).then(async g => {
+      if (!live) return;
+      setGrade(g);
+      if (imported) { setLesson(imported); setNextId(null); return; }
+      if (lessonId === 'review') {
+        const all = (await loadGradeLessons(g)).flatMap(u => u.lessons).flatMap(l => l.words);
+        const words = [...new Map(all.filter(w => progress.mistakes.includes(w.en)).map(w => [w.en, w])).values()];
+        if (words.length < 4) throw new Error();
+        if (live) { setLesson(reviewLesson(words)); setNextId(null); }
+        return;
+      }
       const ref = g.units.flatMap(u => u.lessons).find(l => l.id === lessonId);
       if (!ref) throw new Error();
+      if (!isUnlocked(progress, g, lessonId)) { if (live) setError('هذا الدرس مقفل. احصل على نجمة في الدرس السابق أولاً'); return; }
       const ids = orderedLessonIds(g);
       const l = await loadLesson(ref, gradeId);
       if (live) { setLesson(l); setNextId(ids[ids.indexOf(lessonId) + 1] ?? null); }
@@ -190,9 +212,9 @@ export default function LessonPlayer() {
         <Link to={`/grade/${gradeId}`} className="flex min-h-12 items-center rounded-xl px-3 font-bold text-teal-800 hover:bg-teal-50">→ رجوع</Link>
         {lesson && <h1 className="text-xl font-bold">{lesson.titleAr} · <span className="en">{lesson.title}</span></h1>}
       </div>
-      {error && <Card role="alert" className="text-center text-xl">{error} <Link className="block underline" to="/">العودة للرئيسية</Link></Card>}
+      {error && <Card role="alert" className="text-center text-xl">{error} <Link className="block underline" to={`/grade/${gradeId}`}>العودة إلى المسار</Link></Card>}
       {!lesson && !error && <p className="text-center text-xl">جارٍ التحميل…</p>}
-      {lesson && <LessonRun key={lesson.id} lesson={lesson}
+      {lesson && <LessonRun key={lesson.id} lesson={lesson} grade={grade}
         onNext={nextId ? () => navigate(`/lesson/${gradeId}/${nextId}`) : undefined} />}
     </main>
   );

@@ -4,8 +4,8 @@ import { Card } from '../ui/Card';
 import { StarRow } from '../ui/StarRow';
 import { Pic, WordChip } from '../ui/WordChip';
 
-export default function Result({ stars, points, correct, total, missed, onRetry, onNext }: {
-  stars: number; points: number; correct: number; total: number; missed: Word[]; onRetry: () => void; onNext?: () => void;
+export default function Result({ stars, points, correct, total, missed, onRetry, onNext, newBadges = [] }: {
+  newBadges?: { id: string; emoji: string; titleAr: string }[]; stars: number; points: number; correct: number; total: number; missed: Word[]; onRetry: () => void; onNext?: () => void;
 }) {
   const msg = ['حاول مرة أخرى، أنت قادر!', 'جيد! واصل التدريب', 'رائع جداً!', 'ممتاز! أداء كامل'][stars];
   return (
@@ -15,6 +15,12 @@ export default function Result({ stars, points, correct, total, missed, onRetry,
       <p className="text-xl font-bold">{msg}</p>
       <p className="mt-2 text-lg">أجبت صحيحاً من المحاولة الأولى: {correct} من {total}</p>
       <p className="mt-1 text-2xl font-black text-amber-600">+{points} نقطة</p>
+      {newBadges.length > 0 && (
+        <div role="status" className="mt-4 rounded-2xl bg-amber-100 p-3">
+          <p className="font-bold">وسام جديد!</p>
+          {newBadges.map(b => <p key={b.id} className="text-lg"><span aria-hidden>{b.emoji} </span>{b.titleAr}</p>)}
+        </div>
+      )}
       {stars === 0 && <p className="mt-2">تحتاج نجمة واحدة على الأقل (60٪) لفتح الدرس التالي.</p>}
       {missed.length > 0 && (
         <div className="mt-5 text-start">

@@ -27,7 +27,7 @@ let memory: string | null = null; // used when localStorage is unavailable (priv
 
 export function loadProgress(): Progress {
   let raw: string | null = memory;
-  try { raw = localStorage.getItem(STORAGE_KEY) ?? memory; } catch { /* use memory */ }
+  try { raw = localStorage.getItem(STORAGE_KEY); } catch { /* storage unavailable: use memory */ }
   if (!raw) return defaultProgress();
   try {
     const p: unknown = JSON.parse(raw);
@@ -87,4 +87,26 @@ export function isUnlocked(p: Progress, grade: GradeIndex, lessonId: string): bo
   if (i < 0) return false;
   if (i === 0 || p.teacherMode) return true;
   return (p.lessons[ids[i - 1]]?.stars ?? 0) >= 1;
+}
+
+export const BADGES: { id: string; emoji: string; titleAr: string }[] = [
+  { id: 'first-lesson', emoji: '🌱', titleAr: 'أول درس' },
+  { id: 'unit-done', emoji: '🏅', titleAr: 'أنهيت وحدة' },
+  { id: 'unit-3stars', emoji: '🌟', titleAr: 'وحدة بثلاث نجوم' },
+  { id: 'streak-7', emoji: '🔥', titleAr: '7 أيام متتالية' },
+  { id: 'words-100', emoji: '📚', titleAr: '100 كلمة' },
+  { id: 'big-challenge', emoji: '🏆', titleAr: 'التحدي الكبير' },
+];
+
+/** Full badge list: everything already earned plus anything newly earned. */
+export function awardBadges(p: Progress, grade: GradeIndex): string[] {
+  const stars = (id: string) => p.lessons[id]?.stars ?? 0;
+  const units = grade.units.filter(u => u.kind === 'unit' && u.status === 'open' && u.lessons.length > 0);
+  const earned = new Set(p.badges);
+  if (Object.values(p.lessons).some(l => l.stars >= 1)) earned.add('first-lesson');
+  if (units.some(u => u.lessons.every(l => stars(l.id) >= 1))) earned.add('unit-done');
+  if (units.some(u => u.lessons.every(l => stars(l.id) === 3))) earned.add('unit-3stars');
+  if (p.streak.count >= 7) earned.add('streak-7');
+  if (p.learned.length >= 100) earned.add('words-100');
+  return [...p.badges, ...BADGES.map(b => b.id).filter(id => earned.has(id) && !p.badges.includes(id))];
 }

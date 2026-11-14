@@ -1,35 +1,38 @@
-import { useEffect, useState } from 'react';
-import { Link, Route, Routes } from 'react-router-dom';
-import { loadGradeIndex } from './content/loader';
-import type { GradeIndex } from './types';
-import { ProgressProvider } from './state/ProgressContext';
+import { Navigate, Route, Routes } from 'react-router-dom';
+import { ProgressProvider, useProgress } from './state/ProgressContext';
 import LessonPlayer from './screens/LessonPlayer';
+import Welcome from './screens/Welcome';
+import GradeMap from './screens/GradeMap';
+import UnitPath from './screens/UnitPath';
+import Profile from './screens/Profile';
+import Dictionary from './screens/Dictionary';
+import Settings from './screens/Settings';
+import About from './screens/About';
 
-function Home() {
-  const [grade, setGrade] = useState<GradeIndex | null>(null);
-  const [error, setError] = useState('');
-  useEffect(() => { loadGradeIndex('grade4').then(setGrade, () => setError('تعذّر تحميل الدروس')); }, []);
+function AppRoutes() {
+  const { progress } = useProgress();
+  if (!progress.name) {
+    return (
+      <Routes>
+        <Route path="/about" element={<About />} />
+        <Route path="*" element={<Welcome />} />
+      </Routes>
+    );
+  }
   return (
-    <main className="mx-auto max-w-2xl p-4">
-      <h1 className="text-3xl font-bold text-teal-700"><span className="en">Hello Libya</span></h1>
-      {error && <p role="alert">{error}</p>}
-      {grade?.units.map(u => (
-        <section key={u.id} className="mt-4">
-          <h2 className="text-xl font-bold">{u.titleAr} <span className="en">{u.title}</span></h2>
-          <ul>{u.lessons.map(l => <li key={l.id}><Link className="underline" to={`/lesson/grade4/${l.id}`}>{l.titleAr} – <span className="en">{l.title}</span></Link></li>)}</ul>
-        </section>
-      ))}
-    </main>
+    <Routes>
+      <Route path="/grades" element={<GradeMap />} />
+      <Route path="/grade/:gradeId" element={<UnitPath />} />
+      <Route path="/lesson/:gradeId/:lessonId" element={<LessonPlayer />} />
+      <Route path="/dictionary" element={<Dictionary />} />
+      <Route path="/profile" element={<Profile />} />
+      <Route path="/settings" element={<Settings />} />
+      <Route path="/about" element={<About />} />
+      <Route path="*" element={<Navigate to={Object.keys(progress.lessons).length ? '/grade/grade4' : '/grades'} replace />} />
+    </Routes>
   );
 }
 
 export default function App() {
-  return (
-    <ProgressProvider>
-      <Routes>
-        <Route path="/lesson/:gradeId/:lessonId" element={<LessonPlayer />} />
-        <Route path="*" element={<Home />} />
-      </Routes>
-    </ProgressProvider>
-  );
+  return <ProgressProvider><AppRoutes /></ProgressProvider>;
 }

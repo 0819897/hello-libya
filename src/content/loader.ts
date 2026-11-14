@@ -48,3 +48,12 @@ export async function loadLesson(ref: LessonRef, gradeId: string): Promise<Lesso
   if (!r.ok) throw new Error(r.errorAr);
   return r.lesson;
 }
+
+/** Every loadable lesson of a grade, grouped by unit. Lessons that fail to load are skipped. */
+export async function loadGradeLessons(grade: GradeIndex): Promise<{ unitId: string; lessons: Lesson[] }[]> {
+  return Promise.all(grade.units.filter(u => u.status === 'open').map(async u => ({
+    unitId: u.id,
+    lessons: (await Promise.all(u.lessons.map(ref => loadLesson(ref, grade.id).catch(() => null))))
+      .filter((l): l is Lesson => l !== null),
+  })));
+}
