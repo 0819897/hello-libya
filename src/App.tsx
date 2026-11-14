@@ -1,8 +1,11 @@
 import { useEffect, useState } from 'react';
+import { Link, Route, Routes } from 'react-router-dom';
 import { loadGradeIndex } from './content/loader';
 import type { GradeIndex } from './types';
+import { ProgressProvider } from './state/ProgressContext';
+import LessonPlayer from './screens/LessonPlayer';
 
-export default function App() {
+function Home() {
   const [grade, setGrade] = useState<GradeIndex | null>(null);
   const [error, setError] = useState('');
   useEffect(() => { loadGradeIndex('grade4').then(setGrade, () => setError('تعذّر تحميل الدروس')); }, []);
@@ -13,9 +16,20 @@ export default function App() {
       {grade?.units.map(u => (
         <section key={u.id} className="mt-4">
           <h2 className="text-xl font-bold">{u.titleAr} <span className="en">{u.title}</span></h2>
-          <ul>{u.lessons.map(l => <li key={l.id}>{l.titleAr} – <span className="en">{l.title}</span></li>)}</ul>
+          <ul>{u.lessons.map(l => <li key={l.id}><Link className="underline" to={`/lesson/grade4/${l.id}`}>{l.titleAr} – <span className="en">{l.title}</span></Link></li>)}</ul>
         </section>
       ))}
     </main>
+  );
+}
+
+export default function App() {
+  return (
+    <ProgressProvider>
+      <Routes>
+        <Route path="/lesson/:gradeId/:lessonId" element={<LessonPlayer />} />
+        <Route path="*" element={<Home />} />
+      </Routes>
+    </ProgressProvider>
   );
 }
