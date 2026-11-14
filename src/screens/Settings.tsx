@@ -30,6 +30,7 @@ export default function Settings() {
       <Card className="mb-4 space-y-3">
         <Toggle label="🔊 الصوت" on={progress.sound} onChange={v => update(p => ({ ...p, sound: v }))} />
         <Toggle label="👩‍🏫 وضع المعلّم (يفتح كل الدروس)" on={progress.teacherMode} onChange={v => update(p => ({ ...p, teacherMode: v }))} />
+        <Link to="/teacher" className="flex min-h-12 items-center rounded-2xl px-4 font-bold text-teal-800 underline">إدارة الدروس الإضافية (للمعلّم)</Link>
       </Card>
       <Card className="mb-4">
         <label htmlFor="rename" className="mb-2 block text-lg font-bold">تغيير الاسم</label>

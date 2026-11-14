@@ -16,9 +16,16 @@ export function validateLesson(input: unknown): { ok: true; lesson: Lesson } | {
     return fail(NOT_LESSON);
   if (words.length < 4) return fail('الدرس يحتاج 4 كلمات على الأقل');
   if (!words.every(w => isObj(w) && isStr(w.en) && isStr(w.ar))) return fail('كلمة ناقصة: كل كلمة تحتاج en و ar');
+  const optStr = (x: unknown) => x === undefined || typeof x === 'string';
+  if (!words.every(w => optStr(w.emoji) && optStr(w.image) && optStr(w.audio) && (w.abstract === undefined || typeof w.abstract === 'boolean')))
+    return fail(NOT_LESSON);
+  const { grammar } = input;
+  if (grammar !== undefined && !(isObj(grammar) && typeof grammar.explainAr === 'string'
+    && Array.isArray(grammar.examples) && grammar.examples.every(e => typeof e === 'string'))) return fail(NOT_LESSON);
   for (const g of games) {
     if (!isObj(g)) return fail(NOT_LESSON);
     if (!GAME_TYPES.includes(g.type as GameType)) return fail(`نوع لعبة غير معروف: ${String(g.type)}`);
+    if ((g.count !== undefined && typeof g.count !== 'number') || (g.config !== undefined && !isObj(g.config))) return fail(NOT_LESSON);
   }
   if (typeof challenge.count !== 'number' || !Array.isArray(challenge.types)) return fail(NOT_LESSON);
   for (const t of challenge.types) if (!GAME_TYPES.includes(t as GameType)) return fail(`نوع لعبة غير معروف: ${String(t)}`);

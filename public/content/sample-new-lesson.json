@@ -1,0 +1,36 @@
+{
+  "id": "extra-colours",
+  "title": "Colours",
+  "titleAr": "الألوان",
+  "words": [
+    { "en": "red", "ar": "أحمر", "emoji": "🔴" },
+    { "en": "blue", "ar": "أزرق", "emoji": "🔵" },
+    { "en": "green", "ar": "أخضر", "emoji": "🟢" },
+    { "en": "yellow", "ar": "أصفر", "emoji": "🟡" },
+    { "en": "black", "ar": "أسود", "emoji": "⚫" },
+    { "en": "white", "ar": "أبيض", "emoji": "⚪" }
+  ],
+  "grammar": {
+    "explainAr": "نسأل عن اللون المفضّل: What's your favourite colour?\nونجيب: My favourite colour is blue.",
+    "examples": ["What's your favourite colour?", "My favourite colour is green."]
+  },
+  "sentences": [
+    "My favourite colour is blue.",
+    "The apple is red.",
+    "Reem has black hair.",
+    "The sun is yellow."
+  ],
+  "blanks": [
+    { "text": "My favourite ___ is green.", "answer": "colour", "distractors": ["red", "white"] },
+    { "text": "Milk is ___.", "answer": "white", "distractors": ["black", "blue"] },
+    { "text": "The apple is ___.", "answer": "red", "distractors": ["blue", "black"] },
+    { "text": "Khaled has ___ hair.", "answer": "black", "distractors": ["green", "yellow"] }
+  ],
+  "games": [
+    { "type": "pick-image", "count": 6 },
+    { "type": "listen-pick", "count": 5 },
+    { "type": "match", "count": 5 },
+    { "type": "order-sentence", "count": 3 }
+  ],
+  "challenge": { "count": 6, "types": ["fill-blank", "listen-pick", "spell"] }
+}

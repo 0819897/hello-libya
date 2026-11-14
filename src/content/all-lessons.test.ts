@@ -31,3 +31,10 @@ describe.each(refs)('$id', ref => {
     expect(new Set(ens).size).toBe(ens.length);
   });
 });
+
+test('the sample lesson for teachers is valid', () => {
+  const sample = JSON.parse(readFileSync(join(process.cwd(), 'public', 'content', 'sample-new-lesson.json'), 'utf8'));
+  const r = validateLesson(sample);
+  expect(r.ok ? 'ok' : r.errorAr).toBe('ok');
+  expect(sample.words).toHaveLength(6);
+});

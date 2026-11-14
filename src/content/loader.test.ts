@@ -15,3 +15,13 @@ test('rejects unknown game type', () => expect(validateLesson({ ...good, games: 
 test('word needs en and ar', () => expect(validateLesson({ ...good, words: [...good.words, { en: 'x' }] }))
   .toEqual({ ok: false, errorAr: 'كلمة ناقصة: كل كلمة تحتاج en و ar' }));
 test('lesson 1 file is valid', () => expect(validateLesson(l1).ok).toBe(true));
+test('rejects malformed optional fields that would crash the player', () => {
+  const bad = [
+    { ...good, words: [...good.words, { en: 'x', ar: 'س', emoji: {} }] },
+    { ...good, words: [...good.words, { en: 'x', ar: 'س', abstract: 'yes' }] },
+    { ...good, grammar: { explainAr: 'ش', examples: 'not a list' } },
+    { ...good, games: [{ type: 'pick-image', count: 'six' }] },
+    { ...good, challenge: { count: 8, types: 'listen-pick' } },
+  ];
+  for (const b of bad) expect(validateLesson(b).ok).toBe(false);
+});

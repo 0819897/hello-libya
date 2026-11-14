@@ -10,6 +10,8 @@ import Settings from './screens/Settings';
 import About from './screens/About';
 import BigChallenge from './screens/BigChallenge';
 import Certificate from './screens/Certificate';
+import TeacherMode from './screens/TeacherMode';
+import { ErrorBoundary } from './ui/ErrorBoundary';
 
 function AppRoutes() {
   const { progress } = useProgress();
@@ -31,6 +33,7 @@ function AppRoutes() {
       <Route path="/dictionary" element={<Dictionary />} />
       <Route path="/profile" element={<Profile />} />
       <Route path="/settings" element={<Settings />} />
+      <Route path="/teacher" element={<TeacherMode />} />
       <Route path="/about" element={<About />} />
       <Route path="*" element={<Navigate to={Object.keys(progress.lessons).length ? '/grade/grade4' : '/grades'} replace />} />
     </Routes>
@@ -38,5 +41,5 @@ function AppRoutes() {
 }
 
 export default function App() {
-  return <ProgressProvider><AppRoutes /></ProgressProvider>;
+  return <ErrorBoundary><ProgressProvider><AppRoutes /></ProgressProvider></ErrorBoundary>;
 }
