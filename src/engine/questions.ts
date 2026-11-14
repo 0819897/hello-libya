@@ -12,7 +12,7 @@ const explain = (w: Word) => `${w.en} = ${w.ar}`;
 
 /** "This is a pen." / "This is an apple." / "These are apples." / "This is milk." / "This is Libya." */
 export function thisIs(en: string): string {
-  if (/^[A-Z]/.test(en) || MASS.has(en)) return `This is ${en}.`;
+  if ((/^[A-Z]/.test(en) && !/^[A-Z]-/.test(en)) || MASS.has(en)) return `This is ${en}.`;
   if (/[^s]s$/.test(en) || en === 'sweets') return `These are ${en}.`;
   return `This is ${/^[aeiou]/i.test(en) ? 'an' : 'a'} ${en}.`;
 }

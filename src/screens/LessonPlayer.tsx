@@ -149,7 +149,7 @@ export function LessonRun({ lesson, grade, rng: rngProp, onFinish, onNext }: {
       {Game && current && (
         <Card>
           <div aria-hidden={!!feedback} className={feedback ? 'pointer-events-none' : ''}>
-            <Game key={current.id} question={current} onDone={answered} />
+            <Game key={`${phase}-${round}-${qi}-${current.id}`} question={current} onDone={answered} />
           </div>
           {feedback && (
             <div role="status" className="mt-4 flex flex-wrap items-center justify-between gap-3 rounded-2xl border-4 border-green-600 bg-green-50 p-3">

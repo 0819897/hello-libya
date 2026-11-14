@@ -1,0 +1,44 @@
+{
+  "id": "g4-u3-l2",
+  "title": "Drinks",
+  "titleAr": "المشروبات",
+  "words": [
+    { "en": "drinks", "ar": "مشروبات", "emoji": "🍹" },
+    { "en": "coffee", "ar": "قهوة", "emoji": "☕" },
+    { "en": "tea", "ar": "شاي", "emoji": "🍵" },
+    { "en": "orange juice", "ar": "عصير برتقال", "emoji": "🍊" },
+    { "en": "mango juice", "ar": "عصير مانجو", "emoji": "🥭" },
+    { "en": "cola", "ar": "كولا", "emoji": "🥤" },
+    { "en": "water", "ar": "ماء", "emoji": "💧" },
+    { "en": "a cup of", "ar": "كوب من", "abstract": true }
+  ],
+  "grammar": {
+    "explainAr": "نطلب بأدب: Can I have a tea, please? ويجيب البائع: Yes, here you are.\nونسأل: What do you want? ونجيب: I want a cup of tea. (an قبل orange)",
+    "examples": ["Can I have a mango juice, please?", "Yes, here you are.", "What do you want?", "A cup of coffee, please."]
+  },
+  "sentences": [
+    "Can I have a mango juice, please?",
+    "Yes, here you are.",
+    "I want a cup of tea.",
+    "What do you want?",
+    "Kareem wants some water.",
+    "A cup of coffee, please."
+  ],
+  "blanks": [
+    { "text": "Can I ___ a tea, please?", "answer": "have", "distractors": ["has", "here"] },
+    { "text": "Yes, ___ you are.", "answer": "here", "distractors": ["have", "what"] },
+    { "text": "I want a ___ of tea.", "answer": "cup", "distractors": ["water", "drinks"] },
+    { "text": "What do you ___?", "answer": "want", "distractors": ["wants", "cup"] },
+    { "text": "Can I have an ___ juice, please?", "answer": "orange", "distractors": ["mango", "cola"] },
+    { "text": "Can I have a ___ juice, please?", "answer": "mango", "distractors": ["orange", "water"] }
+  ],
+  "games": [
+    { "type": "pick-image", "count": 6 },
+    { "type": "listen-pick", "count": 5 },
+    { "type": "true-false", "count": 4 },
+    { "type": "match", "count": 4 },
+    { "type": "fill-blank", "count": 4 },
+    { "type": "order-sentence", "count": 3 }
+  ],
+  "challenge": { "count": 8, "types": ["fill-blank", "true-false", "listen-pick"] }
+}

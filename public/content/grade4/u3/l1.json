@@ -1,0 +1,58 @@
+{
+  "id": "g4-u3-l1",
+  "title": "Months of the year",
+  "titleAr": "شهور السنة",
+  "words": [
+    { "en": "January", "ar": "يناير" },
+    { "en": "February", "ar": "فبراير" },
+    { "en": "March", "ar": "مارس" },
+    { "en": "April", "ar": "أبريل" },
+    { "en": "May", "ar": "مايو" },
+    { "en": "June", "ar": "يونيو" },
+    { "en": "July", "ar": "يوليو" },
+    { "en": "August", "ar": "أغسطس" },
+    { "en": "September", "ar": "سبتمبر" },
+    { "en": "October", "ar": "أكتوبر" },
+    { "en": "November", "ar": "نوفمبر" },
+    { "en": "December", "ar": "ديسمبر" },
+    { "en": "month", "ar": "شهر", "emoji": "📅" },
+    { "en": "every month", "ar": "كل شهر", "abstract": true },
+    { "en": "birthday", "ar": "عيد ميلاد", "emoji": "🎂" },
+    { "en": "holiday", "ar": "عطلة", "emoji": "🏖️" }
+  ],
+  "grammar": {
+    "explainAr": "أسماء الشهور في الإنجليزية تبدأ دائماً بحرف كبير: January, May.\nنقول: My birthday is in April. (نستعمل in مع الشهر) ونسأل: When is your birthday?",
+    "examples": ["What month is it?", "When is your birthday?", "My birthday is in June.", "The holiday is in July."]
+  },
+  "sentences": [
+    "What month is it?",
+    "My birthday is in April.",
+    "When is your birthday?",
+    "The holiday is in July.",
+    "January is the first month.",
+    "December is after November."
+  ],
+  "blanks": [
+    { "text": "My birthday is ___ May.", "answer": "in", "distractors": ["on", "at"] },
+    { "text": "___ is your birthday?", "answer": "When", "distractors": ["What", "Where"] },
+    { "text": "What ___ is it? It's March.", "answer": "month", "distractors": ["holiday", "birthday"] },
+    { "text": "January, February, ___", "answer": "March", "distractors": ["May", "June"] },
+    { "text": "June, ___, August", "answer": "July", "distractors": ["June", "May"] },
+    { "text": "December is ___ November.", "answer": "after", "distractors": ["month", "holiday"] }
+  ],
+  "games": [
+    { "type": "drag-order", "config": { "mode": "sequence", "promptAr": "رتّب الشهور من يناير إلى يونيو", "items": [
+      { "id": "jan", "label": "January" }, { "id": "feb", "label": "February" }, { "id": "mar", "label": "March" },
+      { "id": "apr", "label": "April" }, { "id": "may", "label": "May" }, { "id": "jun", "label": "June" }
+    ] } },
+    { "type": "drag-order", "config": { "mode": "sequence", "promptAr": "رتّب الشهور من يوليو إلى ديسمبر", "items": [
+      { "id": "jul", "label": "July" }, { "id": "aug", "label": "August" }, { "id": "sep", "label": "September" },
+      { "id": "oct", "label": "October" }, { "id": "nov", "label": "November" }, { "id": "dec", "label": "December" }
+    ] } },
+    { "type": "listen-pick", "count": 6 },
+    { "type": "match", "count": 5 },
+    { "type": "fill-blank", "count": 4 },
+    { "type": "order-sentence", "count": 3 }
+  ],
+  "challenge": { "count": 8, "types": ["listen-pick", "spell", "fill-blank"] }
+}

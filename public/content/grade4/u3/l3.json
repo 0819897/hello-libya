@@ -1,0 +1,54 @@
+{
+  "id": "g4-u3-l3",
+  "title": "At the stall",
+  "titleAr": "عند الطاولة",
+  "words": [
+    { "en": "Open Day", "ar": "اليوم المفتوح", "emoji": "🎈" },
+    { "en": "stall", "ar": "طاولة البيع", "emoji": "🎪" },
+    { "en": "selling", "ar": "يبيع", "emoji": "💰", "abstract": true },
+    { "en": "buy", "ar": "يشتري", "emoji": "🛍️", "abstract": true },
+    { "en": "cakes", "ar": "كعك", "emoji": "🍰" },
+    { "en": "sandwiches", "ar": "شطائر", "emoji": "🥪" },
+    { "en": "pizza", "ar": "بيتزا", "emoji": "🍕" },
+    { "en": "watermelon", "ar": "بطيخ", "emoji": "🍉" },
+    { "en": "delicious", "ar": "لذيذ", "emoji": "😋", "abstract": true },
+    { "en": "exciting", "ar": "ممتع", "emoji": "🤩", "abstract": true },
+    { "en": "Libyan Dinars", "ar": "دينار ليبي", "emoji": "💵", "abstract": true }
+  ],
+  "grammar": {
+    "explainAr": "البائع يقول: Can I help you? والمشتري يسأل عن السعر: How much are the cakes?\nوالجواب: They're 2.5 Libyan Dinars each. (each = للواحدة)",
+    "examples": ["Can I help you?", "How much are the sandwiches?", "They're 2 Libyan Dinars each."]
+  },
+  "sentences": [
+    "Can I help you?",
+    "How much are the sandwiches?",
+    "They're 2 Libyan Dinars each.",
+    "The pizza is delicious.",
+    "Open Day is exciting.",
+    "Nadia is selling cakes."
+  ],
+  "blanks": [
+    { "text": "How much ___ the cakes?", "answer": "are", "distractors": ["is", "am"] },
+    { "text": "They're 3 Libyan ___ each.", "answer": "Dinars", "distractors": ["Day", "stall"] },
+    { "text": "Can I ___ you?", "answer": "help", "distractors": ["cakes", "pizza"] },
+    { "text": "Sarah is ___ sandwiches at the stall.", "answer": "selling", "distractors": ["sell", "delicious"] },
+    { "text": "The watermelon is ___!", "answer": "delicious", "distractors": ["stall", "buy"] },
+    { "text": "I want to ___ a pizza.", "answer": "buy", "distractors": ["delicious", "stall"] }
+  ],
+  "games": [
+    { "type": "stall", "config": { "rounds": 3, "menu": [
+      { "en": "tea", "emoji": "🍵", "price": 1 },
+      { "en": "cake", "emoji": "🍰", "price": 2.5 },
+      { "en": "sandwich", "emoji": "🥪", "price": 2 },
+      { "en": "pizza", "emoji": "🍕", "price": 3 },
+      { "en": "watermelon", "emoji": "🍉", "price": 1.5 },
+      { "en": "orange juice", "emoji": "🍊", "price": 1 }
+    ] } },
+    { "type": "pick-image", "count": 5 },
+    { "type": "listen-pick", "count": 5 },
+    { "type": "match", "count": 5 },
+    { "type": "fill-blank", "count": 4 },
+    { "type": "order-sentence", "count": 3 }
+  ],
+  "challenge": { "count": 8, "types": ["fill-blank", "listen-pick", "pick-image"] }
+}

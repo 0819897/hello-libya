@@ -1,0 +1,66 @@
+{
+  "id": "g4-u3-l5",
+  "title": "Race day",
+  "titleAr": "يوم السباق",
+  "words": [
+    { "en": "race", "ar": "سباق", "emoji": "🏁" },
+    { "en": "running race", "ar": "سباق الجري", "emoji": "🏃" },
+    { "en": "skipping race", "ar": "سباق نط الحبل", "emoji": "🪢" },
+    { "en": "hopping race", "ar": "سباق القفز على رجل واحدة", "emoji": "🦘" },
+    { "en": "egg and spoon race", "ar": "سباق البيضة والملعقة", "emoji": "🥚" },
+    { "en": "first", "ar": "الأول", "emoji": "🥇" },
+    { "en": "second", "ar": "الثاني", "emoji": "🥈" },
+    { "en": "third", "ar": "الثالث", "emoji": "🥉" },
+    { "en": "fourth", "ar": "الرابع", "emoji": "4️⃣" },
+    { "en": "prize", "ar": "جائزة", "emoji": "🏆" },
+    { "en": "winner", "ar": "الفائز", "emoji": "👑" },
+    { "en": "team", "ar": "فريق", "emoji": "👥" },
+    { "en": "quickly", "ar": "بسرعة", "emoji": "🐇", "abstract": true },
+    { "en": "slowly", "ar": "ببطء", "emoji": "🐢", "abstract": true },
+    { "en": "carefully", "ar": "بحذر", "emoji": "🤲", "abstract": true },
+    { "en": "loudly", "ar": "بصوت عالٍ", "emoji": "📢", "abstract": true },
+    { "en": "cheer", "ar": "يهتف", "emoji": "📣", "abstract": true },
+    { "en": "Good luck!", "ar": "حظاً موفقاً", "emoji": "🍀", "abstract": true }
+  ],
+  "grammar": {
+    "explainAr": "نرتّب الفائزين: first, second, third, fourth. ونقول: Reem was first in the race.\nونصف كيف نفعل الشيء بكلمات تنتهي بـ ly: quickly, slowly, carefully, loudly.",
+    "examples": ["Reem was first in the running race.", "Hold the egg carefully.", "Everyone cheers loudly.", "Good luck, Khaled!"]
+  },
+  "sentences": [
+    "Reem was first in the running race.",
+    "The third race is the hopping race.",
+    "Good luck, Khaled!",
+    "Nadia runs quickly.",
+    "Hold the egg carefully.",
+    "The prize is for the winner."
+  ],
+  "blanks": [
+    { "text": "Reem was ___ in the race. She is the winner.", "answer": "first", "distractors": ["fourth", "slowly"] },
+    { "text": "Hold the egg and spoon ___.", "answer": "carefully", "distractors": ["loudly", "prize"] },
+    { "text": "Everyone cheers ___.", "answer": "loudly", "distractors": ["slowly", "prize"] },
+    { "text": "The ___ gets the prize.", "answer": "winner", "distractors": ["fourth", "race"] },
+    { "text": "Good ___!", "answer": "luck", "distractors": ["race", "prize"] },
+    { "text": "Ali runs ___. He is first.", "answer": "quickly", "distractors": ["slowly", "loudly"] }
+  ],
+  "games": [
+    { "type": "pick-image", "count": 6 },
+    { "type": "listen-pick", "count": 5 },
+    { "type": "drag-order", "config": { "mode": "place", "slots": ["first", "second", "third", "fourth"],
+      "items": [
+        { "id": "lina", "label": "Lina", "emoji": "👧" },
+        { "id": "kareem", "label": "Kareem", "emoji": "👦" },
+        { "id": "sarah", "label": "Sarah", "emoji": "👧" },
+        { "id": "yousif", "label": "Yousif", "emoji": "👦" }
+      ],
+      "rounds": [
+        { "instruction": "Lina was second in the race.", "itemId": "lina", "slot": "second" },
+        { "instruction": "Kareem was fourth in the race.", "itemId": "kareem", "slot": "fourth" },
+        { "instruction": "Sarah was first in the race.", "itemId": "sarah", "slot": "first" },
+        { "instruction": "Yousif was third in the race.", "itemId": "yousif", "slot": "third" }
+      ] } },
+    { "type": "match", "count": 5 },
+    { "type": "fill-blank", "count": 4 },
+    { "type": "order-sentence", "count": 3 }
+  ],
+  "challenge": { "count": 8, "types": ["fill-blank", "listen-pick", "pick-image"] }
+}

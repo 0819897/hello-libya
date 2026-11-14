@@ -1,4 +1,4 @@
-import { buildChallenge, buildQuestions } from './questions';
+import { buildChallenge, buildQuestions, thisIs } from './questions';
 import { makeRng } from './rng';
 import { lesson10, lesson4, withAbstract, withSentences } from './fixtures';
 
@@ -68,4 +68,9 @@ test('special games pass config through, one question per round', () => {
 test('listen-pick with config.show = picture uses the word pictures (e.g. numerals) as options', () => {
   const q = buildQuestions(lesson10, { type: 'listen-pick', count: 1, config: { show: 'picture' } }, makeRng(1))[0];
   expect(q.options!.every(o => o.emoji && !o.text)).toBe(true);
+});
+test('thisIs picks the right form', () => {
+  expect(['pen', 'apple', 'apples', 'milk', 'Libya', 'PE', 'T-shirt', 'sports trousers', 'oil field'].map(thisIs)).toEqual([
+    'This is a pen.', 'This is an apple.', 'These are apples.', 'This is milk.', 'This is Libya.', 'This is PE.',
+    'This is a T-shirt.', 'These are sports trousers.', 'This is an oil field.']);
 });

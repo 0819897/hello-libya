@@ -47,3 +47,17 @@ test('wrong first attempt is asked again at the end of the round; finishing save
   expect(saved.lessons['g4-test']).toEqual({ stars: 3, bestPct: 100 });
   expect(saved.points).toBe(4 * 10 + 5); // 4 first-attempt answers + 1 second-attempt
 });
+
+test('two drag-order games in a row each get a fresh board (no crash)', async () => {
+  const seqLesson: Lesson = { ...lesson, id: 'g4-seq', games: [
+    { type: 'drag-order', config: { mode: 'sequence', promptAr: 'أ', items: [{ id: 'a', label: 'Alpha' }, { id: 'b', label: 'Beta' }] } },
+    { type: 'drag-order', config: { mode: 'sequence', promptAr: 'ب', items: [{ id: 'c', label: 'Gamma' }, { id: 'd', label: 'Delta' }] } },
+  ] };
+  render(<MemoryRouter><ProgressProvider><LessonRun lesson={seqLesson} rng={makeRng(1)} /></ProgressProvider></MemoryRouter>);
+  await click('تخطَّ إلى اللعب');
+  const row = screen.getAllByRole('button', { name: /المكان/ });
+  if (row[0].dataset.id !== 'a') { await userEvent.click(row[0]); await userEvent.click(row[1]); }
+  await click('تحقّق');
+  await click('التالي');
+  expect(screen.getAllByRole('button', { name: /^(Gamma|Delta)، المكان/ })).toHaveLength(2);
+});

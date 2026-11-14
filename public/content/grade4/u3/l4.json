@@ -1,0 +1,45 @@
+{
+  "id": "g4-u3-l4",
+  "title": "Who buys what?",
+  "titleAr": "من يشتري ماذا؟",
+  "words": [
+    { "en": "sports trousers", "ar": "سروال رياضي", "emoji": "👖" },
+    { "en": "T-shirt", "ar": "قميص", "emoji": "👕" },
+    { "en": "put on", "ar": "يلبس", "emoji": "🧥", "abstract": true },
+    { "en": "wear", "ar": "يرتدي", "abstract": true },
+    { "en": "everyone", "ar": "الجميع", "emoji": "👨‍👩‍👧‍👦", "abstract": true },
+    { "en": "trainers", "ar": "حذاء رياضي", "emoji": "👟" },
+    { "en": "watermelon", "ar": "بطيخ", "emoji": "🍉" },
+    { "en": "cakes", "ar": "كعك", "emoji": "🍰" },
+    { "en": "pizza", "ar": "بيتزا", "emoji": "🍕" }
+  ],
+  "grammar": {
+    "explainAr": "مع he / she أو اسم شخص نضيف s للفعل: Khaled buys pizza. / Reem wears a T-shirt.\nونسأل: Who buys cakes? و What does Lina buy? ونقول الملكية: This is Yousif's T-shirt.",
+    "examples": ["Who buys watermelon?", "What does Khaled buy?", "This is Yousif's T-shirt."]
+  },
+  "sentences": [
+    "Who buys pizza?",
+    "Khaled buys a watermelon.",
+    "What does Reem buy?",
+    "This is Yousif's T-shirt.",
+    "Everyone wears sports trousers.",
+    "Ali puts on his trainers."
+  ],
+  "blanks": [
+    { "text": "Khaled ___ a watermelon.", "answer": "buys", "distractors": ["buy", "wear"] },
+    { "text": "What ___ Lina buy?", "answer": "does", "distractors": ["do", "is"] },
+    { "text": "This is ___ T-shirt.", "answer": "Ali's", "distractors": ["Ali", "Alis"] },
+    { "text": "___ buys cakes? Sarah does.", "answer": "Who", "distractors": ["What", "Whose"] },
+    { "text": "Everyone ___ sports trousers.", "answer": "wears", "distractors": ["wear", "buys"] },
+    { "text": "Kareem ___ his T-shirt.", "answer": "puts on", "distractors": ["put on", "wear"] }
+  ],
+  "games": [
+    { "type": "pick-image", "count": 5 },
+    { "type": "true-false", "count": 5 },
+    { "type": "listen-pick", "count": 5 },
+    { "type": "match", "count": 5 },
+    { "type": "fill-blank", "count": 4 },
+    { "type": "order-sentence", "count": 4 }
+  ],
+  "challenge": { "count": 8, "types": ["fill-blank", "true-false", "spell"] }
+}

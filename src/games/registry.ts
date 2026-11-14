@@ -10,6 +10,7 @@ import TrueFalse from './TrueFalse';
 import DragOrder from './special/DragOrder';
 import WorldMap from './special/WorldMap';
 import Clock from './special/Clock';
+import Stall from './special/Stall';
 
 export const registry: Partial<Record<GameType, FC<GameProps>>> = {
   'pick-image': PickImage,
@@ -22,4 +23,5 @@ export const registry: Partial<Record<GameType, FC<GameProps>>> = {
   'drag-order': DragOrder,
   'world-map': WorldMap,
   clock: Clock,
+  stall: Stall,
 };
