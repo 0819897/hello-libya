@@ -1,0 +1,75 @@
+[
+  {
+    "id": "grade1",
+    "titleAr": "الصف الأول",
+    "levelTitleAr": "المستوى التمهيدي 1",
+    "status": "soon"
+  },
+  {
+    "id": "grade2",
+    "titleAr": "الصف الثاني",
+    "levelTitleAr": "المستوى التمهيدي 2",
+    "status": "soon"
+  },
+  {
+    "id": "grade3",
+    "titleAr": "الصف الثالث",
+    "levelTitleAr": "المستوى التمهيدي 3",
+    "status": "soon"
+  },
+  {
+    "id": "grade4",
+    "titleAr": "الصف الرابع",
+    "levelTitleAr": "المستوى 1",
+    "status": "open",
+    "index": "grade4/index.json"
+  },
+  {
+    "id": "grade5",
+    "titleAr": "الصف الخامس",
+    "levelTitleAr": "المستوى 2",
+    "status": "soon"
+  },
+  {
+    "id": "grade6",
+    "titleAr": "الصف السادس",
+    "levelTitleAr": "المستوى 3",
+    "status": "soon"
+  },
+  {
+    "id": "grade7",
+    "titleAr": "الصف السابع",
+    "levelTitleAr": "المستوى 4",
+    "status": "soon"
+  },
+  {
+    "id": "grade8",
+    "titleAr": "الصف الثامن",
+    "levelTitleAr": "المستوى 5",
+    "status": "soon"
+  },
+  {
+    "id": "grade9",
+    "titleAr": "الصف التاسع",
+    "levelTitleAr": "المستوى 6",
+    "status": "soon"
+  },
+  {
+    "id": "grade10",
+    "titleAr": "الصف العاشر",
+    "levelTitleAr": "المستوى 7",
+    "status": "soon"
+  },
+  {
+    "id": "grade11",
+    "titleAr": "الصف الحادي عشر",
+    "levelTitleAr": "المستوى 8",
+    "status": "soon"
+  },
+  {
+    "id": "grade12",
+    "titleAr": "الصف الثاني عشر",
+    "levelTitleAr": "المستوى 9",
+    "status": "soon"
+  }
+]

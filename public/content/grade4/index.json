@@ -1,0 +1,176 @@
+{
+  "id": "grade4",
+  "titleAr": "الصف الرابع",
+  "levelTitleAr": "المستوى 1",
+  "units": [
+    {
+      "id": "g4-u1",
+      "title": "Our School",
+      "titleAr": "مدرستنا",
+      "status": "open",
+      "kind": "unit",
+      "lessons": [
+        {
+          "id": "g4-u1-l1",
+          "file": "u1/l1.json",
+          "title": "Hello!",
+          "titleAr": "مرحباً"
+        },
+        {
+          "id": "g4-u1-l2",
+          "file": "u1/l2.json",
+          "title": "In the playground",
+          "titleAr": "في ساحة اللعب"
+        },
+        {
+          "id": "g4-u1-l3",
+          "file": "u1/l3.json",
+          "title": "My school things",
+          "titleAr": "أدواتي المدرسية"
+        },
+        {
+          "id": "g4-u1-l4",
+          "file": "u1/l4.json",
+          "title": "Taller and bigger",
+          "titleAr": "أطول وأكبر"
+        },
+        {
+          "id": "g4-u1-l5",
+          "file": "u1/l5.json",
+          "title": "School subjects",
+          "titleAr": "المواد الدراسية"
+        },
+        {
+          "id": "g4-u1-l6",
+          "file": "u1/l6.json",
+          "title": "At the shop",
+          "titleAr": "في الدكان"
+        }
+      ]
+    },
+    {
+      "id": "g4-u2",
+      "title": "Around the World",
+      "titleAr": "حول العالم",
+      "status": "open",
+      "kind": "unit",
+      "lessons": [
+        {
+          "id": "g4-u2-l1",
+          "file": "u2/l1.json",
+          "title": "Where are you from?",
+          "titleAr": "من أين أنت؟"
+        },
+        {
+          "id": "g4-u2-l2",
+          "file": "u2/l2.json",
+          "title": "Capitals and languages",
+          "titleAr": "العواصم واللغات"
+        },
+        {
+          "id": "g4-u2-l3",
+          "file": "u2/l3.json",
+          "title": "The weather",
+          "titleAr": "الطقس"
+        },
+        {
+          "id": "g4-u2-l4",
+          "file": "u2/l4.json",
+          "title": "Big numbers",
+          "titleAr": "الأعداد الكبيرة"
+        },
+        {
+          "id": "g4-u2-l5",
+          "file": "u2/l5.json",
+          "title": "Our land",
+          "titleAr": "أرضنا"
+        },
+        {
+          "id": "g4-u2-l6",
+          "file": "u2/l6.json",
+          "title": "Going to school",
+          "titleAr": "الذهاب إلى المدرسة"
+        }
+      ]
+    },
+    {
+      "id": "g4-u3",
+      "title": "Open Day",
+      "titleAr": "اليوم المفتوح",
+      "status": "open",
+      "kind": "unit",
+      "lessons": [
+        {
+          "id": "g4-u3-l1",
+          "file": "u3/l1.json",
+          "title": "Months of the year",
+          "titleAr": "شهور السنة"
+        },
+        {
+          "id": "g4-u3-l2",
+          "file": "u3/l2.json",
+          "title": "Drinks",
+          "titleAr": "المشروبات"
+        },
+        {
+          "id": "g4-u3-l3",
+          "file": "u3/l3.json",
+          "title": "At the stall",
+          "titleAr": "عند الطاولة"
+        },
+        {
+          "id": "g4-u3-l4",
+          "file": "u3/l4.json",
+          "title": "Who buys what?",
+          "titleAr": "من يشتري ماذا؟"
+        },
+        {
+          "id": "g4-u3-l5",
+          "file": "u3/l5.json",
+          "title": "Race day",
+          "titleAr": "يوم السباق"
+        }
+      ]
+    },
+    {
+      "id": "g4-u4",
+      "title": "Revision 1",
+      "titleAr": "التحدي الكبير",
+      "status": "open",
+      "kind": "big-challenge",
+      "lessons": []
+    },
+    {
+      "id": "g4-u5",
+      "title": "Places to See",
+      "titleAr": "أماكن للزيارة",
+      "status": "soon",
+      "kind": "unit",
+      "lessons": []
+    },
+    {
+      "id": "g4-u6",
+      "title": "In the Past",
+      "titleAr": "في الماضي",
+      "status": "soon",
+      "kind": "unit",
+      "lessons": []
+    },
+    {
+      "id": "g4-u7",
+      "title": "The Challenge",
+      "titleAr": "التحدي",
+      "status": "soon",
+      "kind": "unit",
+      "lessons": []
+    },
+    {
+      "id": "g4-u8",
+      "title": "Revision 2",
+      "titleAr": "المراجعة 2",
+      "status": "soon",
+      "kind": "unit",
+      "lessons": []
+    }
+  ]
+}

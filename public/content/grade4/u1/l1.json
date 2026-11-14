@@ -1,0 +1,43 @@
+{
+  "id": "g4-u1-l1",
+  "title": "Hello!",
+  "titleAr": "مرحباً",
+  "words": [
+    { "en": "best friend", "ar": "أفضل صديق", "emoji": "👫" },
+    { "en": "mum", "ar": "أمي", "emoji": "👩" },
+    { "en": "dad", "ar": "أبي", "emoji": "👨" },
+    { "en": "sister", "ar": "أخت", "emoji": "👧" },
+    { "en": "black hair", "ar": "شعر أسود", "emoji": "👩🏻‍🦱" },
+    { "en": "long", "ar": "طويل (للأشياء والشعر)", "emoji": "📏", "abstract": true },
+    { "en": "short", "ar": "قصير", "emoji": "🤏", "abstract": true },
+    { "en": "age", "ar": "عمر", "emoji": "🎂", "abstract": true },
+    { "en": "grade", "ar": "صف دراسي", "emoji": "🏫" }
+  ],
+  "grammar": {
+    "explainAr": "نعرّف بأنفسنا بقول: Hello, I'm … أو My name is …\nونسأل عن العمر: How old are you? ونجيب: I'm 9. ونقول صفّنا: I'm in Grade 4.",
+    "examples": ["Hello, I'm Reem.", "My name is Kareem.", "How old are you? I'm 9.", "I'm in Grade 4."]
+  },
+  "sentences": [
+    "Hello, I'm Nadia.",
+    "My name is Khaled.",
+    "Sarah is my best friend.",
+    "My sister has long black hair.",
+    "Ali is tall for his age.",
+    "Yousif is in Grade 4."
+  ],
+  "blanks": [
+    { "text": "Lina is my best ___.", "answer": "friend", "distractors": ["hair", "grade"] },
+    { "text": "Reem is in ___ 4.", "answer": "Grade", "distractors": ["age", "mum"] },
+    { "text": "My ___ and my mum are at home.", "answer": "dad", "distractors": ["long", "age"] },
+    { "text": "Nadia has ___ black hair.", "answer": "long", "distractors": ["dad", "grade"] },
+    { "text": "How ___ are you? I'm 9.", "answer": "old", "distractors": ["long", "grade"] },
+    { "text": "Hello, ___ name is Kareem.", "answer": "my", "distractors": ["mum", "age"] }
+  ],
+  "games": [
+    { "type": "pick-image", "count": 6 },
+    { "type": "match", "count": 5 },
+    { "type": "order-sentence", "count": 4 },
+    { "type": "listen-pick", "count": 5 }
+  ],
+  "challenge": { "count": 8, "types": ["fill-blank", "listen-pick", "spell"] }
+}
