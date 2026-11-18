@@ -1,0 +1,69 @@
+{
+  "id": "g5-u3-l1",
+  "title": "Engineering tunnels and bridges",
+  "titleAr": "هندسة الأنفاق والجسور",
+  "words": [
+    { "en": "tunnel", "ar": "نفق", "emoji": "🚇" },
+    { "en": "bridge", "ar": "جسر", "emoji": "🌉" },
+    { "en": "engineer", "ar": "مهندس", "emoji": "👷" },
+    { "en": "tube", "ar": "أنبوب", "emoji": "🧪" },
+    { "en": "digger", "ar": "حفّارة آلية", "emoji": "🚜" },
+    { "en": "crane", "ar": "رافعة", "emoji": "🏗️" },
+    { "en": "tower", "ar": "برج مرتفع", "emoji": "🗼" },
+    { "en": "diagram", "ar": "رسم تخطيطي", "emoji": "📐" },
+    { "en": "trench", "ar": "خندق / حفرة طويلة", "abstract": true },
+    { "en": "bulldozer", "ar": "جرّافة", "emoji": "🚧", "abstract": true },
+    { "en": "concrete", "ar": "خرسانة", "abstract": true },
+    { "en": "beam", "ar": "عارضة حاملة", "abstract": true },
+    { "en": "pier", "ar": "دعامة الجسر", "abstract": true },
+    { "en": "arch", "ar": "قوس معماري", "abstract": true },
+    { "en": "cable", "ar": "كابل فولاذي", "emoji": "⛓️", "abstract": true },
+    { "en": "weight", "ar": "وزن / ثِقَل", "emoji": "⚖️", "abstract": true },
+    { "en": "enormous", "ar": "ضخم جداً / هائل", "abstract": true }
+  ],
+  "grammar": {
+    "explainAr": "للجسور ثلاثة أنواع رئيسية: beam bridge (بدعامات piers)، وarch bridge (بالأقواس)، وsuspension bridge (بأبراج عالية وكابلات قوية لعبور الأنهار العريضة).",
+    "examples": [
+      "Tunnels can go under mountains and under water.",
+      "Piers support the weight of a beam bridge.",
+      "Strong cables hold up a suspension bridge.",
+      "Engineers draw a clear diagram first."
+    ]
+  },
+  "sentences": [
+    "Tunnels go under mountains and water.",
+    "A tunnel has a strong tube shape.",
+    "Piers support the weight of the bridge.",
+    "Tall towers hold up the strong cables.",
+    "An arch bridge can hold heavy weight.",
+    "Engineers study the diagram carefully."
+  ],
+  "blanks": [
+    { "text": "Tall ___ support the cables of a suspension bridge.", "answer": "towers", "distractors": ["tubes", "diagrams"] },
+    { "text": "Huge tubes are lowered into the trench by a ___.", "answer": "crane", "distractors": ["pier", "arch"] },
+    { "text": "A tunnel is shaped like an enormous ___.", "answer": "tube", "distractors": ["tower", "weight"] },
+    { "text": "Clever ___ design bridges to cross wide rivers.", "answer": "engineers", "distractors": ["cables", "trenches"] },
+    { "text": "First, a long ___ is dug in the ground by diggers.", "answer": "trench", "distractors": ["crane", "diagram"] },
+    { "text": "An ___ bridge uses curved stone shapes to hold weight.", "answer": "arch", "distractors": ["tube", "digger"] }
+  ],
+  "games": [
+    { "type": "pick-image", "count": 6 },
+    { "type": "true-false", "count": 5 },
+    {
+      "type": "drag-order",
+      "config": {
+        "mode": "sequence",
+        "promptAr": "رتّب خطوات بناء النفق القريب من السطح بالترتيب الصحيح",
+        "items": [
+          { "id": "dig", "label": "1. dig trench", "emoji": "🚜" },
+          { "id": "lower", "label": "2. lower tubes", "emoji": "🏗️" },
+          { "id": "cover", "label": "3. cover with earth", "emoji": "🚧" }
+        ]
+      }
+    },
+    { "type": "match", "count": 5 },
+    { "type": "fill-blank", "count": 5 },
+    { "type": "order-sentence", "count": 4 }
+  ],
+  "challenge": { "count": 8, "types": ["fill-blank", "listen-pick", "pick-image", "spell"] }
+}

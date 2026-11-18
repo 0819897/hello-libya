@@ -51,3 +51,19 @@ test('works on the real Unit 1–3 lessons', async () => {
   expect(rounds.map(r => r.length)).toEqual([10, 10, 10]);
   expect(final).toHaveLength(12);
 });
+
+test('works on the real Grade 5 Unit 1–4 lessons', async () => {
+  const { readFileSync } = await import('node:fs');
+  const { join } = await import('node:path');
+  const root = join(process.cwd(), 'public', 'content', 'grade5');
+  const index = JSON.parse(readFileSync(join(root, 'index.json'), 'utf8'));
+  const byUnit: Lesson[][] = index.units.filter((u: { kind: string; status: string }) => u.kind === 'unit' && u.status === 'open')
+    .map((u: { lessons: { file: string }[] }) => u.lessons.map(r => JSON.parse(readFileSync(join(root, r.file), 'utf8'))));
+  expect(byUnit).toHaveLength(4);
+  const { rounds, final } = buildBigChallenge(byUnit, makeRng(11));
+  expect(rounds.map(r => r.length)).toEqual([10, 10, 10, 10]);
+  expect(final).toHaveLength(12);
+  for (const u of [1, 2, 3, 4]) {
+    expect(final.filter(q => q.id.startsWith(`g5-u${u}-`)).length).toBeGreaterThanOrEqual(3);
+  }
+});

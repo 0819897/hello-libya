@@ -28,7 +28,8 @@
     "id": "grade5",
     "titleAr": "الصف الخامس",
     "levelTitleAr": "المستوى 2",
-    "status": "soon"
+    "status": "open",
+    "index": "grade5/index.json"
   },
   {
     "id": "grade6",

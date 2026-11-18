@@ -1,0 +1,71 @@
+{
+  "id": "g5-u1-l4",
+  "title": "Words with wh & adverbs",
+  "titleAr": "كلمات wh والظروف",
+  "words": [
+    { "en": "wheel", "ar": "عجلة", "emoji": "🛞" },
+    { "en": "whale", "ar": "حوت", "emoji": "🐋" },
+    { "en": "whistle", "ar": "صفّارة", "emoji": "🪈" },
+    { "en": "whisper", "ar": "يهمس", "emoji": "🤫", "abstract": true },
+    { "en": "where", "ar": "أين (للمكان)", "emoji": "📍", "abstract": true },
+    { "en": "when", "ar": "متى (للزمان)", "emoji": "🕒", "abstract": true },
+    { "en": "what", "ar": "ما / ماذا (للأشياء)", "abstract": true },
+    { "en": "which", "ar": "أيّ (للاختيار)", "abstract": true },
+    { "en": "why", "ar": "لماذا (للسبب)", "abstract": true },
+    { "en": "noisily", "ar": "بصوت مزعج", "emoji": "🔊", "abstract": true },
+    { "en": "proudly", "ar": "بفخر", "abstract": true },
+    { "en": "suddenly", "ar": "فجأة", "emoji": "⚡", "abstract": true }
+  ],
+  "grammar": {
+    "explainAr": "في كلمات wh مثل wheel وwhale وwhistle وwhere لا ننطق حرف h.\nولتحويل الصفة إلى ظرف نضيف ly (proud → proudly)، وإذا انتهت بـ y نقلبها i ثم ly (noisy → noisily).",
+    "examples": [
+      "Where is your notebook, Khaled?",
+      "When will the school bus arrive?",
+      "Which shoes do you like best?",
+      "The telephone rang noisily."
+    ]
+  },
+  "sentences": [
+    "Where is your homework, Khaled?",
+    "When will the bus arrive?",
+    "Which bag do you like best?",
+    "Why does an elephant have a long trunk?",
+    "A blue whale lives in the ocean.",
+    "The telephone rang noisily."
+  ],
+  "blanks": [
+    { "text": "___ will the train arrive? At five o'clock.", "answer": "When", "distractors": ["Where", "Which"] },
+    { "text": "___ is my pencil case? It is on the desk.", "answer": "Where", "distractors": ["When", "Why"] },
+    { "text": "___ colour do you prefer, green or blue?", "answer": "Which", "distractors": ["When", "Where"] },
+    { "text": "___ are you smiling? Because I passed the test.", "answer": "Why", "distractors": ["Which", "Where"] },
+    { "text": "The children laughed ___ in the playground. (noisy)", "answer": "noisily", "distractors": ["noisyly", "noisy"] },
+    { "text": "The referee blew his ___ at the end of the game.", "answer": "whistle", "distractors": ["whale", "wheel"] }
+  ],
+  "games": [
+    { "type": "listen-pick", "count": 6 },
+    { "type": "match", "count": 5 },
+    {
+      "type": "drag-order",
+      "config": {
+        "mode": "place",
+        "slots": ["Where (مكان)", "When (زمان)", "Why (سبب)"],
+        "items": [
+          { "id": "school", "label": "in Misratah", "emoji": "📍" },
+          { "id": "tomorrow", "label": "tomorrow morning", "emoji": "🕒" },
+          { "id": "because", "label": "because it is raining", "emoji": "☔" },
+          { "id": "study", "label": "in the study", "emoji": "📚" }
+        ],
+        "rounds": [
+          { "instruction": "Answer: in Misratah", "itemId": "school", "slot": "Where (مكان)" },
+          { "instruction": "Answer: tomorrow morning", "itemId": "tomorrow", "slot": "When (زمان)" },
+          { "instruction": "Answer: because it is raining", "itemId": "because", "slot": "Why (سبب)" },
+          { "instruction": "Answer: in the study", "itemId": "study", "slot": "Where (مكان)" }
+        ]
+      }
+    },
+    { "type": "spell", "count": 5 },
+    { "type": "fill-blank", "count": 5 },
+    { "type": "order-sentence", "count": 4 }
+  ],
+  "challenge": { "count": 8, "types": ["fill-blank", "listen-pick", "spell"] }
+}

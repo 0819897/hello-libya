@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import type { GradeIndex } from '../types';
 import { loadGradeIndex } from '../content/loader';
-import { isUnlocked } from '../state/progress';
+import { bigBadgeFor, isUnlocked, setLastGrade } from '../state/progress';
 import { useProgress } from '../state/ProgressContext';
 import { Shell } from '../ui/Shell';
 import { StarRow } from '../ui/StarRow';
@@ -26,13 +26,19 @@ function Node({ to, locked, done, label, sub, icon, i }: { to: string; locked: b
 
 export function UnitPathView({ grade }: { grade: GradeIndex }) {
   const { progress } = useProgress();
+  useEffect(() => { setLastGrade(grade.id); }, [grade.id]);
   const self = progress.mode === 'self';
   const regular = grade.units.filter(u => u.kind === 'unit' && u.status === 'open');
   const allDone = regular.every(u => u.lessons.every(l => (progress.lessons[l.id]?.stars ?? 0) >= 1));
   const extra = progress.imported;
   let n = 0;
   return (
-    <Shell title={self ? grade.levelTitleAr : grade.titleAr}>
+    <Shell title={self ? grade.levelTitleAr : grade.titleAr} gradeId={grade.id}>
+      <div className="mb-4 flex justify-end">
+        <Link to="/grades" className="flex min-h-12 items-center gap-1 rounded-2xl bg-white px-4 font-bold text-teal-800 shadow-sm">
+          <span aria-hidden>⇄</span> {self ? 'تغيير المستوى' : 'تغيير الصف'}
+        </Link>
+      </div>
       {progress.mistakes.length >= 4 && (
         <div className="mb-6 flex justify-center">
           <Link to={`/lesson/${grade.id}/review`} className="flex min-h-14 items-center gap-2 rounded-2xl border-4 border-rose-300 bg-rose-50 px-5 text-lg font-bold text-rose-800">
@@ -40,10 +46,12 @@ export function UnitPathView({ grade }: { grade: GradeIndex }) {
           </Link>
         </div>
       )}
-      {grade.units.map((u, ui) => (
+      {grade.units.map((u, ui) => {
+        const unitNum = u.id.match(/u(\d+)$/)?.[1] ?? (ui + 1);
+        return (
         <section key={u.id} className="mb-10">
           <h2 className="mb-4 rounded-2xl bg-teal-700 px-4 py-3 text-white">
-            <span className="block text-sm opacity-80">{u.kind === 'big-challenge' ? 'المراجعة' : `الوحدة ${ui + 1}`}</span>
+            <span className="block text-sm opacity-80">{u.kind === 'big-challenge' ? 'المراجعة' : `الوحدة ${unitNum}`}</span>
             <span className="text-xl font-bold">{u.titleAr}</span> · <span className="en">{u.title}</span>
           </h2>
           {u.status === 'soon' ? (
@@ -51,8 +59,8 @@ export function UnitPathView({ grade }: { grade: GradeIndex }) {
           ) : u.kind === 'big-challenge' ? (
             <div className="flex flex-col items-center">
               <Node i={0} to={`/big/${grade.id}`} locked={!(allDone || progress.teacherMode)} icon="🏆"
-                done={progress.badges.includes('big-challenge')} label="التحدي الكبير"
-                sub={!(allDone || progress.teacherMode) && <span className="text-sm text-gray-600">يُفتح بعد نجمة في كل دروس الوحدات 1–3</span>} />
+                done={progress.badges.includes(bigBadgeFor(grade.id))} label="التحدي الكبير"
+                sub={!(allDone || progress.teacherMode) && <span className="text-sm text-gray-600">يُفتح بعد نجمة في كل دروس الوحدات 1–{regular.length}</span>} />
             </div>
           ) : (
             <div className="flex flex-col items-center gap-5">
@@ -65,7 +73,8 @@ export function UnitPathView({ grade }: { grade: GradeIndex }) {
             </div>
           )}
         </section>
-      ))}
+        );
+      })}
       {extra.length > 0 && (
         <section className="mb-10">
           <h2 className="mb-4 rounded-2xl bg-amber-600 px-4 py-3 text-xl font-bold text-white">دروس إضافية</h2>

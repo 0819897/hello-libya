@@ -2,6 +2,7 @@ import type { GradeIndex, Progress } from '../types';
 import { starsFor } from '../engine/scoring';
 
 export const STORAGE_KEY = 'eq.progress.v1';
+export const GRADE_KEY = 'eq.grade.v1';
 
 export function defaultProgress(): Progress {
   return { name: '', avatar: '', mode: 'student', points: 0, lessons: {}, streak: { count: 0, lastDay: '' },
@@ -24,6 +25,23 @@ function isProgress(x: unknown): x is Progress {
 }
 
 let memory: string | null = null; // used when localStorage is unavailable (private mode)
+let memoryGrade: string | null = null;
+
+export function setLastGrade(gradeId: string): void {
+  memoryGrade = gradeId;
+  try { localStorage.setItem(GRADE_KEY, gradeId); } catch { /* memory copy kept */ }
+}
+
+export function getLastGrade(p: Progress): string {
+  let raw: string | null = memoryGrade;
+  try { raw = localStorage.getItem(GRADE_KEY); } catch { /* use memoryGrade */ }
+  if (raw === 'grade4' || raw === 'grade5') return raw;
+  const keys = Object.keys(p.lessons);
+  if (keys.length > 0 && keys.every(k => k.startsWith('g5-'))) return 'grade5';
+  return 'grade4';
+}
+
+export const bigBadgeFor = (gradeId: string) => (gradeId === 'grade4' ? 'big-challenge' : `big-challenge-${gradeId}`);
 
 export function loadProgress(): Progress {
   let raw: string | null = memory;
@@ -37,6 +55,10 @@ export function loadProgress(): Progress {
 
 export function saveProgress(p: Progress): void {
   memory = JSON.stringify(p);
+  if (!p.name) {
+    memoryGrade = null;
+    try { localStorage.removeItem(GRADE_KEY); } catch { /* ignore */ }
+  }
   try { localStorage.setItem(STORAGE_KEY, memory); } catch { /* memory copy kept */ }
 }
 
@@ -96,6 +118,7 @@ export const BADGES: { id: string; emoji: string; titleAr: string }[] = [
   { id: 'streak-7', emoji: '🔥', titleAr: '7 أيام متتالية' },
   { id: 'words-100', emoji: '📚', titleAr: '100 كلمة' },
   { id: 'big-challenge', emoji: '🏆', titleAr: 'التحدي الكبير' },
+  { id: 'big-challenge-grade5', emoji: '🏅', titleAr: 'التحدي الكبير 2' },
 ];
 
 /** Full badge list: everything already earned plus anything newly earned. */

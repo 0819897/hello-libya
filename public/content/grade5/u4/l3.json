@@ -1,0 +1,54 @@
+{
+  "id": "g5-u4-l3",
+  "title": "Have you ever...?",
+  "titleAr": "تجاربك أنت",
+  "words": [
+    { "en": "dolphin", "ar": "دلفين", "emoji": "🐬" },
+    { "en": "eagle", "ar": "نسر / عقاب", "emoji": "🦅" },
+    { "en": "camel", "ar": "جمل", "emoji": "🐪" },
+    { "en": "desert", "ar": "صحراء", "emoji": "🏜️" },
+    { "en": "mountain", "ar": "جبل", "emoji": "⛰️" },
+    { "en": "ever", "ar": "في أي وقت مضى (مع السؤال)", "abstract": true },
+    { "en": "never", "ar": "أبداً / لم يسبق أن", "abstract": true },
+    { "en": "been", "ar": "زار (التصريف الثالث من be)", "abstract": true },
+    { "en": "visited", "ar": "زار", "abstract": true },
+    { "en": "climbed", "ar": "تسلّق", "emoji": "🧗", "abstract": true },
+    { "en": "seen", "ar": "رأى (التصريف الثالث من see)", "emoji": "👀", "abstract": true },
+    { "en": "swum", "ar": "سبح (التصريف الثالث من swim)", "emoji": "🏊", "abstract": true },
+    { "en": "Lucky you!", "ar": "يا لحظّك السعيد!", "abstract": true },
+    { "en": "Never mind!", "ar": "لا بأس!", "abstract": true }
+  ],
+  "grammar": {
+    "explainAr": "عندما نسأل صديقاً عن تجاربه نقول: Have you ever + التصريف الثالث؟\nانتبه للأفعال غير المنتظمة بعد have / I've: see → seen، وswim → swum، وbe → been.",
+    "examples": [
+      "Have you ever been abroad?",
+      "I've visited Tripoli and Benghazi.",
+      "I've never seen an eagle in the sky.",
+      "I've never swum with dolphins."
+    ]
+  },
+  "sentences": [
+    "Have you ever been abroad?",
+    "I have visited Tripoli and Sabha.",
+    "Have you ever ridden a camel?",
+    "I have never swum with dolphins.",
+    "I have never climbed a snowy mountain.",
+    "Ali has seen an eagle in the mountains."
+  ],
+  "blanks": [
+    { "text": "Have you ___ ridden a camel in the desert?", "answer": "ever", "distractors": ["never", "every"] },
+    { "text": "I have never ___ with dolphins in the sea.", "answer": "swum", "distractors": ["swim", "swam"] },
+    { "text": "Nadia has never ___ a snowy mountain peak.", "answer": "seen", "distractors": ["see", "saw"] },
+    { "text": "___ you ever visited the museum in Tripoli?", "answer": "Have", "distractors": ["Has", "Did"] },
+    { "text": "I've been to Egypt. — Wow! ___ you!", "answer": "Lucky", "distractors": ["Never", "Ever"] },
+    { "text": "I've never been abroad. — ___ mind! You will go one day.", "answer": "Never", "distractors": ["Ever", "Been"] }
+  ],
+  "games": [
+    { "type": "pick-image", "count": 5 },
+    { "type": "match", "count": 5 },
+    { "type": "fill-blank", "count": 5 },
+    { "type": "order-sentence", "count": 4 },
+    { "type": "spell", "count": 5 }
+  ],
+  "challenge": { "count": 8, "types": ["fill-blank", "listen-pick", "pick-image", "spell"] }
+}

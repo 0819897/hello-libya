@@ -1,0 +1,70 @@
+{
+  "id": "g5-u2-l1",
+  "title": "Mountain walk",
+  "titleAr": "رحلة بين الجبال",
+  "words": [
+    { "en": "mountain guide", "ar": "مرشد جبلي", "emoji": "🧗" },
+    { "en": "path", "ar": "ممر / درب", "emoji": "🛤️" },
+    { "en": "meadow", "ar": "مرج أخضر", "emoji": "🌼" },
+    { "en": "peak", "ar": "قمة الجبل", "emoji": "🏔️" },
+    { "en": "boulder", "ar": "صخرة ضخمة", "emoji": "🪨" },
+    { "en": "waterfall", "ar": "شلال", "emoji": "🏞️" },
+    { "en": "rope", "ar": "حبل", "emoji": "🪢" },
+    { "en": "glacier", "ar": "نهر جليدي", "emoji": "🧊" },
+    { "en": "cave", "ar": "كهف", "emoji": "🕳️" },
+    { "en": "ravine", "ar": "وادٍ عميق وضيق", "abstract": true },
+    { "en": "cliff", "ar": "جرف صخري عالٍ", "abstract": true },
+    { "en": "narrow", "ar": "ضيّق", "abstract": true },
+    { "en": "shady", "ar": "مظلّل", "emoji": "🌳", "abstract": true },
+    { "en": "deep", "ar": "عميق", "abstract": true },
+    { "en": "massive", "ar": "ضخم جداً", "abstract": true },
+    { "en": "incredible", "ar": "مذهل / لا يُصدّق", "abstract": true },
+    { "en": "exhausted", "ar": "منهك تماماً", "emoji": "😮‍💨", "abstract": true }
+  ],
+  "grammar": {
+    "explainAr": "نصف الأماكن الجبلية بصفات دقيقة: shady (كثير الظلال)، deep (عميق)، massive (ضخم جداً)، incredible (مذهل)، وexhausted (منهك جداً).",
+    "examples": [
+      "We followed a narrow path through a shady forest.",
+      "Water crashed down into a deep ravine.",
+      "A glacier looks like a frozen river of ice.",
+      "At the end of the walk, we were exhausted."
+    ]
+  },
+  "sentences": [
+    "We followed a narrow path through the meadow.",
+    "The forest was shady and quiet.",
+    "We walked round a massive boulder.",
+    "The path led behind the noisy waterfall.",
+    "A glacier looks like a river of ice.",
+    "Everyone was exhausted after the long climb."
+  ],
+  "blanks": [
+    { "text": "A forest full of shadows is ___.", "answer": "shady", "distractors": ["narrow", "exhausted"] },
+    { "text": "A ravine going a long way down is ___.", "answer": "deep", "distractors": ["shady", "massive"] },
+    { "text": "A very big boulder is ___.", "answer": "massive", "distractors": ["narrow", "shady"] },
+    { "text": "After climbing for hours, the hikers felt ___.", "answer": "exhausted", "distractors": ["shady", "deep"] },
+    { "text": "A ___ is a huge frozen river of ice on a mountain.", "answer": "glacier", "distractors": ["meadow", "rope"] },
+    { "text": "Water falls down a high cliff to make a ___.", "answer": "waterfall", "distractors": ["boulder", "cave"] }
+  ],
+  "games": [
+    { "type": "pick-image", "count": 6 },
+    { "type": "true-false", "count": 5 },
+    {
+      "type": "drag-order",
+      "config": {
+        "mode": "sequence",
+        "promptAr": "رتّب محطات الرحلة الجبلية من البداية حتى القمة الجليدية",
+        "items": [
+          { "id": "meadow", "label": "meadow", "emoji": "🌼" },
+          { "id": "waterfall", "label": "waterfall", "emoji": "🏞️" },
+          { "id": "peak", "label": "peak", "emoji": "🏔️" },
+          { "id": "glacier", "label": "glacier", "emoji": "🧊" }
+        ]
+      }
+    },
+    { "type": "match", "count": 5 },
+    { "type": "fill-blank", "count": 5 },
+    { "type": "order-sentence", "count": 4 }
+  ],
+  "challenge": { "count": 8, "types": ["fill-blank", "listen-pick", "pick-image", "spell"] }
+}

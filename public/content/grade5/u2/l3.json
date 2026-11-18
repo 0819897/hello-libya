@@ -1,0 +1,71 @@
+{
+  "id": "g5-u2-l3",
+  "title": "Things we have to do",
+  "titleAr": "أشياء يجب أن نفعلها",
+  "words": [
+    { "en": "exam", "ar": "امتحان", "emoji": "📝" },
+    { "en": "composition", "ar": "موضوع تعبير", "emoji": "✍️" },
+    { "en": "project", "ar": "مشروع مدرسي", "emoji": "📊" },
+    { "en": "history", "ar": "مادة التاريخ", "emoji": "🏺" },
+    { "en": "have to", "ar": "يجب أن (في الحاضر)", "abstract": true },
+    { "en": "had to", "ar": "كان يجب أن (في الماضي)", "abstract": true },
+    { "en": "will have to", "ar": "سيجب أن (في المستقبل)", "abstract": true },
+    { "en": "pass", "ar": "ينجح / يجتاز", "emoji": "✅", "abstract": true },
+    { "en": "fail", "ar": "يخفق", "abstract": true },
+    { "en": "nervous", "ar": "متوتر / قلق", "emoji": "😟", "abstract": true },
+    { "en": "calm", "ar": "هادئ", "emoji": "😌", "abstract": true },
+    { "en": "Don't worry!", "ar": "لا تقلق!", "abstract": true }
+  ],
+  "grammar": {
+    "explainAr": "للتعبير عن الواجب نستعمل:\nاليوم: have to / has to، وفي الماضي (yesterday): had to، وفي المستقبل (tomorrow): will have to + الفعل المجرد.",
+    "examples": [
+      "I have to take my science exam today.",
+      "I had to study for hours last night.",
+      "Tomorrow I will have to finish my project.",
+      "Don't worry! Just keep calm."
+    ]
+  },
+  "sentences": [
+    "I have to take a science exam today.",
+    "Khaled had to study last night.",
+    "Tomorrow I will have to finish my project.",
+    "Lina had to write a composition yesterday.",
+    "Don't worry! Just keep calm.",
+    "Study well to pass the exam."
+  ],
+  "blanks": [
+    { "text": "Yesterday Nadia ___ to write a short composition.", "answer": "had", "distractors": ["have", "will"] },
+    { "text": "Tomorrow we ___ have to hand in our science project.", "answer": "will", "distractors": ["had", "are"] },
+    { "text": "Today I ___ to tidy my desk before class.", "answer": "have", "distractors": ["had", "having"] },
+    { "text": "Yousif studied hard because he wanted to ___ the exam.", "answer": "pass", "distractors": ["fail", "calm"] },
+    { "text": "Don't worry! Just keep ___ and read the questions.", "answer": "calm", "distractors": ["nervous", "fail"] },
+    { "text": "Reem ___ to help her mum in the kitchen today.", "answer": "has", "distractors": ["have", "will"] }
+  ],
+  "games": [
+    { "type": "listen-pick", "count": 5 },
+    { "type": "match", "count": 5 },
+    {
+      "type": "drag-order",
+      "config": {
+        "mode": "place",
+        "slots": ["had to (الماضي)", "have to (اليوم)", "will have to (غداً)"],
+        "items": [
+          { "id": "lastnight", "label": "last night", "emoji": "🌙" },
+          { "id": "today", "label": "today", "emoji": "☀️" },
+          { "id": "tomorrow", "label": "tomorrow", "emoji": "📅" },
+          { "id": "yesterday", "label": "yesterday", "emoji": "⏮️" }
+        ],
+        "rounds": [
+          { "instruction": "I ___ study for two hours last night.", "itemId": "lastnight", "slot": "had to (الماضي)" },
+          { "instruction": "I ___ take a maths exam today.", "itemId": "today", "slot": "have to (اليوم)" },
+          { "instruction": "I ___ finish my project tomorrow.", "itemId": "tomorrow", "slot": "will have to (غداً)" },
+          { "instruction": "We ___ clean the classroom yesterday.", "itemId": "yesterday", "slot": "had to (الماضي)" }
+        ]
+      }
+    },
+    { "type": "fill-blank", "count": 5 },
+    { "type": "order-sentence", "count": 4 },
+    { "type": "spell", "count": 4 }
+  ],
+  "challenge": { "count": 8, "types": ["fill-blank", "listen-pick", "spell"] }
+}

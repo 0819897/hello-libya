@@ -7,6 +7,7 @@ import { makeRng } from '../engine/rng';
 import { pointsFor } from '../engine/scoring';
 import { registry } from '../games/registry';
 import { buzz, chime } from '../audio/speak';
+import { bigBadgeFor } from '../state/progress';
 import { useProgress } from '../state/ProgressContext';
 import { Button } from '../ui/Button';
 import { Card } from '../ui/Card';
@@ -14,7 +15,7 @@ import { ProgressBar } from '../ui/ProgressBar';
 
 const SECONDS = 10;
 
-export function BigChallengeRun({ units, titles, rng: rngProp }: { units: Lesson[][]; titles: string[]; rng?: () => number }) {
+export function BigChallengeRun({ units, titles, gradeId = 'grade4', rng: rngProp }: { units: Lesson[][]; titles: string[]; gradeId?: string; rng?: () => number }) {
   const { progress, update } = useProgress();
   const navigate = useNavigate();
   const rng = useMemo(() => rngProp ?? makeRng(Date.now() & 0xffffffff), [rngProp]);
@@ -58,8 +59,9 @@ export function BigChallengeRun({ units, titles, rng: rngProp }: { units: Lesson
   };
   const finish = () => {
     const passed = bigChallengePassed(correct.current, total);
+    const badge = bigBadgeFor(gradeId);
     update(p => ({ ...p, points: p.points + points.current,
-      badges: passed && !p.badges.includes('big-challenge') ? [...p.badges, 'big-challenge'] : p.badges }));
+      badges: passed && !p.badges.includes(badge) ? [...p.badges, badge] : p.badges }));
     setDone(true);
   };
   const next = () => {
@@ -80,7 +82,7 @@ export function BigChallengeRun({ units, titles, rng: rngProp }: { units: Lesson
         <p className="mt-1">تحتاج 70٪ للنجاح.</p>
         <p className="mt-1 text-2xl font-black text-amber-600">+{points.current} نقطة</p>
         <div className="mt-5 flex flex-wrap justify-center gap-3">
-          {passed && <Button onClick={() => navigate('/certificate')}>🎓 شهادتي</Button>}
+          {passed && <Button onClick={() => navigate(`/certificate/${gradeId}`)}>🎓 شهادتي</Button>}
           <Button variant="soft" onClick={() => window.location.reload()}>أعد التحدي</Button>
         </div>
       </Card>
@@ -154,8 +156,8 @@ export default function BigChallenge() {
       </div>
       {error && <Card role="alert" className="text-center text-xl">تعذّر تحميل التحدي.</Card>}
       {!data && !error && <p className="text-center text-xl">جارٍ التحميل…</p>}
-      {data && !unlocked && <Card className="text-center text-xl"><span aria-hidden>🔒</span> احصل على نجمة واحدة على الأقل في كل دروس الوحدات 1–3 لفتح التحدي الكبير.</Card>}
-      {data && unlocked && <BigChallengeRun units={data.units} titles={regular.map(u => u.titleAr)} />}
+      {data && !unlocked && <Card className="text-center text-xl"><span aria-hidden>🔒</span> احصل على نجمة واحدة على الأقل في كل دروس الوحدات 1–{regular.length} لفتح التحدي الكبير.</Card>}
+      {data && unlocked && <BigChallengeRun units={data.units} titles={regular.map(u => u.titleAr)} gradeId={gradeId} />}
     </main>
   );
 }

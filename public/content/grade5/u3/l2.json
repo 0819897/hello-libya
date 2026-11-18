@@ -1,0 +1,52 @@
+{
+  "id": "g5-u3-l2",
+  "title": "How things are built",
+  "titleAr": "كيف تُصنع وتُبنى الأشياء",
+  "words": [
+    { "en": "bakery", "ar": "مخبز", "emoji": "🥖" },
+    { "en": "pilot", "ar": "طيّار", "emoji": "🧑‍✈️" },
+    { "en": "farmer", "ar": "مزارع", "emoji": "🧑‍🌾" },
+    { "en": "passenger", "ar": "راكب / مسافر", "emoji": "🧳" },
+    { "en": "lorry", "ar": "شاحنة كبيرة", "emoji": "🚛" },
+    { "en": "wood", "ar": "خشب", "emoji": "🪵" },
+    { "en": "stone", "ar": "حجر", "emoji": "🪨", "abstract": true },
+    { "en": "built", "ar": "مَبني / يُبنى", "abstract": true },
+    { "en": "designed", "ar": "مُصمَّم / يُصمَّم", "abstract": true },
+    { "en": "grown", "ar": "مَزروع / يُزرَع", "emoji": "🌾", "abstract": true },
+    { "en": "flown", "ar": "يُقاد جواً", "abstract": true },
+    { "en": "lowered", "ar": "يُنزَل", "abstract": true }
+  ],
+  "grammar": {
+    "explainAr": "المبني للمجهول في المضارع البسيط يتكوّن من: is / are + التصريف الثالث للفعل.\nنذكر الشخص الفاعل بعد by (are flown by pilots)، ونذكر مادة الصنع بعد of (is made of stone).",
+    "examples": [
+      "This old bridge is made of stone.",
+      "Large bridges are designed by engineers.",
+      "Food is grown by farmers.",
+      "Bread is made in a bakery."
+    ]
+  },
+  "sentences": [
+    "This old bridge is made of stone.",
+    "Food is grown by farmers.",
+    "Planes are flown by pilots.",
+    "Bread is made in a bakery.",
+    "Tunnels are built through mountains.",
+    "Some trains carry passengers only."
+  ],
+  "blanks": [
+    { "text": "Fresh bread ___ made in a bakery every morning.", "answer": "is", "distractors": ["are", "am"] },
+    { "text": "Large planes ___ flown by clever pilots.", "answer": "are", "distractors": ["is", "be"] },
+    { "text": "Vegetables and fruit are ___ by farmers.", "answer": "grown", "distractors": ["grow", "grew"] },
+    { "text": "Long suspension bridges are designed ___ engineers.", "answer": "by", "distractors": ["of", "in"] },
+    { "text": "This small boat is made ___ strong wood.", "answer": "of", "distractors": ["by", "to"] },
+    { "text": "Heavy tubes are ___ into the trench by cranes.", "answer": "lowered", "distractors": ["lower", "flown"] }
+  ],
+  "games": [
+    { "type": "pick-image", "count": 6 },
+    { "type": "match", "count": 5 },
+    { "type": "fill-blank", "count": 5 },
+    { "type": "order-sentence", "count": 4 },
+    { "type": "listen-pick", "count": 5 }
+  ],
+  "challenge": { "count": 8, "types": ["fill-blank", "listen-pick", "pick-image", "spell"] }
+}

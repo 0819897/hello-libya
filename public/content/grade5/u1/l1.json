@@ -1,0 +1,58 @@
+{
+  "id": "g5-u1-l1",
+  "title": "Escape and inventions",
+  "titleAr": "الاختراعات والمغامرة",
+  "words": [
+    { "en": "inventor", "ar": "مخترع", "emoji": "🧑‍🔬" },
+    { "en": "invention", "ar": "اختراع", "emoji": "💡" },
+    { "en": "study", "ar": "غرفة المكتب والمطالعة", "emoji": "📚" },
+    { "en": "armchair", "ar": "كرسي بذراعين", "emoji": "🛋️" },
+    { "en": "ankle", "ar": "كاحل القدم", "emoji": "🦶" },
+    { "en": "bandage", "ar": "ضمادة طبية", "emoji": "🩹" },
+    { "en": "explorer", "ar": "مستكشف", "emoji": "🧭" },
+    { "en": "ocean", "ar": "محيط", "emoji": "🌊" },
+    { "en": "soldier", "ar": "جندي", "emoji": "🪖" },
+    { "en": "password", "ar": "كلمة المرور", "emoji": "🔑" },
+    { "en": "ordinary", "ar": "عادي", "abstract": true },
+    { "en": "missing", "ar": "مفقود", "emoji": "❓", "abstract": true },
+    { "en": "nod", "ar": "يومئ برأسه موافقاً", "abstract": true },
+    { "en": "escape", "ar": "يهرب / ينجو", "emoji": "🏃", "abstract": true },
+    { "en": "shake", "ar": "يهزّ", "abstract": true },
+    { "en": "promise", "ar": "يَعِد", "emoji": "🤝", "abstract": true },
+    { "en": "disappear", "ar": "يختفي", "abstract": true }
+  ],
+  "grammar": {
+    "explainAr": "نستعمل هذه المفردات في قصص المغامرات والاختراعات: inventor للشخص المخترع، وinvention للاختراع نفسه.\nونقول: Do you promise not to tell anyone? أي: هل تَعِدُ ألّا تخبر أحداً؟",
+    "examples": [
+      "Khaled's grandfather is a clever inventor.",
+      "There was a white bandage on his ankle.",
+      "Do you promise to keep the password safe?",
+      "Explorers sailed across the wide ocean."
+    ]
+  },
+  "sentences": [
+    "Grandad was sitting in a big armchair.",
+    "There is a white bandage on his ankle.",
+    "This machine is my newest invention.",
+    "Put in the secret password first.",
+    "One of the phones is missing.",
+    "Explorers sailed across the wide ocean."
+  ],
+  "blanks": [
+    { "text": "Kareem hurt his ___ during the football match.", "answer": "ankle", "distractors": ["ocean", "study"] },
+    { "text": "The doctor put a clean ___ on his foot.", "answer": "bandage", "distractors": ["password", "armchair"] },
+    { "text": "Grandad reads history books in his ___.", "answer": "study", "distractors": ["ankle", "bandage"] },
+    { "text": "To move your head up and down means to ___.", "answer": "nod", "distractors": ["escape", "disappear"] },
+    { "text": "To get away from danger means to ___.", "answer": "escape", "distractors": ["promise", "nod"] },
+    { "text": "Do you ___ to help your little brother?", "answer": "promise", "distractors": ["shake", "missing"] }
+  ],
+  "games": [
+    { "type": "pick-image", "count": 6 },
+    { "type": "true-false", "count": 5 },
+    { "type": "match", "count": 5 },
+    { "type": "listen-pick", "count": 5 },
+    { "type": "fill-blank", "count": 5 },
+    { "type": "order-sentence", "count": 4 }
+  ],
+  "challenge": { "count": 8, "types": ["fill-blank", "listen-pick", "pick-image", "spell"] }
+}

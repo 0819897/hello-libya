@@ -1,0 +1,50 @@
+{
+  "id": "g5-u1-l3",
+  "title": "When I was little",
+  "titleAr": "عندما كنتُ صغيراً",
+  "words": [
+    { "en": "castle", "ar": "قلعة", "emoji": "🏰" },
+    { "en": "bricks", "ar": "مكعبات بناء / طوب", "emoji": "🧱" },
+    { "en": "doll", "ar": "دمية", "emoji": "🪆" },
+    { "en": "stories", "ar": "قصص", "emoji": "📖" },
+    { "en": "grandmother", "ar": "جدّة", "emoji": "👵" },
+    { "en": "cakes", "ar": "كعك", "emoji": "🧁" },
+    { "en": "used to", "ar": "اعتاد أن (في الماضي)", "abstract": true },
+    { "en": "look after", "ar": "يعتني بـ", "emoji": "🤲", "abstract": true },
+    { "en": "tiny", "ar": "صغير جداً", "emoji": "🐜", "abstract": true },
+    { "en": "How about you?", "ar": "ماذا عنك؟", "abstract": true },
+    { "en": "That sounds nice.", "ar": "يبدو ذلك لطيفاً", "abstract": true }
+  ],
+  "grammar": {
+    "explainAr": "للحديث عن عادة قديمة لم نعد نفعلها الآن نستعمل: used to + الفعل المجرد (دون إضافات).\nمثل: When I was little, I used to sleep in a tiny bed.",
+    "examples": [
+      "When I was little, I used to build castles with bricks.",
+      "Lina used to play with dolls.",
+      "My grandmother used to read stories to me."
+    ]
+  },
+  "sentences": [
+    "I used to build castles with bricks.",
+    "Lina used to play with her doll.",
+    "I used to sleep in a tiny bed.",
+    "My grandmother used to look after me.",
+    "We used to make cakes together.",
+    "Do you remember when you were little?"
+  ],
+  "blanks": [
+    { "text": "When I was little, I ___ to play with bricks.", "answer": "used", "distractors": ["use", "using"] },
+    { "text": "Grandma used to ___ stories to us every Friday.", "answer": "read", "distractors": ["reading", "reads"] },
+    { "text": "My aunt used to look ___ me while Mum was at work.", "answer": "after", "distractors": ["tiny", "bricks"] },
+    { "text": "Yousif used ___ ride a very small bike.", "answer": "to", "distractors": ["for", "at"] },
+    { "text": "When Reem was a baby, she slept in a ___ bed.", "answer": "tiny", "distractors": ["bricks", "stories"] },
+    { "text": "Ali used to build tall ___ with colourful bricks.", "answer": "castles", "distractors": ["stories", "cakes"] }
+  ],
+  "games": [
+    { "type": "pick-image", "count": 6 },
+    { "type": "match", "count": 5 },
+    { "type": "fill-blank", "count": 5 },
+    { "type": "order-sentence", "count": 4 },
+    { "type": "spell", "count": 4 }
+  ],
+  "challenge": { "count": 8, "types": ["fill-blank", "listen-pick", "pick-image", "spell"] }
+}

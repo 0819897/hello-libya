@@ -1,0 +1,51 @@
+{
+  "id": "g5-u2-l2",
+  "title": "Why do we go?",
+  "titleAr": "لماذا نذهب؟",
+  "words": [
+    { "en": "glasses", "ar": "نظارة طبية", "emoji": "👓" },
+    { "en": "cinema", "ar": "سينما", "emoji": "🎬" },
+    { "en": "wooden bridge", "ar": "جسر خشبي", "emoji": "🌉" },
+    { "en": "mountain train", "ar": "قطار الجبل", "emoji": "🚞" },
+    { "en": "holiday", "ar": "عطلة", "emoji": "🏖️" },
+    { "en": "sports", "ar": "رياضة", "emoji": "⚽" },
+    { "en": "reach", "ar": "يصل إلى", "abstract": true },
+    { "en": "cross", "ar": "يعبر", "abstract": true },
+    { "en": "keep steady", "ar": "يحافظ على توازنه", "emoji": "⚖️", "abstract": true },
+    { "en": "keep fit", "ar": "يحافظ على لياقته", "emoji": "💪", "abstract": true },
+    { "en": "learn", "ar": "يتعلّم", "abstract": true }
+  ],
+  "grammar": {
+    "explainAr": "لبيان الغرض أو السبب (لماذا نفعل الشيء؟) نستعمل: to + الفعل المجرد بدون إضافات.\nمثل: We go to school to learn. ويمكن أن تبدأ بها الجملة: To cross the river, they used a bridge.",
+    "examples": [
+      "We go to school to learn.",
+      "We do sports to keep fit and strong.",
+      "Yousif wears glasses to see better.",
+      "They walked slowly to keep steady."
+    ]
+  },
+  "sentences": [
+    "We go to school to learn.",
+    "We do sports to keep fit.",
+    "Kareem wears glasses to see better.",
+    "They walked slowly to keep steady.",
+    "They took a mountain train to reach the village.",
+    "We have holidays to rest and have fun."
+  ],
+  "blanks": [
+    { "text": "We go to school ___ learn.", "answer": "to", "distractors": ["for", "by"] },
+    { "text": "Sarah wears glasses to ___ better.", "answer": "see", "distractors": ["saw", "seeing"] },
+    { "text": "Ali does sports every week to ___ fit.", "answer": "keep", "distractors": ["kept", "keeping"] },
+    { "text": "They crossed the wooden bridge to ___ the other side.", "answer": "reach", "distractors": ["reached", "reaches"] },
+    { "text": "Mum went to the market ___ buy fresh fruit.", "answer": "to", "distractors": ["at", "of"] },
+    { "text": "They walked carefully across the rope bridge to keep ___.", "answer": "steady", "distractors": ["cinema", "holiday"] }
+  ],
+  "games": [
+    { "type": "pick-image", "count": 6 },
+    { "type": "match", "count": 5 },
+    { "type": "fill-blank", "count": 5 },
+    { "type": "order-sentence", "count": 4 },
+    { "type": "listen-pick", "count": 5 }
+  ],
+  "challenge": { "count": 8, "types": ["fill-blank", "listen-pick", "pick-image", "spell"] }
+}

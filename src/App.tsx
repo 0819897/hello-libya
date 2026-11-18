@@ -1,5 +1,6 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { ProgressProvider, useProgress } from './state/ProgressContext';
+import { getLastGrade } from './state/progress';
 import LessonPlayer from './screens/LessonPlayer';
 import Welcome from './screens/Welcome';
 import GradeMap from './screens/GradeMap';
@@ -30,12 +31,13 @@ function AppRoutes() {
       <Route path="/lesson/:gradeId/:lessonId" element={<LessonPlayer />} />
       <Route path="/big/:gradeId" element={<BigChallenge />} />
       <Route path="/certificate" element={<Certificate />} />
+      <Route path="/certificate/:gradeId" element={<Certificate />} />
       <Route path="/dictionary" element={<Dictionary />} />
       <Route path="/profile" element={<Profile />} />
       <Route path="/settings" element={<Settings />} />
       <Route path="/teacher" element={<TeacherMode />} />
       <Route path="/about" element={<About />} />
-      <Route path="*" element={<Navigate to={Object.keys(progress.lessons).length ? '/grade/grade4' : '/grades'} replace />} />
+      <Route path="*" element={<Navigate to={Object.keys(progress.lessons).length ? `/grade/${getLastGrade(progress)}` : '/grades'} replace />} />
     </Routes>
   );
 }

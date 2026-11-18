@@ -1,4 +1,4 @@
-import { bumpStreak, completeLesson, defaultProgress, isUnlocked, loadProgress, saveProgress } from './progress';
+import { bigBadgeFor, bumpStreak, completeLesson, defaultProgress, getLastGrade, isUnlocked, loadProgress, saveProgress, setLastGrade } from './progress';
 import type { GradeIndex } from '../types';
 
 beforeEach(() => localStorage.clear());
@@ -51,4 +51,13 @@ test('unlocks: first open, next needs a star, teacher opens all open units', () 
   expect(isUnlocked(p0, grade, 'b')).toBe(false);
   expect(isUnlocked({ ...p, teacherMode: true }, grade, 'c')).toBe(true);
   expect(isUnlocked({ ...p, teacherMode: true }, grade, 'z')).toBe(false);
+});
+
+test('multi-grade helpers: bigBadgeFor and last active grade', () => {
+  expect(bigBadgeFor('grade4')).toBe('big-challenge');
+  expect(bigBadgeFor('grade5')).toBe('big-challenge-grade5');
+  expect(getLastGrade(defaultProgress())).toBe('grade4');
+  expect(getLastGrade({ ...defaultProgress(), lessons: { 'g5-u1-l1': { stars: 2, bestPct: 80 } } })).toBe('grade5');
+  setLastGrade('grade5');
+  expect(getLastGrade(defaultProgress())).toBe('grade5');
 });

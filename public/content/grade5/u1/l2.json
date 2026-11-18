@@ -1,0 +1,50 @@
+{
+  "id": "g5-u1-l2",
+  "title": "While it was happening",
+  "titleAr": "بينما كان ذلك يحدث",
+  "words": [
+    { "en": "telephone", "ar": "هاتف", "emoji": "☎️" },
+    { "en": "shark", "ar": "سمكة قرش", "emoji": "🦈" },
+    { "en": "picnic", "ar": "نزهة في الهواء الطلق", "emoji": "🧺" },
+    { "en": "forest", "ar": "غابة", "emoji": "🌲" },
+    { "en": "bear", "ar": "دبّ", "emoji": "🐻" },
+    { "en": "ring", "ar": "خاتم", "emoji": "💍" },
+    { "en": "pack", "ar": "يحزم الحقيبة", "emoji": "🎒", "abstract": true },
+    { "en": "rang", "ar": "رنّ (الماضي من ring)", "emoji": "🔔", "abstract": true },
+    { "en": "swim", "ar": "يسبح", "emoji": "🏊", "abstract": true },
+    { "en": "knock", "ar": "يطرق الباب", "emoji": "🚪", "abstract": true },
+    { "en": "dig", "ar": "يحفر", "emoji": "⛏️", "abstract": true }
+  ],
+  "grammar": {
+    "explainAr": "لربط حدث طويل مستمر في الماضي بحدث قصير قطعه نستعمل:\nWhile + was / were + فعل ينتهي بـ ing، ثم الماضي البسيط في الشطر الثاني.",
+    "examples": [
+      "While Yousif was packing his bag, the telephone rang.",
+      "While the boys were playing football, it started to rain.",
+      "While Ali was digging in the garden, he found a ring."
+    ]
+  },
+  "sentences": [
+    "While Yousif was packing his bag, the telephone rang.",
+    "While we were having a picnic, it started to rain.",
+    "While Sarah was watching television, someone knocked.",
+    "While Kareem was swimming, he saw a big fish.",
+    "While the children were walking in the forest, they saw a bear.",
+    "While Ali was digging, he found a gold ring."
+  ],
+  "blanks": [
+    { "text": "While Nadia ___ packing her bag, the telephone rang.", "answer": "was", "distractors": ["were", "are"] },
+    { "text": "While the boys ___ playing football, a cat took the ball.", "answer": "were", "distractors": ["was", "is"] },
+    { "text": "While Khaled was ___ in the garden, he found a coin.", "answer": "digging", "distractors": ["dig", "dug"] },
+    { "text": "While we were having a picnic, it ___ to rain.", "answer": "started", "distractors": ["starting", "starts"] },
+    { "text": "___ Reem was reading a story, someone knocked on the door.", "answer": "While", "distractors": ["Where", "Which"] },
+    { "text": "While Dad was cooking dinner, the telephone ___.", "answer": "rang", "distractors": ["ring", "ringing"] }
+  ],
+  "games": [
+    { "type": "pick-image", "count": 6 },
+    { "type": "match", "count": 5 },
+    { "type": "fill-blank", "count": 5 },
+    { "type": "order-sentence", "count": 4 },
+    { "type": "listen-pick", "count": 5 }
+  ],
+  "challenge": { "count": 8, "types": ["fill-blank", "listen-pick", "spell"] }
+}

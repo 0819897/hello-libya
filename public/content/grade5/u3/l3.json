@@ -1,0 +1,70 @@
+{
+  "id": "g5-u3-l3",
+  "title": "Interesting or interested?",
+  "titleAr": "الهوايات والصفات بـ ing و ed",
+  "words": [
+    { "en": "hobby", "ar": "هواية", "emoji": "🎨" },
+    { "en": "stamps", "ar": "طوابع بريدية", "emoji": "✉️" },
+    { "en": "interesting", "ar": "ممتع / مثير للاهتمام (للأشياء)", "abstract": true },
+    { "en": "interested", "ar": "مهتمّ (لشعور الشخص)", "abstract": true },
+    { "en": "boring", "ar": "مملّ (للأشياء)", "abstract": true },
+    { "en": "bored", "ar": "يشعر بالملل (للشخص)", "emoji": "🥱", "abstract": true },
+    { "en": "exciting", "ar": "مشوّق / مثير (للأشياء)", "abstract": true },
+    { "en": "excited", "ar": "متحمّس (لشعور الشخص)", "emoji": "🤩", "abstract": true },
+    { "en": "fascinating", "ar": "مدهش / باهر (للأشياء)", "abstract": true },
+    { "en": "fascinated", "ar": "منبهر (لشعور الشخص)", "abstract": true },
+    { "en": "prefer", "ar": "يفضّل", "abstract": true }
+  ],
+  "grammar": {
+    "explainAr": "الصفات المنتهية بـ ing تصف الشيء أو النشاط (Science is fascinating / This film is exciting).\nأما الصفات المنتهية بـ ed فتصف شعور الشخص (Nadia is interested in art / Ali is excited).",
+    "examples": [
+      "Kareem is interested in collecting stamps.",
+      "Books about oceans are fascinating.",
+      "Yousif was excited before the school trip.",
+      "I prefer an exciting hobby."
+    ]
+  },
+  "sentences": [
+    "Kareem is interested in collecting stamps.",
+    "History books are very interesting.",
+    "Yousif is excited about the match.",
+    "Football is an exciting sport.",
+    "Nadia never gets bored in art class.",
+    "What are your favourite hobbies?"
+  ],
+  "blanks": [
+    { "text": "Reem is very ___ in reading science stories.", "answer": "interested", "distractors": ["interesting", "interest"] },
+    { "text": "This documentary about whales is ___.", "answer": "fascinating", "distractors": ["fascinated", "bored"] },
+    { "text": "Khaled felt ___ because there was nothing to do.", "answer": "bored", "distractors": ["boring", "exciting"] },
+    { "text": "The football final was really ___!", "answer": "exciting", "distractors": ["excited", "interested"] },
+    { "text": "Lina was ___ by the old coins in the museum.", "answer": "fascinated", "distractors": ["fascinating", "boring"] },
+    { "text": "I ___ painting pictures to watching television.", "answer": "prefer", "distractors": ["bored", "hobby"] }
+  ],
+  "games": [
+    { "type": "listen-pick", "count": 5 },
+    { "type": "match", "count": 5 },
+    {
+      "type": "drag-order",
+      "config": {
+        "mode": "place",
+        "slots": ["-ing (وصف الشيء)", "-ed (شعور الشخص)"],
+        "items": [
+          { "id": "book", "label": "The story is exciting.", "emoji": "📖" },
+          { "id": "boy", "label": "Ali is excited.", "emoji": "🤩" },
+          { "id": "film", "label": "The lesson is fascinating.", "emoji": "🔬" },
+          { "id": "girl", "label": "Sarah is interested in art.", "emoji": "🎨" }
+        ],
+        "rounds": [
+          { "instruction": "The story is exciting.", "itemId": "book", "slot": "-ing (وصف الشيء)" },
+          { "instruction": "Ali is excited.", "itemId": "boy", "slot": "-ed (شعور الشخص)" },
+          { "instruction": "The lesson is fascinating.", "itemId": "film", "slot": "-ing (وصف الشيء)" },
+          { "instruction": "Sarah is interested in art.", "itemId": "girl", "slot": "-ed (شعور الشخص)" }
+        ]
+      }
+    },
+    { "type": "fill-blank", "count": 5 },
+    { "type": "order-sentence", "count": 4 },
+    { "type": "spell", "count": 4 }
+  ],
+  "challenge": { "count": 8, "types": ["fill-blank", "listen-pick", "spell"] }
+}

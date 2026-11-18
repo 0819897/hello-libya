@@ -1,0 +1,50 @@
+{
+  "id": "g5-u3-l4",
+  "title": "Suffix -ful",
+  "titleAr": "اللاحقة -ful وبناء الصفات",
+  "words": [
+    { "en": "careful", "ar": "حذر / منتبه", "emoji": "⚠️", "abstract": true },
+    { "en": "helpful", "ar": "متعاون / خدوم", "emoji": "🤝", "abstract": true },
+    { "en": "useful", "ar": "مفيد / نافع", "emoji": "🛠️", "abstract": true },
+    { "en": "playful", "ar": "مرح / محب للعب", "emoji": "🐱", "abstract": true },
+    { "en": "watchful", "ar": "يقِظ / متنبّه", "emoji": "👀", "abstract": true },
+    { "en": "wonderful", "ar": "رائع", "emoji": "🌟", "abstract": true },
+    { "en": "beautiful", "ar": "جميل", "emoji": "🌸", "abstract": true },
+    { "en": "colourful", "ar": "زاهي الألوان", "emoji": "🌈", "abstract": true },
+    { "en": "powerful", "ar": "قوي", "emoji": "💪", "abstract": true },
+    { "en": "carefully", "ar": "بحذر / بعناية", "abstract": true }
+  ],
+  "grammar": {
+    "explainAr": "نضيف اللاحقة ful (بلام واحدة فقط!) لنهاية الاسم لنصنع صفة: care → careful، use → useful.\nوإذا انتهى الاسم بحرف ساكن قبله y نقلب y إلى i ثم نضيف ful: beauty → beautiful.",
+    "examples": [
+      "Be careful when you cross the road.",
+      "A dictionary is a very useful book.",
+      "Spring flowers in Libya are beautiful and colourful.",
+      "Reem is a helpful sister."
+    ]
+  },
+  "sentences": [
+    "Be careful when you cross the road.",
+    "A dictionary is a very useful book.",
+    "Reem is a very helpful sister.",
+    "The little kitten is very playful.",
+    "The gardens are colourful in spring.",
+    "Cross the wooden bridge carefully."
+  ],
+  "blanks": [
+    { "text": "An object that you use often is ___.", "answer": "useful", "distractors": ["playful", "watchful"] },
+    { "text": "A person who helps other people a lot is ___.", "answer": "helpful", "distractors": ["careful", "colourful"] },
+    { "text": "A kitten that loves fun and games is ___.", "answer": "playful", "distractors": ["useful", "powerful"] },
+    { "text": "Watch the spelling of beauty + full: ___.", "answer": "beautiful", "distractors": ["beautyful", "beautifull"] },
+    { "text": "Watch the spelling of care + full: ___.", "answer": "careful", "distractors": ["carefull", "carful"] },
+    { "text": "The crane lowered the heavy tube ___.", "answer": "carefully", "distractors": ["careful", "playful"] }
+  ],
+  "games": [
+    { "type": "listen-pick", "count": 6 },
+    { "type": "match", "count": 5 },
+    { "type": "spell", "count": 5 },
+    { "type": "fill-blank", "count": 5 },
+    { "type": "order-sentence", "count": 4 }
+  ],
+  "challenge": { "count": 8, "types": ["fill-blank", "listen-pick", "spell"] }
+}

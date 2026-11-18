@@ -1,0 +1,70 @@
+{
+  "id": "g5-u4-l2",
+  "title": "Has he ever been there?",
+  "titleAr": "هل سبق له أن زارها؟",
+  "words": [
+    { "en": "Africa", "ar": "قارة أفريقيا", "emoji": "🌍" },
+    { "en": "Asia", "ar": "قارة آسيا", "emoji": "🌏" },
+    { "en": "Europe", "ar": "قارة أوروبا", "emoji": "🏰" },
+    { "en": "Australia", "ar": "أستراليا", "emoji": "🦘" },
+    { "en": "Egypt", "ar": "مصر", "emoji": "🐪" },
+    { "en": "Canada", "ar": "كندا", "emoji": "🍁" },
+    { "en": "the Arctic", "ar": "القطب الشمالي", "emoji": "🐻‍❄️" },
+    { "en": "the Antarctic", "ar": "القارة القطبية الجنوبية", "emoji": "🐧" },
+    { "en": "Spain", "ar": "إسبانيا", "abstract": true },
+    { "en": "Peru", "ar": "بيرو", "abstract": true },
+    { "en": "abroad", "ar": "خارج البلاد", "emoji": "✈️", "abstract": true }
+  ],
+  "grammar": {
+    "explainAr": "للسؤال عن زيارة سابقة في أي وقت مضى نستعمل:\nHas + he / she + ever been to …? ومع الجمع: Have + they + ever been to …?\nللنفي نستعمل never مع فعل مثبت: No, he has never been to Peru.",
+    "examples": [
+      "Has Khaled's uncle ever been to Egypt?",
+      "Yes, he has been to Egypt.",
+      "No, he has never been to Peru.",
+      "Have they ever been to the Arctic?"
+    ]
+  },
+  "sentences": [
+    "Has he ever been to Africa?",
+    "Yes, he has been to Egypt.",
+    "No, he has never been to Peru.",
+    "Have they ever been to Australia?",
+    "She has visited many countries in Asia.",
+    "They have never been to the Antarctic."
+  ],
+  "blanks": [
+    { "text": "___ Yousif's uncle ever been to Canada?", "answer": "Has", "distractors": ["Have", "Is"] },
+    { "text": "___ the explorers ever been to the Arctic?", "answer": "Have", "distractors": ["Has", "Are"] },
+    { "text": "No, she has ___ been to Peru.", "answer": "never", "distractors": ["ever", "not"] },
+    { "text": "Has Sarah ___ been to Spain?", "answer": "ever", "distractors": ["never", "yet"] },
+    { "text": "Yes, Kareem has ___ to Cairo in Egypt.", "answer": "been", "distractors": ["be", "being"] },
+    { "text": "Penguins live on the ice in ___.", "answer": "the Antarctic", "distractors": ["Egypt", "Spain"] }
+  ],
+  "games": [
+    { "type": "pick-image", "count": 6 },
+    {
+      "type": "drag-order",
+      "config": {
+        "mode": "place",
+        "slots": ["Yes, he's been ✓", "No, he's never been ✗"],
+        "items": [
+          { "id": "egypt", "label": "Egypt ✓", "emoji": "🐪" },
+          { "id": "peru", "label": "Peru ✗", "emoji": "⛰️" },
+          { "id": "arctic", "label": "the Arctic ✓", "emoji": "🐻‍❄️" },
+          { "id": "canada", "label": "Canada ✗", "emoji": "🍁" }
+        ],
+        "rounds": [
+          { "instruction": "Explorer's list: Egypt ✓", "itemId": "egypt", "slot": "Yes, he's been ✓" },
+          { "instruction": "Explorer's list: Peru ✗", "itemId": "peru", "slot": "No, he's never been ✗" },
+          { "instruction": "Explorer's list: the Arctic ✓", "itemId": "arctic", "slot": "Yes, he's been ✓" },
+          { "instruction": "Explorer's list: Canada ✗", "itemId": "canada", "slot": "No, he's never been ✗" }
+        ]
+      }
+    },
+    { "type": "match", "count": 5 },
+    { "type": "fill-blank", "count": 5 },
+    { "type": "order-sentence", "count": 4 },
+    { "type": "listen-pick", "count": 5 }
+  ],
+  "challenge": { "count": 8, "types": ["fill-blank", "listen-pick", "pick-image", "spell"] }
+}

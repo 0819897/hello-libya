@@ -70,7 +70,7 @@ test('listen-pick with config.show = picture uses the word pictures (e.g. numera
   expect(q.options!.every(o => o.emoji && !o.text)).toBe(true);
 });
 test('thisIs picks the right form', () => {
-  expect(['pen', 'apple', 'apples', 'milk', 'Libya', 'PE', 'T-shirt', 'sports trousers', 'oil field'].map(thisIs)).toEqual([
+  expect(['pen', 'apple', 'apples', 'milk', 'Libya', 'PE', 'T-shirt', 'sports trousers', 'oil field', 'marble', 'wood', 'the Arctic'].map(thisIs)).toEqual([
     'This is a pen.', 'This is an apple.', 'These are apples.', 'This is milk.', 'This is Libya.', 'This is PE.',
-    'This is a T-shirt.', 'These are sports trousers.', 'This is an oil field.']);
+    'This is a T-shirt.', 'These are sports trousers.', 'This is an oil field.', 'This is marble.', 'This is wood.', 'This is the Arctic.']);
 });

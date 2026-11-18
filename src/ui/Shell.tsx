@@ -1,16 +1,17 @@
 import type { ReactNode } from 'react';
 import { NavLink } from 'react-router-dom';
+import { getLastGrade } from '../state/progress';
 import { useProgress } from '../state/ProgressContext';
 
-const tabs = [
-  { to: '/grade/grade4', label: 'المسار', icon: '🗺️' },
-  { to: '/dictionary', label: 'قاموسي', icon: '📖' },
-  { to: '/profile', label: 'ملفّي', icon: '👤' },
-];
-
 /** Page frame: header with points and streak, content, bottom tabs. */
-export function Shell({ title, children }: { title?: ReactNode; children: ReactNode }) {
+export function Shell({ title, gradeId, children }: { title?: ReactNode; gradeId?: string; children: ReactNode }) {
   const { progress } = useProgress();
+  const activeGrade = gradeId ?? getLastGrade(progress);
+  const tabs = [
+    { to: `/grade/${activeGrade}`, label: 'المسار', icon: '🗺️' },
+    { to: '/dictionary', label: 'قاموسي', icon: '📖' },
+    { to: '/profile', label: 'ملفّي', icon: '👤' },
+  ];
   return (
     <div className="flex min-h-screen flex-col">
       <header className="sticky top-0 z-10 border-b-2 border-amber-100 bg-[#fdf8ef]/95 backdrop-blur">

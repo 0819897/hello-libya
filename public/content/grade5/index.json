@@ -1,0 +1,211 @@
+{
+  "id": "grade5",
+  "titleAr": "الصف الخامس",
+  "levelTitleAr": "المستوى 2",
+  "units": [
+    {
+      "id": "g5-u1",
+      "title": "A journey to adventure",
+      "titleAr": "رحلة إلى المغامرة",
+      "status": "open",
+      "kind": "unit",
+      "lessons": [
+        {
+          "id": "g5-u1-l1",
+          "file": "u1/l1.json",
+          "title": "Escape and inventions",
+          "titleAr": "الاختراعات والمغامرة"
+        },
+        {
+          "id": "g5-u1-l2",
+          "file": "u1/l2.json",
+          "title": "While it was happening",
+          "titleAr": "بينما كان ذلك يحدث"
+        },
+        {
+          "id": "g5-u1-l3",
+          "file": "u1/l3.json",
+          "title": "When I was little",
+          "titleAr": "عندما كنتُ صغيراً"
+        },
+        {
+          "id": "g5-u1-l4",
+          "file": "u1/l4.json",
+          "title": "Words with wh & adverbs",
+          "titleAr": "كلمات wh والظروف"
+        }
+      ]
+    },
+    {
+      "id": "g5-u2",
+      "title": "In the mountains",
+      "titleAr": "في الجبال",
+      "status": "open",
+      "kind": "unit",
+      "lessons": [
+        {
+          "id": "g5-u2-l1",
+          "file": "u2/l1.json",
+          "title": "Mountain walk",
+          "titleAr": "رحلة بين الجبال"
+        },
+        {
+          "id": "g5-u2-l2",
+          "file": "u2/l2.json",
+          "title": "Why do we go?",
+          "titleAr": "لماذا نذهب؟"
+        },
+        {
+          "id": "g5-u2-l3",
+          "file": "u2/l3.json",
+          "title": "Things we have to do",
+          "titleAr": "أشياء يجب أن نفعلها"
+        },
+        {
+          "id": "g5-u2-l4",
+          "file": "u2/l4.json",
+          "title": "Soft ch and hard ch",
+          "titleAr": "صوتا الحرفين ch"
+        }
+      ]
+    },
+    {
+      "id": "g5-u3",
+      "title": "Tunnels and bridges",
+      "titleAr": "الأنفاق والجسور",
+      "status": "open",
+      "kind": "unit",
+      "lessons": [
+        {
+          "id": "g5-u3-l1",
+          "file": "u3/l1.json",
+          "title": "Engineering tunnels and bridges",
+          "titleAr": "هندسة الأنفاق والجسور"
+        },
+        {
+          "id": "g5-u3-l2",
+          "file": "u3/l2.json",
+          "title": "How things are built",
+          "titleAr": "كيف تُصنع وتُبنى الأشياء"
+        },
+        {
+          "id": "g5-u3-l3",
+          "file": "u3/l3.json",
+          "title": "Interesting or interested?",
+          "titleAr": "الهوايات والصفات بـ ing و ed"
+        },
+        {
+          "id": "g5-u3-l4",
+          "file": "u3/l4.json",
+          "title": "Suffix -ful",
+          "titleAr": "اللاحقة -ful وبناء الصفات"
+        }
+      ]
+    },
+    {
+      "id": "g5-u4",
+      "title": "Astonishing structures",
+      "titleAr": "منشآت مدهشة",
+      "status": "open",
+      "kind": "unit",
+      "lessons": [
+        {
+          "id": "g5-u4-l1",
+          "file": "u4/l1.json",
+          "title": "Palaces, pyramids and landmarks",
+          "titleAr": "القصور والأهرام والمعالم"
+        },
+        {
+          "id": "g5-u4-l2",
+          "file": "u4/l2.json",
+          "title": "Has he ever been there?",
+          "titleAr": "هل سبق له أن زارها؟"
+        },
+        {
+          "id": "g5-u4-l3",
+          "file": "u4/l3.json",
+          "title": "Have you ever...?",
+          "titleAr": "تجاربك أنت"
+        },
+        {
+          "id": "g5-u4-l4",
+          "file": "u4/l4.json",
+          "title": "Prefix un-",
+          "titleAr": "البادئة un- لعكس المعنى"
+        }
+      ]
+    },
+    {
+      "id": "g5-rev",
+      "title": "Revision 1 & 2",
+      "titleAr": "التحدي الكبير",
+      "status": "open",
+      "kind": "big-challenge",
+      "lessons": []
+    },
+    {
+      "id": "g5-u5",
+      "title": "A story from the ancient world",
+      "titleAr": "قصة من العالم القديم",
+      "status": "soon",
+      "kind": "unit",
+      "lessons": []
+    },
+    {
+      "id": "g5-u6",
+      "title": "A legend from the ancient world",
+      "titleAr": "أسطورة من العالم القديم",
+      "status": "soon",
+      "kind": "unit",
+      "lessons": []
+    },
+    {
+      "id": "g5-u7",
+      "title": "Newspapers",
+      "titleAr": "الصحف",
+      "status": "soon",
+      "kind": "unit",
+      "lessons": []
+    },
+    {
+      "id": "g5-u8",
+      "title": "Radio and television",
+      "titleAr": "الإذاعة والتلفاز",
+      "status": "soon",
+      "kind": "unit",
+      "lessons": []
+    },
+    {
+      "id": "g5-u9",
+      "title": "Deep sea animals",
+      "titleAr": "كائنات أعماق البحار",
+      "status": "soon",
+      "kind": "unit",
+      "lessons": []
+    },
+    {
+      "id": "g5-u10",
+      "title": "Deep sea exploration",
+      "titleAr": "استكشاف الأعماق",
+      "status": "soon",
+      "kind": "unit",
+      "lessons": []
+    },
+    {
+      "id": "g5-u11",
+      "title": "Helping other people",
+      "titleAr": "مساعدة الآخرين",
+      "status": "soon",
+      "kind": "unit",
+      "lessons": []
+    },
+    {
+      "id": "g5-u12",
+      "title": "Saving other people",
+      "titleAr": "إنقاذ الآخرين",
+      "status": "soon",
+      "kind": "unit",
+      "lessons": []
+    }
+  ]
+}

@@ -1,0 +1,68 @@
+{
+  "id": "g5-u4-l4",
+  "title": "Prefix un-",
+  "titleAr": "البادئة un- لعكس المعنى",
+  "words": [
+    { "en": "unusual", "ar": "غير عادي / نادر", "emoji": "🦄", "abstract": true },
+    { "en": "unkind", "ar": "غير لطيف / قاسٍ", "abstract": true },
+    { "en": "unhappy", "ar": "حزين / غير سعيد", "emoji": "😢", "abstract": true },
+    { "en": "untrue", "ar": "غير حقيقي / خيالي", "abstract": true },
+    { "en": "unfriendly", "ar": "غير ودود", "abstract": true },
+    { "en": "unwrap", "ar": "يفتح غلاف هدية", "emoji": "🎁", "abstract": true },
+    { "en": "undo", "ar": "يفكّ (عقدة أو زراً)", "emoji": "🪢", "abstract": true },
+    { "en": "uncover", "ar": "يكشف الغطاء عن", "abstract": true },
+    { "en": "unfold", "ar": "يبسط / يفتح مطوياً", "emoji": "🗺️", "abstract": true }
+  ],
+  "grammar": {
+    "explainAr": "نضيف البادئة un إلى بداية بعض الصفات والأفعال لنحصل على ضدّ المعنى دون تغيير حروف الكلمة:\nhappy → unhappy، kind → unkind، wrap → unwrap، fold → unfold.",
+    "examples": [
+      "Khaled was unhappy because he lost his pen.",
+      "You must never be unkind to little children.",
+      "This desert plant is very unusual.",
+      "Reem unwrapped her birthday present happily."
+    ]
+  },
+  "sentences": [
+    "Khaled was unhappy because he lost his pen.",
+    "You must never be unkind to children.",
+    "The story of the giant is untrue.",
+    "This desert bird is very unusual.",
+    "Reem will unwrap her present now.",
+    "Unfold the map on the table, please."
+  ],
+  "blanks": [
+    { "text": "Ali was ___ because his team lost the match.", "answer": "unhappy", "distractors": ["untrue", "unwrap"] },
+    { "text": "You must never be ___ to animals or little children.", "answer": "unkind", "distractors": ["unfold", "undo"] },
+    { "text": "Fairy tales about dragons are ___. They did not happen.", "answer": "untrue", "distractors": ["unhappy", "uncover"] },
+    { "text": "This shiny gold bull is ___ because it is 4,000 years old.", "answer": "unusual", "distractors": ["unkind", "unfold"] },
+    { "text": "Lina smiled as she started to ___ her gift.", "answer": "unwrap", "distractors": ["unhappy", "untrue"] },
+    { "text": "Please ___ the paper map so we can read it.", "answer": "unfold", "distractors": ["unkind", "unfriendly"] }
+  ],
+  "games": [
+    { "type": "listen-pick", "count": 6 },
+    {
+      "type": "drag-order",
+      "config": {
+        "mode": "place",
+        "slots": ["صفة متضادة (Adjective)", "فعل معكوس (Verb)"],
+        "items": [
+          { "id": "unhappy", "label": "unhappy", "emoji": "😢" },
+          { "id": "unwrap", "label": "unwrap", "emoji": "🎁" },
+          { "id": "unusual", "label": "unusual", "emoji": "🦄" },
+          { "id": "unfold", "label": "unfold", "emoji": "🗺️" }
+        ],
+        "rounds": [
+          { "instruction": "unhappy (not happy)", "itemId": "unhappy", "slot": "صفة متضادة (Adjective)" },
+          { "instruction": "unwrap (open a gift)", "itemId": "unwrap", "slot": "فعل معكوس (Verb)" },
+          { "instruction": "unusual (not usual)", "itemId": "unusual", "slot": "صفة متضادة (Adjective)" },
+          { "instruction": "unfold (open a map)", "itemId": "unfold", "slot": "فعل معكوس (Verb)" }
+        ]
+      }
+    },
+    { "type": "spell", "count": 5 },
+    { "type": "match", "count": 5 },
+    { "type": "fill-blank", "count": 5 },
+    { "type": "order-sentence", "count": 4 }
+  ],
+  "challenge": { "count": 8, "types": ["fill-blank", "listen-pick", "spell"] }
+}

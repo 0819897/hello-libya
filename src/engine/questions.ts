@@ -4,7 +4,8 @@ import { shuffle } from './rng';
 type Rng = () => number;
 const SPECIAL: GameType[] = ['drag-order', 'world-map', 'clock', 'stall'];
 const MASS = new Set(['milk', 'water', 'tea', 'coffee', 'lemonade', 'cola', 'paper', 'pizza', 'snow', 'music', 'art',
-  'maths', 'science', 'orange juice', 'mango juice', 'black hair', 'weather']);
+  'maths', 'science', 'orange juice', 'mango juice', 'black hair', 'weather',
+  'concrete', 'earth', 'stone', 'wood', 'marble', 'treasure', 'gunpowder', 'ice']);
 
 const pictured = (w: Word) => !w.abstract && !!(w.emoji || w.image);
 const picOpt = (w: Word): Option => ({ id: w.en, emoji: w.emoji, image: w.image });
@@ -12,7 +13,7 @@ const explain = (w: Word) => `${w.en} = ${w.ar}`;
 
 /** "This is a pen." / "This is an apple." / "These are apples." / "This is milk." / "This is Libya." */
 export function thisIs(en: string): string {
-  if ((/^[A-Z]/.test(en) && !/^[A-Z]-/.test(en)) || MASS.has(en)) return `This is ${en}.`;
+  if ((/^[A-Z]/.test(en) && !/^[A-Z]-/.test(en)) || /^the\s+/i.test(en) || MASS.has(en)) return `This is ${en}.`;
   if (/[^s]s$/.test(en) || en === 'sweets') return `These are ${en}.`;
   return `This is ${/^[aeiou]/i.test(en) ? 'an' : 'a'} ${en}.`;
 }

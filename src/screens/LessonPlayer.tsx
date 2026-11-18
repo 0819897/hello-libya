@@ -8,7 +8,7 @@ import { registry } from '../games/registry';
 import { chime, speak } from '../audio/speak';
 import { awardBadges, BADGES, completeLesson, isUnlocked, orderedLessonIds, todayStr } from '../state/progress';
 import { useProgress } from '../state/ProgressContext';
-import { loadGradeIndex, loadGradeLessons, loadLesson } from '../content/loader';
+import { loadGradeIndex, loadGradeLessons, loadGrades, loadLesson } from '../content/loader';
 import { Button } from '../ui/Button';
 import { Card } from '../ui/Card';
 import { ProgressBar } from '../ui/ProgressBar';
@@ -190,8 +190,14 @@ export default function LessonPlayer() {
       setGrade(g);
       if (imported) { setLesson(imported); setNextId(null); return; }
       if (lessonId === 'review') {
-        const all = (await loadGradeLessons(g)).flatMap(u => u.lessons).flatMap(l => l.words);
-        const words = [...new Map(all.filter(w => progress.mistakes.includes(w.en)).map(w => [w.en, w])).values()];
+        let all = (await loadGradeLessons(g)).flatMap(u => u.lessons).flatMap(l => l.words);
+        let words = [...new Map(all.filter(w => progress.mistakes.includes(w.en)).map(w => [w.en, w])).values()];
+        if (words.length < 4) {
+          const otherGrades = (await loadGrades()).filter(x => x.status === 'open' && x.id !== g.id);
+          const more = await Promise.all(otherGrades.map(async x => loadGradeLessons(await loadGradeIndex(x.id))));
+          all = [...all, ...more.flat().flatMap(u => u.lessons).flatMap(l => l.words)];
+          words = [...new Map(all.filter(w => progress.mistakes.includes(w.en)).map(w => [w.en, w])).values()];
+        }
         if (words.length < 4) throw new Error();
         if (live) { setLesson(reviewLesson(words)); setNextId(null); }
         return;

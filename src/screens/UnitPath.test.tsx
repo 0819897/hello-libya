@@ -1,6 +1,7 @@
 import { render, screen } from '@testing-library/react';
-import { MemoryRouter } from 'react-router-dom';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { UnitPathView } from './UnitPath';
+import Certificate from './Certificate';
 import { ProgressProvider } from '../state/ProgressContext';
 import { defaultProgress, saveProgress } from '../state/progress';
 import type { GradeIndex, Progress } from '../types';
@@ -47,4 +48,39 @@ test('review node appears with 4 or more mistakes', () => {
 test('review node links to the review lesson', () => {
   show({ mistakes: ['a', 'b', 'c', 'd'] });
   expect(screen.getByRole('link', { name: /راجع أخطاءك/ })).toHaveAttribute('href', '/lesson/grade4/review');
+});
+
+test('grade5 path keeps unit numbers across unnumbered revision, links المسار to grade5, and offers grade switch', () => {
+  const g5: GradeIndex = { id: 'grade5', titleAr: 'الصف الخامس', levelTitleAr: 'المستوى 2', units: [
+    { id: 'g5-u1', title: 'Adventure', titleAr: 'مغامرة', status: 'open', kind: 'unit', lessons: [ref('g5-u1-l1', 'Escape')] },
+    { id: 'g5-u2', title: 'Mountains', titleAr: 'جبال', status: 'open', kind: 'unit', lessons: [ref('g5-u2-l1', 'Walk')] },
+    { id: 'g5-u3', title: 'Bridges', titleAr: 'جسور', status: 'open', kind: 'unit', lessons: [ref('g5-u3-l1', 'Tunnel')] },
+    { id: 'g5-u4', title: 'Structures', titleAr: 'منشآت', status: 'open', kind: 'unit', lessons: [ref('g5-u4-l1', 'Palace')] },
+    { id: 'g5-rev', title: 'Revision', titleAr: 'التحدي الكبير', status: 'open', kind: 'big-challenge', lessons: [] },
+    { id: 'g5-u5', title: 'Ancient', titleAr: 'القديم', status: 'soon', kind: 'unit', lessons: [] },
+  ] };
+  saveProgress({ ...defaultProgress(), name: 'Reem', avatar: '🦁', badges: ['big-challenge'] });
+  render(<MemoryRouter><ProgressProvider><UnitPathView grade={g5} /></ProgressProvider></MemoryRouter>);
+  expect(screen.getByText(/القديم/).closest('section')).toHaveTextContent('الوحدة 5');
+  expect(screen.getByText(/1–4/)).toBeInTheDocument();
+  expect(screen.getByRole('link', { name: /المسار/ })).toHaveAttribute('href', '/grade/grade5');
+  expect(screen.getByRole('link', { name: /تغيير الصف/ })).toHaveAttribute('href', '/grades');
+});
+
+test('grade5 certificate uses grade5 badge and title independently of grade4', () => {
+  saveProgress({ ...defaultProgress(), name: 'Reem', avatar: '🦁', badges: ['big-challenge'] });
+  const { unmount } = render(
+    <MemoryRouter initialEntries={['/certificate/grade5']}>
+      <ProgressProvider><Routes><Route path="/certificate/:gradeId" element={<Certificate />} /></Routes></ProgressProvider>
+    </MemoryRouter>,
+  );
+  expect(screen.getByText(/أكمل التحدي الكبير/)).toBeInTheDocument();
+  unmount();
+  saveProgress({ ...defaultProgress(), name: 'Reem', avatar: '🦁', badges: ['big-challenge-grade5'] });
+  render(
+    <MemoryRouter initialEntries={['/certificate/grade5']}>
+      <ProgressProvider><Routes><Route path="/certificate/:gradeId" element={<Certificate />} /></Routes></ProgressProvider>
+    </MemoryRouter>,
+  );
+  expect(screen.getByText(/الصف الخامس/)).toBeInTheDocument();
 });

@@ -1,0 +1,73 @@
+{
+  "id": "g5-u2-l4",
+  "title": "Soft ch and hard ch",
+  "titleAr": "صوتا الحرفين ch",
+  "words": [
+    { "en": "lunch", "ar": "وجبة الغداء", "emoji": "🍱" },
+    { "en": "bunch", "ar": "باقة / عنقود", "emoji": "💐" },
+    { "en": "chip", "ar": "رقاقة بطاطس", "emoji": "🍟" },
+    { "en": "anchor", "ar": "مرساة السفينة", "emoji": "⚓" },
+    { "en": "school", "ar": "مدرسة", "emoji": "🏫" },
+    { "en": "dentist", "ar": "طبيب الأسنان", "emoji": "🦷" },
+    { "en": "vase", "ar": "مزهرية", "emoji": "🏺" },
+    { "en": "munch", "ar": "يمضغ بصوت مسموع", "abstract": true },
+    { "en": "catch", "ar": "يمسك / يلتقط", "emoji": "🤲", "abstract": true },
+    { "en": "chop", "ar": "يقطّع", "emoji": "🔪", "abstract": true },
+    { "en": "stomach", "ar": "معدة", "abstract": true },
+    { "en": "ache", "ar": "ألم / يوجع", "abstract": true },
+    { "en": "headache", "ar": "صداع", "emoji": "🤕", "abstract": true },
+    { "en": "toothache", "ar": "ألم الأسنان", "abstract": true }
+  ],
+  "grammar": {
+    "explainAr": "للحرفين ch نطقان في الإنجليزية:\nنطق ناعم كما في lunch وbunch وcatch وchop، ونطق قوي كصوت الحرف k كما في school وanchor وstomach وheadache.",
+    "examples": [
+      "We ate a healthy lunch at school.",
+      "Mum put a bunch of flowers in the vase.",
+      "Ali has got toothache, so he will see the dentist.",
+      "The ship dropped its heavy anchor."
+    ]
+  },
+  "sentences": [
+    "Mum put a bunch of flowers in a vase.",
+    "Have you got a headache today?",
+    "Ali has got toothache.",
+    "We will visit the dentist after lunch.",
+    "The heavy anchor held the ship.",
+    "Can you catch the ball, Kareem?"
+  ],
+  "blanks": [
+    { "text": "Mum put a ___ of flowers in the blue vase.", "answer": "bunch", "distractors": ["lunch", "anchor"] },
+    { "text": "My tooth hurts! I have got ___.", "answer": "toothache", "distractors": ["anchor", "bunch"] },
+    { "text": "Dad will take Khaled to the ___ after lunch.", "answer": "dentist", "distractors": ["vase", "chip"] },
+    { "text": "In the word ___, the letters ch sound like k.", "answer": "school", "distractors": ["lunch", "chop"] },
+    { "text": "In the word ___, the letters ch have a soft sound.", "answer": "catch", "distractors": ["anchor", "stomach"] },
+    { "text": "The sailor dropped the iron ___ into the sea.", "answer": "anchor", "distractors": ["bunch", "toothache"] }
+  ],
+  "games": [
+    { "type": "pick-image", "count": 6 },
+    {
+      "type": "drag-order",
+      "config": {
+        "mode": "place",
+        "slots": ["ch ناعمة (مثل lunch)", "ch كحرف k (مثل school)"],
+        "items": [
+          { "id": "bunch", "label": "bunch", "emoji": "💐" },
+          { "id": "anchor", "label": "anchor", "emoji": "⚓" },
+          { "id": "catch", "label": "catch", "emoji": "🤲" },
+          { "id": "headache", "label": "headache", "emoji": "🤕" }
+        ],
+        "rounds": [
+          { "instruction": "bunch", "itemId": "bunch", "slot": "ch ناعمة (مثل lunch)" },
+          { "instruction": "anchor", "itemId": "anchor", "slot": "ch كحرف k (مثل school)" },
+          { "instruction": "catch", "itemId": "catch", "slot": "ch ناعمة (مثل lunch)" },
+          { "instruction": "headache", "itemId": "headache", "slot": "ch كحرف k (مثل school)" }
+        ]
+      }
+    },
+    { "type": "spell", "count": 5 },
+    { "type": "match", "count": 5 },
+    { "type": "fill-blank", "count": 5 },
+    { "type": "order-sentence", "count": 4 }
+  ],
+  "challenge": { "count": 8, "types": ["fill-blank", "listen-pick", "spell", "pick-image"] }
+}

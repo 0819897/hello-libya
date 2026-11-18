@@ -1,0 +1,70 @@
+{
+  "id": "g5-u4-l1",
+  "title": "Palaces, pyramids and landmarks",
+  "titleAr": "القصور والأهرام والمعالم",
+  "words": [
+    { "en": "palace", "ar": "قصر", "emoji": "🏛️" },
+    { "en": "museum", "ar": "متحف", "emoji": "🖼️" },
+    { "en": "pyramid", "ar": "هرم", "emoji": "🔺" },
+    { "en": "gift shop", "ar": "متجر الهدايا التذكارية", "emoji": "🛍️" },
+    { "en": "leaflet", "ar": "مطوية تعريفية", "emoji": "📄" },
+    { "en": "staircase", "ar": "دَرَج / سلّم واسع", "emoji": "🪜" },
+    { "en": "statue", "ar": "تمثال", "emoji": "🗽" },
+    { "en": "chandelier", "ar": "ثريّا إضاءة", "emoji": "🕯️" },
+    { "en": "treasure", "ar": "كنز", "emoji": "👑" },
+    { "en": "archaeologist", "ar": "عالِم آثار", "emoji": "🔍" },
+    { "en": "column", "ar": "عمود معماري", "abstract": true },
+    { "en": "canopy", "ar": "مظلّة فخمة", "emoji": "⛺", "abstract": true },
+    { "en": "tomb", "ar": "ضريح / مقبرة أثرية", "abstract": true },
+    { "en": "chamber", "ar": "حجرة داخلية", "abstract": true },
+    { "en": "marble", "ar": "رخام", "abstract": true },
+    { "en": "queue", "ar": "طابور انتظار", "abstract": true },
+    { "en": "precious", "ar": "ثمين / نفيس", "emoji": "💎", "abstract": true },
+    { "en": "stunning", "ar": "مبهر / خلّاب", "abstract": true }
+  ],
+  "grammar": {
+    "explainAr": "عند وصف المعالم والمتاحف نستعمل مفردات العمارة: staircase (الدرج)، marble (الرخام)، column (العمود)، chandelier (الثريا)، وgift shop (متجر الهدايا).",
+    "examples": [
+      "The wide staircases are made of white marble.",
+      "Huge chandeliers hang from the high ceiling.",
+      "Archaeologists found precious treasure in the tomb.",
+      "Nadia bought a colourful leaflet at the gift shop."
+    ]
+  },
+  "sentences": [
+    "The staircases are made of white marble.",
+    "Huge chandeliers hang from the ceiling.",
+    "There are tall statues on the roof.",
+    "Go early because there are long queues.",
+    "Archaeologists found gold in the tomb.",
+    "Lina visited the museum gift shop."
+  ],
+  "blanks": [
+    { "text": "The wide staircases in the palace are made of ___.", "answer": "marble", "distractors": ["leaflet", "queue"] },
+    { "text": "Bright ___ hang from the high palace ceiling.", "answer": "chandeliers", "distractors": ["staircases", "queues"] },
+    { "text": "Clever ___ opened the ancient tomb carefully.", "answer": "archaeologists", "distractors": ["columns", "leaflets"] },
+    { "text": "You can buy postcards and books in the ___.", "answer": "gift shop", "distractors": ["staircase", "chamber"] },
+    { "text": "Go in the morning because there are long ___ in the afternoon.", "answer": "queues", "distractors": ["statues", "columns"] },
+    { "text": "We walked into the king's ___ inside the Great Pyramid.", "answer": "chamber", "distractors": ["leaflet", "canopy"] }
+  ],
+  "games": [
+    { "type": "pick-image", "count": 6 },
+    { "type": "true-false", "count": 5 },
+    {
+      "type": "stall",
+      "config": {
+        "rounds": 2,
+        "menu": [
+          { "en": "leaflet", "emoji": "📄", "price": 1.5 },
+          { "en": "statue", "emoji": "🗽", "price": 4 },
+          { "en": "book", "emoji": "📘", "price": 3.5 },
+          { "en": "map", "emoji": "🗺️", "price": 2 }
+        ]
+      }
+    },
+    { "type": "match", "count": 5 },
+    { "type": "fill-blank", "count": 5 },
+    { "type": "order-sentence", "count": 4 }
+  ],
+  "challenge": { "count": 8, "types": ["fill-blank", "listen-pick", "pick-image", "spell"] }
+}
