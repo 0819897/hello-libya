@@ -2,6 +2,9 @@ import { render, screen } from '@testing-library/react';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { UnitPathView } from './UnitPath';
 import Certificate from './Certificate';
+import Shop from './Shop';
+import League from './League';
+import userEvent from '@testing-library/user-event';
 import { ProgressProvider } from '../state/ProgressContext';
 import { defaultProgress, saveProgress } from '../state/progress';
 import type { GradeIndex, Progress } from '../types';
@@ -65,6 +68,25 @@ test('grade5 path keeps unit numbers across unnumbered revision, links المس�
   expect(screen.getByText(/1–4/)).toBeInTheDocument();
   expect(screen.getByRole('link', { name: /المسار/ })).toHaveAttribute('href', '/grade/grade5');
   expect(screen.getByRole('link', { name: /تغيير الصف/ })).toHaveAttribute('href', '/grades');
+  expect(screen.getByText(/المهام اليومية/)).toBeInTheDocument();
+  expect(screen.getByRole('link', { name: /تحدّي البرق/ })).toHaveAttribute('href', '/speed/grade5');
+  expect(screen.getByRole('link', { name: /قصص المغامرة/ })).toHaveAttribute('href', '/stories/grade5');
+  expect(screen.getByRole('link', { name: /دوري المتصدرين/ })).toHaveAttribute('href', '/league');
+  expect(screen.getByRole('link', { name: /متجر الجواهر/ })).toHaveAttribute('href', '/shop');
+});
+
+test('shop buys streak freeze and league switches between learners on same device', async () => {
+  saveProgress({ ...defaultProgress(), name: 'ريم', avatar: '👧', points: 100 });
+  const { unmount } = render(<MemoryRouter><ProgressProvider><Shop /></ProgressProvider></MemoryRouter>);
+  await userEvent.click(screen.getByRole('button', { name: /اشترِ تجميد السلسلة/ }));
+  expect(screen.getByText(/لديك الآن: 1/)).toBeInTheDocument();
+  unmount();
+
+  render(<MemoryRouter><ProgressProvider><League /></ProgressProvider></MemoryRouter>);
+  expect(screen.getByRole('heading', { name: /الدوري البرونزي/ })).toBeInTheDocument();
+  await userEvent.type(screen.getByPlaceholderText(/اسم المتعلّم الجديد/), 'خالد');
+  await userEvent.click(screen.getByRole('button', { name: /أضف وابدأ/ }));
+  expect(screen.getAllByText(/خالد/).length).toBeGreaterThan(0);
 });
 
 test('grade5 certificate uses grade5 badge and title independently of grade4', () => {

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { defaultProgress } from '../state/progress';
+import { clearDuo } from '../state/quests';
 import { useProgress } from '../state/ProgressContext';
 import { Button } from '../ui/Button';
 import { Card } from '../ui/Card';
@@ -47,7 +48,7 @@ export default function Settings() {
         {!confirm ? <Button variant="danger" onClick={() => setConfirm(true)}>مسح التقدّم</Button> : (
           <div className="flex flex-wrap items-center gap-2">
             <span className="font-bold">هل أنت متأكد؟ لا يمكن التراجع.</span>
-            <Button variant="danger" onClick={() => { update(() => defaultProgress()); navigate('/'); }}>نعم، امسح</Button>
+            <Button variant="danger" onClick={() => { clearDuo(); update(() => defaultProgress()); navigate('/'); }}>نعم، امسح</Button>
             <Button variant="soft" onClick={() => setConfirm(false)}>إلغاء</Button>
           </div>
         )}

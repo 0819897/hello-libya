@@ -1,0 +1,233 @@
+[
+  {
+    "id": "g5-s1",
+    "unitAr": "الوحدة 1 · رحلة إلى المغامرة",
+    "title": "Grandad's Secret Invention",
+    "titleAr": "اختراع الجدّ السرّي",
+    "emoji": "💡",
+    "steps": [
+      {
+        "kind": "line",
+        "speaker": "Kareem",
+        "avatar": "👦",
+        "en": "While I was packing my bag, the telephone rang noisily.",
+        "ar": "بينما كنت أحزم حقيبتي، رنّ الهاتف بصوتٍ عالٍ."
+      },
+      {
+        "kind": "line",
+        "speaker": "Reem",
+        "avatar": "👧",
+        "en": "Hurry up, Kareem! Grandad is waiting for us in his study.",
+        "ar": "أسرع يا كريم! جدّي ينتظرنا في غرفة مكتبه."
+      },
+      {
+        "kind": "line",
+        "speaker": "Grandad",
+        "avatar": "👴",
+        "en": "Welcome! I hurt my ankle yesterday, so there is a bandage on my foot.",
+        "ar": "أهلاً بكما! لقد آذيتُ كاحلي أمس، ولذلك توجد ضمادة على قدمي."
+      },
+      {
+        "kind": "quiz",
+        "promptAr": "لماذا يضع الجدّ ضمادة طبية (bandage)؟",
+        "options": ["لأنه آذى كاحله (ankle)", "لأنه ذاهب للسباحة", "لأنه يبحث عن كتاب"],
+        "answer": "لأنه آذى كاحله (ankle)"
+      },
+      {
+        "kind": "line",
+        "speaker": "Grandad",
+        "avatar": "👴",
+        "en": "Look at this machine. It is my newest invention! Do you promise to keep a secret?",
+        "ar": "انظرا إلى هذا الجهاز. إنه أحدث اختراعاتي! هل تعدانني بحفظ السر؟"
+      },
+      {
+        "kind": "line",
+        "speaker": "Kareem",
+        "avatar": "👦",
+        "en": "We promise! When I was little, you used to tell us stories about explorers.",
+        "ar": "نعدك! عندما كنتُ صغيراً، اعتدتَ أن تحكي لنا قصصاً عن المستكشفين."
+      },
+      {
+        "kind": "quiz",
+        "promptAr": "ما الكلمة السرية التي تفتح جهاز المغامرة؟",
+        "options": ["password (كلمة المرور)", "armchair (الكرسي)", "whistle (الصفّارة)"],
+        "answer": "password (كلمة المرور)"
+      },
+      {
+        "kind": "line",
+        "speaker": "Grandad",
+        "avatar": "👴",
+        "en": "Put in the place and the password, Adventure, and let's learn about history!",
+        "ar": "أدخلا المكان وكلمة المرور Adventure، وهيا نتعلّم عن التاريخ!"
+      }
+    ]
+  },
+  {
+    "id": "g5-s2",
+    "unitAr": "الوحدة 2 · في الجبال",
+    "title": "Behind the Waterfall",
+    "titleAr": "خلف الشلّال الكبير",
+    "emoji": "🏞️",
+    "steps": [
+      {
+        "kind": "line",
+        "speaker": "Yousif",
+        "avatar": "👦",
+        "en": "Our family travelled to the mountains to have a summer holiday.",
+        "ar": "سافرت عائلتنا إلى الجبال لقضاء عطلة صيفية."
+      },
+      {
+        "kind": "line",
+        "speaker": "Dad",
+        "avatar": "👨",
+        "en": "Follow this narrow path through the shady forest to reach the waterfall.",
+        "ar": "اتبعوا هذا الممر الضيق عبر الغابة المظلّلة للوصول إلى الشلال."
+      },
+      {
+        "kind": "quiz",
+        "promptAr": "لماذا مشى الجميع في الممر الضيّق؟ (to + الفعل)",
+        "options": ["للوصول إلى الشلال (to reach the waterfall)", "لشراء نظارة جديدة", "لكتابة موضوع تعبير"],
+        "answer": "للوصول إلى الشلال (to reach the waterfall)"
+      },
+      {
+        "kind": "line",
+        "speaker": "Nadia",
+        "avatar": "👧",
+        "en": "Look at that wooden bridge over the deep ravine! I feel a bit nervous.",
+        "ar": "انظروا إلى ذلك الجسر الخشبي فوق الوادي العميق! أشعر ببعض التوتر."
+      },
+      {
+        "kind": "line",
+        "speaker": "Dad",
+        "avatar": "👨",
+        "en": "Don't worry, Nadia! Just keep calm. We have to walk slowly to keep steady.",
+        "ar": "لا تقلقي يا نادية! فقط ابقي هادئة. يجب أن نمشي ببطء لنحافظ على توازننا."
+      },
+      {
+        "kind": "quiz",
+        "promptAr": "ماذا يجب أن يفعلوا فوق الجسر؟ (We have to...)",
+        "options": ["المشي ببطء للحفاظ على التوازن (keep steady)", "الركض بسرعة كبيرة", "إغماض أعينهم"],
+        "answer": "المشي ببطء للحفاظ على التوازن (keep steady)"
+      },
+      {
+        "kind": "line",
+        "speaker": "Yousif",
+        "avatar": "👦",
+        "en": "At the top we saw a huge glacier! We were exhausted, so we took the mountain train back.",
+        "ar": "في القمة رأينا نهراً جليدياً ضخماً! كنا منهكين تماماً، فأخذنا قطار الجبل في العودة."
+      }
+    ]
+  },
+  {
+    "id": "g5-s3",
+    "unitAr": "الوحدة 3 · الأنفاق والجسور",
+    "title": "The Young Engineers",
+    "titleAr": "المهندسون الصغار",
+    "emoji": "🌉",
+    "steps": [
+      {
+        "kind": "line",
+        "speaker": "Sarah",
+        "avatar": "👧",
+        "en": "Look at this fascinating diagram! Large bridges are designed by clever engineers.",
+        "ar": "انظر إلى هذا الرسم التخطيطي المدهش! الجسور الكبيرة تُصمَّم بواسطة مهندسين بارعين."
+      },
+      {
+        "kind": "line",
+        "speaker": "Ali",
+        "avatar": "👦",
+        "en": "I am very interested in engineering! How is an underwater tunnel built?",
+        "ar": "أنا مهتمّ جداً بالهندسة! كيف يُبنى النفق تحت الماء؟"
+      },
+      {
+        "kind": "quiz",
+        "promptAr": "أيّ صفة اختارها علي ليصف شعوره هو؟",
+        "options": ["interested (مهتمّ - تنتهي بـ ed)", "interesting (للأشياء - تنتهي بـ ing)", "boring (مملّ)"],
+        "answer": "interested (مهتمّ - تنتهي بـ ed)"
+      },
+      {
+        "kind": "line",
+        "speaker": "Sarah",
+        "avatar": "👧",
+        "en": "First, a deep trench is dug by diggers. Then strong tubes are lowered carefully by cranes.",
+        "ar": "أولاً، يُحفر خندق عميق بالحفارات. ثم تُنزل الأنابيب القوية بحذر بواسطة الرافعات."
+      },
+      {
+        "kind": "line",
+        "speaker": "Ali",
+        "avatar": "👦",
+        "en": "And what holds up a long suspension bridge across a wide river?",
+        "ar": "وما الذي يحمل الجسر المعلّق الطويل عبر النهر العريض؟"
+      },
+      {
+        "kind": "line",
+        "speaker": "Sarah",
+        "avatar": "👧",
+        "en": "It is supported by tall towers and powerful steel cables! This book is very useful.",
+        "ar": "إنه مدعوم بأبراج عالية وكابلات فولاذية قوية! هذا الكتاب مفيد جداً."
+      },
+      {
+        "kind": "quiz",
+        "promptAr": "كيف نكتب صفة «مفيد» من كلمة use + full؟",
+        "options": ["useful (بلام واحدة)", "usefull (بلامين)", "usful"],
+        "answer": "useful (بلام واحدة)"
+      }
+    ]
+  },
+  {
+    "id": "g5-s4",
+    "unitAr": "الوحدة 4 · منشآت مدهشة",
+    "title": "A Visit to the Museum",
+    "titleAr": "زيارة إلى المتحف",
+    "emoji": "🏛️",
+    "steps": [
+      {
+        "kind": "line",
+        "speaker": "Lina",
+        "avatar": "👧",
+        "en": "Have you ever been to the old palace museum, Khaled?",
+        "ar": "هل سبق لك أن زرت متحف القصر القديم يا خالد؟"
+      },
+      {
+        "kind": "line",
+        "speaker": "Khaled",
+        "avatar": "👦",
+        "en": "No, I have never been there! Let's go early before the long queues start.",
+        "ar": "لا، لم أزره أبداً! هيا نذهب مبكراً قبل أن تبدأ طوابير الانتظار الطويلة."
+      },
+      {
+        "kind": "quiz",
+        "promptAr": "ماذا قال خالد لأنه لم يزر المتحف من قبل؟",
+        "options": ["I have never been there", "I have ever been there", "I used to go yesterday"],
+        "answer": "I have never been there"
+      },
+      {
+        "kind": "line",
+        "speaker": "Lina",
+        "avatar": "👧",
+        "en": "Look at the wide marble staircase and the huge chandelier hanging from the ceiling!",
+        "ar": "انظر إلى الدرج الرخامي الواسع والثريا الضخمة المعلّقة في السقف!"
+      },
+      {
+        "kind": "line",
+        "speaker": "Khaled",
+        "avatar": "👦",
+        "en": "And look at this unusual gold treasure! Archaeologists uncovered it in an ancient tomb.",
+        "ar": "وانظر إلى هذا الكنز الذهبي غير العادي! لقد كشف علماء الآثار الغطاء عنه في مقبرة قديمة."
+      },
+      {
+        "kind": "line",
+        "speaker": "Lina",
+        "avatar": "👧",
+        "en": "I bought a gift for my little brother at the gift shop. He will unwrap it happily!",
+        "ar": "اشتريت هدية لأخي الصغير من متجر الهدايا. سيفتح غلافها بسعادة!"
+      },
+      {
+        "kind": "quiz",
+        "promptAr": "ماذا تعني كلمة unwrap التي تبدأ بالبادئة un-؟",
+        "options": ["يفتح غلاف الهدية (عكس wrap)", "يغلق الصندوق", "يرسم خريطة"],
+        "answer": "يفتح غلاف الهدية (عكس wrap)"
+      }
+    ]
+  }
+]

@@ -7,6 +7,7 @@ import { pointsFor, starsFor } from '../engine/scoring';
 import { registry } from '../games/registry';
 import { chime, speak } from '../audio/speak';
 import { awardBadges, BADGES, completeLesson, isUnlocked, orderedLessonIds, todayStr } from '../state/progress';
+import { applyStreakFreeze, loadDuo, recordActivity, saveDuo } from '../state/quests';
 import { useProgress } from '../state/ProgressContext';
 import { loadGradeIndex, loadGradeLessons, loadGrades, loadLesson } from '../content/loader';
 import { Button } from '../ui/Button';
@@ -38,6 +39,10 @@ export function LessonRun({ lesson, grade, rng: rngProp, onFinish, onNext }: {
   const [queue, setQueue] = useState<Question[]>(rounds[0] ?? []);
   const [qi, setQi] = useState(0);
   const [feedback, setFeedback] = useState<GameResult | null>(null);
+  const [combo, setCombo] = useState(0);
+  const [questInfo, setQuestInfo] = useState<{ bonusGems: number; titles: string[]; usedFreeze: boolean }>({ bonusGems: 0, titles: [], usedFreeze: false });
+  const duoEnabled = lesson.id.startsWith('g5-');
+  const maxCombo = useRef(0);
   const points = useRef(0);
   const firstRight = useRef(0);
   const missed = useRef<string[]>([]);
@@ -53,6 +58,13 @@ export function LessonRun({ lesson, grade, rng: rngProp, onFinish, onNext }: {
   const answered = (r: GameResult) => {
     if (!current) return;
     points.current += pointsFor(r.attempts);
+    if (r.attempts === 1) {
+      const nextCombo = combo + 1;
+      setCombo(nextCombo);
+      if (nextCombo > maxCombo.current) maxCombo.current = nextCombo;
+    } else {
+      setCombo(0);
+    }
     if (phase === 'play' && r.attempts > 1 && !current.id.endsWith(':again')) setQueue(q => [...q, { ...current, id: current.id + ':again' }]);
     if (phase === 'challenge') {
       if (r.attempts === 1) firstRight.current++;
@@ -69,11 +81,23 @@ export function LessonRun({ lesson, grade, rng: rngProp, onFinish, onNext }: {
     if (!saved.current) {
       saved.current = true;
       const miss = [...new Set(missed.current)];
+      const today = todayStr();
+      const st = starsFor(firstRight.current, total);
+      let bonus = { bonusGems: 0, titles: [] as string[], usedFreeze: false };
       update(p => {
-        const n = completeLesson(p, { lessonId: lesson.id, correct: firstRight.current, total, points: points.current,
-          learned: lesson.words.map(w => w.en).filter(en => !miss.includes(en)), missed: miss, today: todayStr() });
+        let n = completeLesson(p, { lessonId: lesson.id, correct: firstRight.current, total, points: points.current,
+          learned: lesson.words.map(w => w.en).filter(en => !miss.includes(en)), missed: miss, today });
+        if (duoEnabled) {
+          const d0 = loadDuo(today);
+          const fr = applyStreakFreeze(p.streak, n.streak, d0.freezes, today);
+          const act = recordActivity({ ...d0, freezes: fr.freezes }, { xp: points.current, perfect: st === 3, maxCombo: maxCombo.current, today });
+          saveDuo(act.duo);
+          n = { ...n, streak: fr.streak, points: n.points + act.bonusGems };
+          bonus = { bonusGems: act.bonusGems, titles: act.justCompleted, usedFreeze: fr.usedFreeze };
+        }
         return grade ? { ...n, badges: awardBadges(n, grade) } : n;
       });
+      if (duoEnabled) setQuestInfo(bonus);
       onFinish?.({ lessonId: lesson.id, correct: firstRight.current, total });
     }
     setPhase('result');
@@ -96,10 +120,12 @@ export function LessonRun({ lesson, grade, rng: rngProp, onFinish, onNext }: {
 
   if (phase === 'result') {
     const miss = [...new Set(missed.current)];
-    return <Result stars={starsFor(firstRight.current, challenge.length)} points={points.current} correct={firstRight.current}
+    const st = starsFor(firstRight.current, challenge.length);
+    return <Result stars={st} points={points.current} correct={firstRight.current}
       total={challenge.length} missed={lesson.words.filter(w => miss.includes(w.en))} onNext={onNext}
+      questBonus={duoEnabled ? questInfo : undefined} celebrate={duoEnabled && st === 3}
       newBadges={BADGES.filter(b => progress.badges.includes(b.id) && !badgesBefore.current.includes(b.id))}
-      onRetry={() => { saved.current = false; badgesBefore.current = progress.badges; points.current = 0; firstRight.current = 0; missed.current = []; setCard(0); setQi(0); setPhase('learn'); }} />;
+      onRetry={() => { saved.current = false; badgesBefore.current = progress.badges; points.current = 0; firstRight.current = 0; missed.current = []; maxCombo.current = 0; setCombo(0); setQuestInfo({ bonusGems: 0, titles: [], usedFreeze: false }); setCard(0); setQi(0); setPhase('learn'); }} />;
   }
 
   const Game = current ? registry[current.type] : undefined;
@@ -113,7 +139,14 @@ export function LessonRun({ lesson, grade, rng: rngProp, onFinish, onNext }: {
           </li>
         ))}
       </ol>
-      <div className="mb-4"><ProgressBar value={barValue} max={barMax} label="التقدّم في المرحلة" /></div>
+      <div className="mb-4 flex items-center gap-3">
+        <div className="flex-1"><ProgressBar value={barValue} max={barMax} label="التقدّم في المرحلة" /></div>
+        {duoEnabled && combo >= 2 && (phase === 'play' || phase === 'challenge') && (
+          <span className="shrink-0 rounded-full bg-amber-100 px-3 py-1 text-sm font-black text-amber-800">
+            🔥 {combo} على التوالي
+          </span>
+        )}
+      </div>
 
       {phase === 'learn' && (
         <Card className="text-center">
@@ -153,10 +186,17 @@ export function LessonRun({ lesson, grade, rng: rngProp, onFinish, onNext }: {
           </div>
           {feedback && (
             <div role="status" className="mt-4 flex flex-wrap items-center justify-between gap-3 rounded-2xl border-4 border-green-600 bg-green-50 p-3">
-              <span className="text-xl font-bold text-green-800"><span aria-hidden>✓ </span>
-                {feedback.attempts === 1 ? 'أحسنت! إجابة صحيحة' : 'صحيح! سنعيد هذا السؤال لاحقاً للتثبيت'}
-                {current.wordEn && <span className="en mx-2">{current.wordEn}</span>}
-              </span>
+              <div>
+                <span className="text-xl font-bold text-green-800"><span aria-hidden>✓ </span>
+                  {feedback.attempts === 1 ? 'أحسنت! إجابة صحيحة' : 'صحيح! سنعيد هذا السؤال لاحقاً للتثبيت'}
+                  {current.wordEn && <span className="en mx-2">{current.wordEn}</span>}
+                </span>
+                {duoEnabled && feedback.attempts === 1 && combo >= 2 && (
+                  <p className="mt-1 text-sm font-bold text-teal-800">
+                    {combo >= 5 ? '🦉 أسطوري! سلسلة مذهلة بلا أخطاء!' : '🦉 رائع! واصل السلسلة المتتالية!'}
+                  </p>
+                )}
+              </div>
               <Button onClick={next} autoFocus>التالي</Button>
             </div>
           )}

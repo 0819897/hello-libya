@@ -12,6 +12,10 @@ import About from './screens/About';
 import BigChallenge from './screens/BigChallenge';
 import Certificate from './screens/Certificate';
 import TeacherMode from './screens/TeacherMode';
+import SpeedChallenge from './screens/SpeedChallenge';
+import Stories from './screens/Stories';
+import Shop from './screens/Shop';
+import League from './screens/League';
 import { ErrorBoundary } from './ui/ErrorBoundary';
 
 function AppRoutes() {
@@ -30,6 +34,11 @@ function AppRoutes() {
       <Route path="/grade/:gradeId" element={<UnitPath />} />
       <Route path="/lesson/:gradeId/:lessonId" element={<LessonPlayer />} />
       <Route path="/big/:gradeId" element={<BigChallenge />} />
+      <Route path="/speed/:gradeId" element={<SpeedChallenge />} />
+      <Route path="/stories/:gradeId" element={<Stories />} />
+      <Route path="/story/:gradeId/:storyId" element={<Stories />} />
+      <Route path="/shop" element={<Shop />} />
+      <Route path="/league" element={<League />} />
       <Route path="/certificate" element={<Certificate />} />
       <Route path="/certificate/:gradeId" element={<Certificate />} />
       <Route path="/dictionary" element={<Dictionary />} />

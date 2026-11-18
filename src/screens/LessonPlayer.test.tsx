@@ -4,6 +4,7 @@ import { MemoryRouter } from 'react-router-dom';
 import { LessonRun } from './LessonPlayer';
 import { ProgressProvider } from '../state/ProgressContext';
 import * as progressMod from '../state/progress';
+import { loadDuo } from '../state/quests';
 import { makeRng } from '../engine/rng';
 import type { Lesson } from '../types';
 
@@ -60,4 +61,21 @@ test('two drag-order games in a row each get a fresh board (no crash)', async ()
   await click('تحقّق');
   await click('التالي');
   expect(screen.getAllByRole('button', { name: /^(Gamma|Delta)، المكان/ })).toHaveLength(2);
+});
+
+test('grade 5 lesson shows Duolingo combo streak and awards daily quest bonus on 3 stars', async () => {
+  const g5Lesson: Lesson = { ...lesson, id: 'g5-u1-test' };
+  render(<MemoryRouter><ProgressProvider><LessonRun lesson={g5Lesson} rng={makeRng(2)} /></ProgressProvider></MemoryRouter>);
+  await click('تخطَّ إلى اللعب');
+  // Answer 1st right, 2nd right -> combo reaches 2 before clicking التالي
+  await click(emoji[promptWord()]);
+  await click('التالي');
+  await click(emoji[promptWord()]);
+  expect(screen.getByText(/على التوالي/)).toBeInTheDocument();
+  await click('التالي');
+  await click('ابدأ التحدّي');
+  await answer(true);
+  await answer(true);
+  expect(screen.getByText(/مهمة يومية/)).toBeInTheDocument();
+  expect(loadDuo().bestComboToday).toBe(4);
 });
