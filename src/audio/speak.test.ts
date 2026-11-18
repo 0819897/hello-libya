@@ -1,4 +1,6 @@
-import { speak } from './speak';
+import { existsSync } from 'node:fs';
+import { join } from 'node:path';
+import { audioFileFor, speak } from './speak';
 
 afterEach(() => vi.unstubAllGlobals());
 
@@ -23,4 +25,36 @@ test('falls back to speech when there is no audio file', async () => {
   vi.stubGlobal('speechSynthesis', { cancel() {}, speak(u: { text: string; onend?: () => void }) { spoken.push(u.text); u.onend?.(); } });
   await speak({ en: 'sister' }, true);
   expect(spoken).toEqual(['sister']);
+});
+
+test('selects an installed en-US voice when no en-GB voice exists (Arabic Windows setup)', async () => {
+  const arVoice = { name: 'Microsoft Hoda', lang: 'ar-EG', default: true } as SpeechSynthesisVoice;
+  const usVoice = { name: 'Microsoft Zira Desktop', lang: 'en-US', default: false } as SpeechSynthesisVoice;
+  let captured: { text?: string; lang?: string; voice?: SpeechSynthesisVoice } = {};
+  vi.stubGlobal('SpeechSynthesisUtterance', function (this: { text: string }, t: string) { this.text = t; });
+  vi.stubGlobal('speechSynthesis', {
+    getVoices: () => [arVoice, usVoice],
+    cancel() {},
+    resume() {},
+    speak(u: { text: string; lang?: string; voice?: SpeechSynthesisVoice; onend?: () => void }) {
+      captured = u;
+      u.onend?.();
+    },
+  });
+  await speak({ en: 'adventure' }, true);
+  expect(captured.voice).toBe(usVoice);
+  expect(captured.lang).toBe('en-US');
+});
+
+test('plays pre-generated local wav file by default for words and sentences', async () => {
+  let playedSrc = '';
+  vi.stubGlobal('Audio', function (this: { src: string; play: () => Promise<void>; pause: () => void }, src: string) {
+    this.src = src;
+    this.pause = () => {};
+    this.play = () => { playedSrc = src; return Promise.resolve(); };
+  });
+  await speak({ en: 'inventor' }, true);
+  expect(playedSrc).toBe(`./content/audio/${audioFileFor('inventor')}`);
+  expect(existsSync(join(process.cwd(), 'public', 'content', 'audio', audioFileFor('inventor')))).toBe(true);
+  expect(existsSync(join(process.cwd(), 'public', 'content', 'audio', audioFileFor('While I was packing my bag, the telephone rang noisily.')))).toBe(true);
 });

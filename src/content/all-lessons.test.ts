@@ -1,5 +1,6 @@
 import { existsSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
+import { audioFileFor } from '../audio/speak';
 import { validateLesson } from './loader';
 import { buildChallenge } from '../engine/questions';
 import { makeRng } from '../engine/rng';
@@ -58,6 +59,16 @@ describe.each(openGrades)('grade $id', gradeEntry => {
       test('challenge generates full question count', () => {
         const l = lesson();
         expect(buildChallenge(l, makeRng(7))).toHaveLength(l.challenge.count);
+      });
+      test('every word and grammar example has a generated local audio file', () => {
+        const l = lesson();
+        const audioDir = join(contentRoot, 'audio');
+        for (const w of l.words) {
+          expect(existsSync(join(audioDir, w.audio ?? audioFileFor(w.en))), w.en).toBe(true);
+        }
+        for (const ex of l.grammar?.examples ?? []) {
+          expect(existsSync(join(audioDir, audioFileFor(ex))), ex).toBe(true);
+        }
       });
     });
   }

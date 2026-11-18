@@ -31,7 +31,7 @@ export default defineConfig({
       },
       workbox: {
         // App shell plus every lesson, image and audio file, so the whole app works offline after the first visit.
-        globPatterns: ['**/*.{js,css,html,svg,png,json,mp3,webp}'],
+        globPatterns: ['**/*.{js,css,html,svg,png,json,mp3,wav,webp}'],
         navigateFallback: 'index.html',
         cleanupOutdatedCaches: true,
       },
