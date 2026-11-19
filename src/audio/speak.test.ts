@@ -1,4 +1,4 @@
-import { existsSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { audioFileFor, speak } from './speak';
 
@@ -57,4 +57,31 @@ test('plays pre-generated local wav file by default for words and sentences', as
   expect(playedSrc).toBe(`./content/audio/${audioFileFor('inventor')}`);
   expect(existsSync(join(process.cwd(), 'public', 'content', 'audio', audioFileFor('inventor')))).toBe(true);
   expect(existsSync(join(process.cwd(), 'public', 'content', 'audio', audioFileFor('While I was packing my bag, the telephone rang noisily.')))).toBe(true);
+});
+
+test('decodes 8-bit WAV directly into WebAudio AudioBuffer on mobile PWA', async () => {
+  const wavPath = join(process.cwd(), 'public', 'content', 'audio', audioFileFor('inventor'));
+  const raw = readFileSync(wavPath);
+  const ab = raw.buffer.slice(raw.byteOffset, raw.byteOffset + raw.byteLength);
+  let started = false;
+  let createdFrames = 0;
+  vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: true, arrayBuffer: () => Promise.resolve(ab) }));
+  vi.stubGlobal('AudioContext', function (this: unknown) {
+    return {
+      state: 'running',
+      destination: {},
+      createBuffer(_ch: number, frames: number, rate: number) {
+        createdFrames = frames;
+        expect(rate).toBe(11025);
+        const data = new Float32Array(frames);
+        return { getChannelData: () => data };
+      },
+      createBufferSource() {
+        return { buffer: null, connect() {}, start() { started = true; }, stop() {} };
+      },
+    };
+  });
+  await speak({ en: 'inventor' }, true);
+  expect(createdFrames).toBeGreaterThan(1000);
+  expect(started).toBe(true);
 });

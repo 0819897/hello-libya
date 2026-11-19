@@ -1,5 +1,21 @@
 let activeUtterance: SpeechSynthesisUtterance | null = null;
 let activeAudio: HTMLAudioElement | null = null;
+let activeSource: { stop?: () => void } | null = null;
+let ctx: AudioContext | null = null;
+
+function getCtx(): AudioContext | null {
+  const AC = globalThis.AudioContext ?? (globalThis as unknown as { webkitAudioContext?: typeof AudioContext }).webkitAudioContext;
+  if (!AC) { ctx = null; return null; }
+  ctx ??= new AC();
+  if (ctx.state === 'suspended') ctx.resume?.().catch(() => {});
+  return ctx;
+}
+
+if (typeof window !== 'undefined' && typeof window.addEventListener === 'function') {
+  const unlock = () => { getCtx(); };
+  window.addEventListener('pointerdown', unlock, { passive: true });
+  window.addEventListener('touchstart', unlock, { passive: true });
+}
 
 /** Deterministic filename in ./content/audio/ for any English word or sentence. */
 export function audioFileFor(en: string): string {
@@ -13,6 +29,44 @@ export function audioFileFor(en: string): string {
   return `${slug}-${(h >>> 0).toString(36)}.wav`;
 }
 
+async function playWavViaWebAudio(url: string): Promise<boolean> {
+  try {
+    const ac = getCtx();
+    if (!ac || typeof fetch !== 'function' || typeof ac.createBuffer !== 'function') return false;
+    const res = await fetch(url);
+    if (!res.ok) return false;
+    const buf = await res.arrayBuffer();
+    const bytes = new Uint8Array(buf);
+    if (bytes.length <= 44 || bytes[0] !== 0x52 || bytes[1] !== 0x49 || bytes[8] !== 0x57) return false;
+    const view = new DataView(buf);
+    const channels = view.getUint16(22, true) || 1;
+    const sampleRate = view.getUint32(24, true) || 11025;
+    const bits = view.getUint16(34, true) || 8;
+    const pcmOffset = 44;
+    const frameCount = bits === 16
+      ? Math.floor((bytes.length - pcmOffset) / (2 * channels))
+      : Math.floor((bytes.length - pcmOffset) / channels);
+    if (frameCount <= 0) return false;
+    const audioBuf = ac.createBuffer(1, frameCount, sampleRate);
+    const ch = audioBuf.getChannelData(0);
+    if (bits === 16) {
+      for (let i = 0; i < frameCount; i++) ch[i] = view.getInt16(pcmOffset + i * 2 * channels, true) / 32768;
+    } else {
+      for (let i = 0; i < frameCount; i++) ch[i] = (bytes[pcmOffset + i * channels] - 128) / 128;
+    }
+    if (ac.state === 'suspended') await ac.resume?.();
+    try { activeSource?.stop?.(); } catch { /* already stopped */ }
+    const src = ac.createBufferSource();
+    src.buffer = audioBuf;
+    src.connect(ac.destination);
+    activeSource = src;
+    src.start(0);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
 function pickEnglishVoice(synth: SpeechSynthesis): SpeechSynthesisVoice | undefined {
   const voices = synth.getVoices?.() ?? [];
   return (
@@ -22,14 +76,16 @@ function pickEnglishVoice(synth: SpeechSynthesis): SpeechSynthesisVoice | undefi
   );
 }
 
-/** Play a word: recorded audio first, then the browser voice. Never rejects. */
+/** Play a word: recorded audio first (WebAudio then HTMLAudio), then the browser voice. Never rejects. */
 export async function speak(w: { en: string; audio?: string }, enabled: boolean): Promise<void> {
   if (!enabled) return;
   try {
     const file = w.audio ?? audioFileFor(w.en);
+    const url = `./content/audio/${file}`;
+    if (await playWavViaWebAudio(url)) return;
     try {
       activeAudio?.pause?.();
-      const a = new Audio(`./content/audio/${file}`);
+      const a = new Audio(url);
       activeAudio = a;
       await a.play();
       return;
@@ -61,18 +117,16 @@ export async function speak(w: { en: string; audio?: string }, enabled: boolean)
   } catch { /* silent */ }
 }
 
-let ctx: AudioContext | null = null;
 function tone(freqs: number[], type: OscillatorType, dur: number) {
   try {
-    const AC = globalThis.AudioContext ?? (globalThis as unknown as { webkitAudioContext?: typeof AudioContext }).webkitAudioContext;
-    if (!AC) return;
-    ctx ??= new AC();
+    const ac = getCtx();
+    if (!ac) return;
     freqs.forEach((f, i) => {
-      const o = ctx!.createOscillator(), g = ctx!.createGain();
-      const t = ctx!.currentTime + i * dur;
+      const o = ac.createOscillator(), g = ac.createGain();
+      const t = ac.currentTime + i * dur;
       o.type = type; o.frequency.value = f;
       g.gain.setValueAtTime(0.18, t); g.gain.exponentialRampToValueAtTime(0.001, t + dur);
-      o.connect(g).connect(ctx!.destination); o.start(t); o.stop(t + dur);
+      o.connect(g).connect(ac.destination); o.start(t); o.stop(t + dur);
     });
   } catch { /* no sound */ }
 }

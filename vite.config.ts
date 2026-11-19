@@ -30,12 +30,22 @@ export default defineConfig({
         ],
       },
       workbox: {
-        // App shell plus every lesson, image and audio file, so the whole app works offline after the first visit.
-        globPatterns: ['**/*.{js,css,html,svg,png,json,mp3,wav,webp}'],
+        // Precache core app shell and lesson JSONs so SW updates install in <1s on mobile; cache audio on demand.
+        globPatterns: ['**/*.{js,css,html,svg,png,json,webp}'],
         navigateFallback: 'index.html',
         cleanupOutdatedCaches: true,
+        runtimeCaching: [
+          {
+            urlPattern: /\/content\/audio\/.*\.(?:wav|mp3)$/i,
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'hello-libya-audio-v1',
+              expiration: { maxEntries: 1000, maxAgeSeconds: 60 * 60 * 24 * 365 },
+            },
+          },
+        ],
       },
     }),
   ],
-  test: { environment: 'jsdom', globals: true, maxWorkers: 2, setupFiles: ['./src/test-setup.ts'] },
+  test: { environment: 'jsdom', globals: true, include: ['src/**/*.test.{ts,tsx}'], maxWorkers: 2, setupFiles: ['./src/test-setup.ts'] },
 });
