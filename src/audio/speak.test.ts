@@ -97,3 +97,24 @@ test('every audio file is a real mp3', () => {
   const isFrame = head[0] === 0xff && (head[1] & 0xe0) === 0xe0;
   expect(isId3 || isFrame).toBe(true);
 });
+
+test('prefers WebAudio over the <audio> element (iOS PWA cannot stream cached audio through <audio>)', async () => {
+  const play = vi.fn(() => Promise.resolve());
+  let started = 0;
+  vi.stubGlobal('Audio', vi.fn(function () { return { play, pause() {}, load() {} }; }));
+  vi.stubGlobal('fetch', vi.fn(() => Promise.resolve({ ok: true, arrayBuffer: () => Promise.resolve(new ArrayBuffer(8)) })));
+  vi.stubGlobal('AudioContext', function (this: unknown) {
+    return {
+      state: 'running',
+      destination: {},
+      createBuffer: () => ({}),
+      decodeAudioData: () => Promise.resolve({ duration: 1 }),
+      createBufferSource() { return { buffer: null, connect() {}, start() { started++; }, stop() {} }; },
+    };
+  });
+  await speak({ en: 'ankle' }, true);
+  await speak({ en: 'bandage' }, true);
+  await speak({ en: 'explorer' }, true);
+  expect(started).toBe(3);
+  expect(play).not.toHaveBeenCalled();
+});

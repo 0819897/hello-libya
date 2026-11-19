@@ -14,6 +14,9 @@ if ('serviceWorker' in navigator) {
   });
 }
 
+// Old WAV clips (replaced by mp3 in v1.1) were runtime-cached under this name; free that space.
+if (typeof caches !== 'undefined') caches.delete('hello-libya-audio-v1').catch(() => {});
+
 createRoot(document.getElementById('root')!).render(
   <StrictMode><HashRouter><App /></HashRouter></StrictMode>,
 );

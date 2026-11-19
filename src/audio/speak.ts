@@ -3,6 +3,7 @@ let sharedAudio: HTMLAudioElement | null = null;
 let sharedAudioCtor: unknown = null;
 let activeSource: { stop?: () => void } | null = null;
 let ctx: AudioContext | null = null;
+let ctxCtor: unknown = null;
 
 function getSharedAudio(): HTMLAudioElement | null {
   if (typeof Audio === 'undefined') return null;
@@ -25,19 +26,31 @@ function getCtx(): AudioContext | null {
   const AC = globalThis.AudioContext ?? (globalThis as unknown as { webkitAudioContext?: typeof AudioContext }).webkitAudioContext;
   if (!AC) { ctx = null; return null; }
   setPlaybackSession();
-  ctx ??= new AC();
-  if (ctx.state === 'suspended') ctx.resume?.().catch(() => {});
+  try {
+    if (!ctx || ctxCtor !== AC) { ctxCtor = AC; ctx = new AC(); }
+  } catch { return null; }
+  // iOS reports 'interrupted' after a call, Siri or backgrounding the PWA; resume() brings it back.
+  if (ctx.state !== 'running') ctx.resume?.().catch(() => {});
   return ctx;
 }
 
+/** iOS only unlocks WebAudio when something is played inside a user gesture: play one silent sample. */
+function unlockInGesture() {
+  const ac = getCtx();
+  if (!ac) return;
+  try {
+    const b = ac.createBuffer(1, 1, 22050);
+    const src = ac.createBufferSource();
+    src.buffer = b;
+    src.connect(ac.destination);
+    src.start(0);
+  } catch { /* ignore */ }
+}
+
 if (typeof window !== 'undefined' && typeof window.addEventListener === 'function') {
-  const unlock = () => {
-    const ac = getCtx();
-    if (ac && ac.state === 'suspended') ac.resume?.().catch(() => {});
-  };
-  window.addEventListener('pointerdown', unlock, { passive: true });
-  window.addEventListener('touchend', unlock, { passive: true });
-  window.addEventListener('click', unlock, { passive: true });
+  window.addEventListener('pointerdown', unlockInGesture, { passive: true });
+  window.addEventListener('touchend', unlockInGesture, { passive: true });
+  window.addEventListener('click', unlockInGesture, { passive: true });
 }
 
 /** Deterministic filename in ./content/audio/ for any English word or sentence. */
@@ -60,16 +73,36 @@ function decode(ac: AudioContext, buf: ArrayBuffer): Promise<AudioBuffer> {
   });
 }
 
-async function playViaWebAudio(url: string): Promise<boolean> {
+/** Resolves false instead of hanging: on iOS resume() can stay pending forever outside a gesture. */
+function withTimeout<T>(p: Promise<T>, ms: number, fallback: T): Promise<T> {
+  return Promise.race([p, new Promise<T>(r => setTimeout(() => r(fallback), ms))]);
+}
+
+const buffers = new Map<string, AudioBuffer>();
+let playToken = 0;
+
+/**
+ * Primary path everywhere. fetch() reads the mp3 straight from the service-worker cache; an <audio>
+ * element would instead send HTTP Range requests, which cached responses cannot answer, so on an
+ * installed iPhone PWA it plays one or two words and then stays silent.
+ */
+async function playViaWebAudio(url: string, token: number): Promise<boolean> {
   try {
     const ac = getCtx();
     if (!ac || typeof fetch !== 'function' || typeof ac.decodeAudioData !== 'function') return false;
-    const res = await fetch(url);
-    if (!res.ok) return false;
-    const audioBuf = await decode(ac, await res.arrayBuffer());
-    if (ac.state === 'suspended') await ac.resume?.();
+    let audioBuf = buffers.get(url);
+    if (!audioBuf) {
+      const res = await fetch(url);
+      if (!res.ok) return false;
+      audioBuf = await decode(ac, await res.arrayBuffer());
+      if (buffers.size > 60) buffers.delete(buffers.keys().next().value as string);
+      buffers.set(url, audioBuf);
+    }
+    if (ac.state !== 'running') await withTimeout(Promise.resolve(ac.resume?.()).catch(() => {}), 300, undefined);
     if (ac.state && ac.state !== 'running') return false;
+    if (token !== playToken) return true; // a newer word was requested meanwhile: stay quiet
     try { activeSource?.stop?.(); } catch { /* already stopped */ }
+    try { sharedAudio?.pause?.(); } catch { /* ignore */ }
     const src = ac.createBufferSource();
     src.buffer = audioBuf;
     src.connect(ac.destination);
@@ -90,13 +123,16 @@ function pickEnglishVoice(synth: SpeechSynthesis): SpeechSynthesisVoice | undefi
   );
 }
 
-/** Play a word: HTMLAudio first (ignores iOS silent switch on tap), then WebAudio, then browser voice. Never rejects. */
+/** Play a word: WebAudio (works from the offline cache), then an <audio> element, then the browser voice. Never rejects. */
 export async function speak(w: { en: string; audio?: string }, enabled: boolean): Promise<void> {
   if (!enabled) return;
   try {
     setPlaybackSession();
+    const token = ++playToken;
     const file = w.audio ?? audioFileFor(w.en);
     const url = `./content/audio/${file}`;
+    if (await playViaWebAudio(url, token)) return;
+    if (token !== playToken) return;
     const a = getSharedAudio();
     if (a) {
       try {
@@ -105,9 +141,8 @@ export async function speak(w: { en: string; audio?: string }, enabled: boolean)
         a.load?.();
         await a.play();
         return;
-      } catch { /* blocked by autoplay or unsupported -> try WebAudio */ }
+      } catch { /* blocked or unsupported -> browser voice */ }
     }
-    if (await playViaWebAudio(url)) return;
     const synth = globalThis.speechSynthesis;
     if (!synth || typeof SpeechSynthesisUtterance === 'undefined') return;
     let voice = pickEnglishVoice(synth);
