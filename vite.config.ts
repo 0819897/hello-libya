@@ -4,12 +4,16 @@ import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
 import { VitePWA } from 'vite-plugin-pwa';
 import { pbkdf2Sync, randomBytes } from 'node:crypto';
+import { readFileSync } from 'node:fs';
 
-// Teacher code: read from the TEACHER_CODE secret at build time; only a salted hash reaches the app.
+// Teacher code: only a salted PBKDF2 hash reaches the app. Source, in order: the TEACHER_CODE secret
+// (GitHub Actions) if set, otherwise the committed teacher-code.hash.json (the code itself is never committed).
 function teacherHash() {
   const raw = (process.env.TEACHER_CODE ?? '').trim()
     .replace(/[٠-٩]/g, d => String(d.charCodeAt(0) - 0x0660)).replace(/[۰-۹]/g, d => String(d.charCodeAt(0) - 0x06f0));
-  if (!raw) return null;
+  if (!raw) {
+    try { return JSON.parse(readFileSync(new URL('./teacher-code.hash.json', import.meta.url), 'utf8')); } catch { return null; }
+  }
   const salt = randomBytes(16);
   const iterations = 300_000;
   return { salt: salt.toString('hex'), iterations, hash: pbkdf2Sync(raw, salt, iterations, 32, 'sha256').toString('hex') };

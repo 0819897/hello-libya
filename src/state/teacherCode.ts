@@ -1,9 +1,9 @@
 /**
  * Teacher code: turning teacher mode ON needs a code chosen by the school.
  *
- * The code itself is never in the repository or the app. It is stored as the GitHub Actions secret
- * TEACHER_CODE; at build time vite.config.ts turns it into a salted PBKDF2-SHA256 hash, and only that
- * hash ships in the app. Without the secret, teacher mode cannot be turned on at all.
+ * The code itself is never in the repository or the app: only a salted PBKDF2-SHA256 hash ships. At build
+ * time vite.config.ts hashes the GitHub Actions secret TEACHER_CODE if it is set, otherwise it uses the
+ * committed teacher-code.hash.json. With neither, teacher mode cannot be turned on at all.
  *
  * This stops students, not a determined programmer: the app has no server, so a short code could be
  * brute-forced from the hash offline. That is an accepted trade-off for a children's learning app.
