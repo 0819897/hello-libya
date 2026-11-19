@@ -66,8 +66,10 @@ export function SpeedRun({ words, seconds = 60, rng: rngProp }: { words: Word[];
   const start = () => {
     scoreRef.current = 0; xpRef.current = 0; maxComboRef.current = 0; finishedRef.current = false;
     setScore(0); setCombo(0); setXp(0); setWrongAr([]);
-    setDeal(nextDeal(words, rng));
+    const first = nextDeal(words, rng);
+    setDeal(first);
     setPhase('run');
+    speak(first.target, progress.sound);
   };
 
   const pick = (w: Word) => {

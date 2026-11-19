@@ -3,18 +3,30 @@ let activeAudio: HTMLAudioElement | null = null;
 let activeSource: { stop?: () => void } | null = null;
 let ctx: AudioContext | null = null;
 
+function setPlaybackSession() {
+  try {
+    const nav = globalThis.navigator as { audioSession?: { type: string } } | undefined;
+    if (nav?.audioSession) nav.audioSession.type = 'playback';
+  } catch { /* ignore */ }
+}
+
 function getCtx(): AudioContext | null {
   const AC = globalThis.AudioContext ?? (globalThis as unknown as { webkitAudioContext?: typeof AudioContext }).webkitAudioContext;
   if (!AC) { ctx = null; return null; }
+  setPlaybackSession();
   ctx ??= new AC();
   if (ctx.state === 'suspended') ctx.resume?.().catch(() => {});
   return ctx;
 }
 
 if (typeof window !== 'undefined' && typeof window.addEventListener === 'function') {
-  const unlock = () => { getCtx(); };
+  const unlock = () => {
+    const ac = getCtx();
+    if (ac && ac.state === 'suspended') ac.resume?.().catch(() => {});
+  };
   window.addEventListener('pointerdown', unlock, { passive: true });
-  window.addEventListener('touchstart', unlock, { passive: true });
+  window.addEventListener('touchend', unlock, { passive: true });
+  window.addEventListener('click', unlock, { passive: true });
 }
 
 /** Deterministic filename in ./content/audio/ for any English word or sentence. */
@@ -55,6 +67,7 @@ async function playWavViaWebAudio(url: string): Promise<boolean> {
       for (let i = 0; i < frameCount; i++) ch[i] = (bytes[pcmOffset + i * channels] - 128) / 128;
     }
     if (ac.state === 'suspended') await ac.resume?.();
+    if (ac.state && ac.state !== 'running') return false;
     try { activeSource?.stop?.(); } catch { /* already stopped */ }
     const src = ac.createBufferSource();
     src.buffer = audioBuf;
@@ -76,20 +89,22 @@ function pickEnglishVoice(synth: SpeechSynthesis): SpeechSynthesisVoice | undefi
   );
 }
 
-/** Play a word: recorded audio first (WebAudio then HTMLAudio), then the browser voice. Never rejects. */
+/** Play a word: HTMLAudio first (ignores iOS silent switch on tap), then WebAudio, then browser voice. Never rejects. */
 export async function speak(w: { en: string; audio?: string }, enabled: boolean): Promise<void> {
   if (!enabled) return;
   try {
+    setPlaybackSession();
     const file = w.audio ?? audioFileFor(w.en);
     const url = `./content/audio/${file}`;
-    if (await playWavViaWebAudio(url)) return;
     try {
       activeAudio?.pause?.();
       const a = new Audio(url);
+      a.setAttribute?.('playsinline', '');
       activeAudio = a;
       await a.play();
       return;
-    } catch { /* fall back to speech */ }
+    } catch { /* blocked by autoplay or unsupported -> try WebAudio */ }
+    if (await playWavViaWebAudio(url)) return;
     const synth = globalThis.speechSynthesis;
     if (!synth || typeof SpeechSynthesisUtterance === 'undefined') return;
     let voice = pickEnglishVoice(synth);
