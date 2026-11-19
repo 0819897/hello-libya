@@ -5,7 +5,7 @@ import { buildChallenge, buildQuestions } from '../engine/questions';
 import { makeRng } from '../engine/rng';
 import { pointsFor, starsFor } from '../engine/scoring';
 import { registry } from '../games/registry';
-import { chime, speak } from '../audio/speak';
+import { chime, prefetchAudio, speak } from '../audio/speak';
 import { awardBadges, BADGES, completeLesson, isUnlocked, orderedLessonIds, todayStr } from '../state/progress';
 import { applyStreakFreeze, loadDuo, recordActivity, saveDuo } from '../state/quests';
 import { useProgress } from '../state/ProgressContext';
@@ -32,6 +32,11 @@ export function LessonRun({ lesson, grade, rng: rngProp, onFinish, onNext }: {
   const rounds = useMemo(() => lesson.games.map(g => playable(buildQuestions(lesson, g, rng))).filter(r => r.length > 0), [lesson, rng]);
   const challenge = useMemo(() => playable(buildChallenge(lesson, rng)).map(q => ({ ...q, explainAr: undefined })), [lesson, rng]);
   const cards = lesson.words.length + (lesson.grammar ? 1 : 0);
+
+  useEffect(() => {
+    // Cache this lesson's audio in the background so it keeps working offline.
+    prefetchAudio([...lesson.words.map(w => w.en), ...(lesson.grammar?.examples ?? []), ...(lesson.sentences ?? [])]);
+  }, [lesson]);
 
   const [phase, setPhase] = useState<Phase>('learn');
   const [card, setCard] = useState(0);

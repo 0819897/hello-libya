@@ -114,6 +114,26 @@ async function playViaWebAudio(url: string, token: number): Promise<boolean> {
   }
 }
 
+const prefetched = new Set<string>();
+
+/**
+ * Downloads clips in the background (2 at a time) so the service worker caches them for offline use.
+ * Failures are ignored: the clip is simply fetched again when it is played.
+ */
+export function prefetchAudio(texts: string[]): void {
+  if (typeof fetch !== 'function') return;
+  const urls = [...new Set(texts.filter(Boolean).map(t => `./content/audio/${audioFileFor(t)}`))].filter(u => !prefetched.has(u));
+  urls.forEach(u => prefetched.add(u));
+  let i = 0;
+  const next = (): Promise<void> => {
+    const u = urls[i++];
+    if (!u) return Promise.resolve();
+    return fetch(u).then(r => r.arrayBuffer?.()).catch(() => { prefetched.delete(u); }).then(next);
+  };
+  void next();
+  void next();
+}
+
 function pickEnglishVoice(synth: SpeechSynthesis): SpeechSynthesisVoice | undefined {
   const voices = synth.getVoices?.() ?? [];
   return (

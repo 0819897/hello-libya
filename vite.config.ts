@@ -4,8 +4,11 @@ import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
 import { VitePWA } from 'vite-plugin-pwa';
 
+const build = new Date(Date.now() + 2 * 3600e3).toISOString().slice(0, 16).replace('T', ' '); // Libya is UTC+2
+
 export default defineConfig({
   base: './',
+  define: { __APP_BUILD__: JSON.stringify(build) },
   plugins: [
     react(),
     tailwindcss(),
@@ -30,9 +33,11 @@ export default defineConfig({
         ],
       },
       workbox: {
-        // Precache the app shell, lesson JSONs and every lesson mp3 so the whole app (sound included)
-        // works offline after the first visit. Workbox only re-downloads files whose content changed.
-        globPatterns: ['**/*.{js,css,html,svg,png,json,webp,mp3}'],
+        // Keep the install tiny (app shell + lesson JSON, ~50 files): an update that has to download
+        // hundreds of mp3s fails on a phone if one request fails, and the old version then stays forever.
+        // Audio is cached on first use, and each lesson's audio is fetched in the background when it opens
+        // (prefetchAudio), so a lesson opened once also works offline.
+        globPatterns: ['**/*.{js,css,html,svg,png,json,webp}'],
         navigateFallback: 'index.html',
         cleanupOutdatedCaches: true,
         runtimeCaching: [

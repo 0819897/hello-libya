@@ -54,6 +54,7 @@ export default function Settings() {
         )}
       </Card>
       <Link to="/about" className="flex min-h-12 items-center font-bold text-teal-800 underline">ℹ️ عن التطبيق</Link>
+      <p className="mt-2 text-sm text-gray-500">الإصدار: <span dir="ltr">{typeof __APP_BUILD__ === 'string' ? __APP_BUILD__ : 'dev'}</span></p>
     </Shell>
   );
 }
