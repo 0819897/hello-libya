@@ -46,15 +46,27 @@ test('selects an installed en-US voice when no en-GB voice exists (Arabic Window
   expect(captured.lang).toBe('en-US');
 });
 
-test('plays pre-generated local wav file by default for words and sentences', async () => {
-  let playedSrc = '';
-  vi.stubGlobal('Audio', function (this: { src: string; play: () => Promise<void>; pause: () => void }, src: string) {
-    this.src = src;
+test('reuses a single HTMLAudioElement across multiple words (prevents iOS Safari media limit)', async () => {
+  const played: string[] = [];
+  let instances = 0;
+  vi.stubGlobal('Audio', function (this: { src: string; play: () => Promise<void>; pause: () => void; load: () => void }) {
+    instances++;
+    this.src = '';
     this.pause = () => {};
-    this.play = () => { playedSrc = src; return Promise.resolve(); };
+    this.load = () => {};
+    this.play = () => { played.push(this.src); return Promise.resolve(); };
   });
   await speak({ en: 'inventor' }, true);
-  expect(playedSrc).toBe(`./content/audio/${audioFileFor('inventor')}`);
+  await speak({ en: 'invention' }, true);
+  await speak({ en: 'study' }, true);
+  await speak({ en: 'armchair' }, true);
+  expect(instances).toBe(1);
+  expect(played).toEqual([
+    `./content/audio/${audioFileFor('inventor')}`,
+    `./content/audio/${audioFileFor('invention')}`,
+    `./content/audio/${audioFileFor('study')}`,
+    `./content/audio/${audioFileFor('armchair')}`,
+  ]);
   expect(existsSync(join(process.cwd(), 'public', 'content', 'audio', audioFileFor('inventor')))).toBe(true);
   expect(existsSync(join(process.cwd(), 'public', 'content', 'audio', audioFileFor('While I was packing my bag, the telephone rang noisily.')))).toBe(true);
 });

@@ -1,7 +1,18 @@
 let activeUtterance: SpeechSynthesisUtterance | null = null;
-let activeAudio: HTMLAudioElement | null = null;
+let sharedAudio: HTMLAudioElement | null = null;
+let sharedAudioCtor: unknown = null;
 let activeSource: { stop?: () => void } | null = null;
 let ctx: AudioContext | null = null;
+
+function getSharedAudio(): HTMLAudioElement | null {
+  if (typeof Audio === 'undefined') return null;
+  if (!sharedAudio || sharedAudioCtor !== Audio) {
+    sharedAudioCtor = Audio;
+    sharedAudio = new Audio();
+    sharedAudio.setAttribute?.('playsinline', '');
+  }
+  return sharedAudio;
+}
 
 function setPlaybackSession() {
   try {
@@ -96,14 +107,16 @@ export async function speak(w: { en: string; audio?: string }, enabled: boolean)
     setPlaybackSession();
     const file = w.audio ?? audioFileFor(w.en);
     const url = `./content/audio/${file}`;
-    try {
-      activeAudio?.pause?.();
-      const a = new Audio(url);
-      a.setAttribute?.('playsinline', '');
-      activeAudio = a;
-      await a.play();
-      return;
-    } catch { /* blocked by autoplay or unsupported -> try WebAudio */ }
+    const a = getSharedAudio();
+    if (a) {
+      try {
+        a.pause?.();
+        a.src = url;
+        a.load?.();
+        await a.play();
+        return;
+      } catch { /* blocked by autoplay or unsupported -> try WebAudio */ }
+    }
     if (await playWavViaWebAudio(url)) return;
     const synth = globalThis.speechSynthesis;
     if (!synth || typeof SpeechSynthesisUtterance === 'undefined') return;

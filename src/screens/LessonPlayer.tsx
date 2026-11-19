@@ -163,8 +163,8 @@ export function LessonRun({ lesson, grade, rng: rngProp, onFinish, onNext }: {
             <ul className="mt-3 space-y-1">{lesson.grammar?.examples.map(e => <li key={e} className="text-2xl"><WordChip en={e} /></li>)}</ul>
           </>)}
           <div className="mt-5 flex flex-wrap justify-center gap-3">
-            {card > 0 && <Button variant="soft" onClick={() => setCard(card - 1)}>السابق</Button>}
-            {card + 1 < cards ? <Button onClick={() => setCard(card + 1)}>الكلمة التالية</Button> : <Button onClick={startPlay}>هيا نلعب!</Button>}
+            {card > 0 && <Button variant="soft" onClick={() => { const prev = card - 1; setCard(prev); if (lesson.words[prev]) speak(lesson.words[prev], progress.sound); }}>السابق</Button>}
+            {card + 1 < cards ? <Button onClick={() => { const nxt = card + 1; setCard(nxt); if (lesson.words[nxt]) speak(lesson.words[nxt], progress.sound); }}>الكلمة التالية</Button> : <Button onClick={startPlay}>هيا نلعب!</Button>}
             {card + 1 < cards && <Button variant="ghost" onClick={startPlay}>تخطَّ إلى اللعب</Button>}
           </div>
         </Card>
