@@ -14,8 +14,10 @@ if ('serviceWorker' in navigator) {
   });
 }
 
-// Old WAV clips (replaced by mp3 in v1.1) were runtime-cached under this name; free that space.
-if (typeof caches !== 'undefined') caches.delete('hello-libya-audio-v1').catch(() => {});
+// Clips from earlier voices (v1: old WAV, v2: British bf_emma) were cached under these names; free that space.
+if (typeof caches !== 'undefined') {
+  for (const old of ['hello-libya-audio-v1', 'hello-libya-audio-v2']) caches.delete(old).catch(() => {});
+}
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode><HashRouter><App /></HashRouter></StrictMode>,

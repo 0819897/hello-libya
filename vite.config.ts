@@ -45,7 +45,8 @@ export default defineConfig({
             urlPattern: /\/content\/audio\/.*\.mp3$/i,
             handler: 'CacheFirst',
             options: {
-              cacheName: 'hello-libya-audio-v2',
+              // Bump the version whenever the voice changes: clip file names depend only on the text.
+              cacheName: 'hello-libya-audio-v3',
               expiration: { maxEntries: 1000, maxAgeSeconds: 60 * 60 * 24 * 365 },
             },
           },
