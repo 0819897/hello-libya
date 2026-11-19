@@ -79,7 +79,7 @@ if (todo.length > 0) {
   let n = 0;
   for (const [file, text] of todo) {
     const audio = await tts.generate(text, { voice: VOICE, speed: SPEED });
-    audio.save(tmp);
+    writeFileSync(tmp, Buffer.from(audio.toWav()));
     // Trim leading/trailing silence, keep a short natural pad, normalise loudness, mono 24 kHz 48 kbps MP3.
     execFileSync('ffmpeg', ['-nostdin', '-loglevel', 'error', '-y', '-i', tmp, '-af',
       'silenceremove=start_periods=1:start_threshold=-50dB,areverse,silenceremove=start_periods=1:start_threshold=-50dB,areverse,adelay=60,apad=pad_dur=0.12,loudnorm=I=-16:TP=-1.5:LRA=11',
