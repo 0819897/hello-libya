@@ -133,3 +133,19 @@ export function awardBadges(p: Progress, grade: GradeIndex): string[] {
   if (p.learned.length >= 100) earned.add('words-100');
   return [...p.badges, ...BADGES.map(b => b.id).filter(id => earned.has(id) && !p.badges.includes(id))];
 }
+
+const TEACHER_MIGRATION_KEY = 'eq.teachercode.v1';
+
+/**
+ * Teacher mode used to need no code. Called once at app start: switches it off on each device a single
+ * time, so students who had turned it on lose it and a teacher re-enters the code.
+ */
+export function migrateTeacherModeOnce(): void {
+  try {
+    if (localStorage.getItem(TEACHER_MIGRATION_KEY)) return;
+    localStorage.setItem(TEACHER_MIGRATION_KEY, '1');
+  } catch { return; }
+  const p = loadProgress();
+  if (p.teacherMode) saveProgress({ ...p, teacherMode: false });
+}
+

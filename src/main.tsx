@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client';
 import { HashRouter } from 'react-router-dom';
 import App from './App';
 import './index.css';
+import { migrateTeacherModeOnce } from './state/progress';
 
 if ('serviceWorker' in navigator) {
   let refreshing = false;
@@ -18,6 +19,8 @@ if ('serviceWorker' in navigator) {
 if (typeof caches !== 'undefined') {
   for (const old of ['hello-libya-audio-v1', 'hello-libya-audio-v2']) caches.delete(old).catch(() => {});
 }
+
+migrateTeacherModeOnce();
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode><HashRouter><App /></HashRouter></StrictMode>,

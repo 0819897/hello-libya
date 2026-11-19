@@ -5,6 +5,7 @@ import { useProgress } from '../state/ProgressContext';
 import { Button } from '../ui/Button';
 import { Card } from '../ui/Card';
 import { Shell } from '../ui/Shell';
+import { TeacherGate } from '../ui/TeacherGate';
 
 /** Parse and validate a lesson file; on success the lesson is added (or replaces one with the same id). */
 export function importLessonText(p: Progress, text: string): { ok: true; progress: Progress; title: string } | { ok: false; errorAr: string } {
@@ -29,6 +30,15 @@ export default function TeacherMode() {
     update(p => { const again = importLessonText(p, text); return again.ok ? again.progress : p; });
     setMsg({ ok: true, text: `تمت إضافة الدرس: ${r.title}` });
   };
+
+  if (!progress.teacherMode) {
+    return (
+      <Shell title="وضع المعلّم">
+        <h1 className="mb-4 text-2xl font-black">👩‍🏫 وضع المعلّم</h1>
+        <TeacherGate onUnlock={() => update(p => ({ ...p, teacherMode: true }))} />
+      </Shell>
+    );
+  }
 
   return (
     <Shell title="وضع المعلّم">

@@ -15,7 +15,7 @@ const file = (text: string, name = 'lesson.json') => new File([text], name, { ty
 const show = () => render(<MemoryRouter><ProgressProvider><TeacherMode /></ProgressProvider></MemoryRouter>);
 const upload = (f: File) => userEvent.upload(screen.getByLabelText(/اختر ملف درس/), f);
 
-beforeEach(() => { localStorage.clear(); saveProgress({ ...defaultProgress(), name: 'Teacher' }); });
+beforeEach(() => { localStorage.clear(); saveProgress({ ...defaultProgress(), name: 'Teacher', teacherMode: true }); });
 
 test('a valid file is added to progress.imported and appears in the path under دروس إضافية', async () => {
   show();

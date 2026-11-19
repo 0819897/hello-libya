@@ -3,12 +3,23 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
 import { VitePWA } from 'vite-plugin-pwa';
+import { pbkdf2Sync, randomBytes } from 'node:crypto';
+
+// Teacher code: read from the TEACHER_CODE secret at build time; only a salted hash reaches the app.
+function teacherHash() {
+  const raw = (process.env.TEACHER_CODE ?? '').trim()
+    .replace(/[٠-٩]/g, d => String(d.charCodeAt(0) - 0x0660)).replace(/[۰-۹]/g, d => String(d.charCodeAt(0) - 0x06f0));
+  if (!raw) return null;
+  const salt = randomBytes(16);
+  const iterations = 300_000;
+  return { salt: salt.toString('hex'), iterations, hash: pbkdf2Sync(raw, salt, iterations, 32, 'sha256').toString('hex') };
+}
 
 const build = new Date(Date.now() + 2 * 3600e3).toISOString().slice(0, 16).replace('T', ' '); // Libya is UTC+2
 
 export default defineConfig({
   base: './',
-  define: { __APP_BUILD__: JSON.stringify(build) },
+  define: { __APP_BUILD__: JSON.stringify(build), __TEACHER_HASH__: JSON.stringify(teacherHash()) },
   plugins: [
     react(),
     tailwindcss(),

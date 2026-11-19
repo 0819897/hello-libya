@@ -4,6 +4,7 @@ import { defaultProgress } from '../state/progress';
 import { clearDuo } from '../state/quests';
 import { useProgress } from '../state/ProgressContext';
 import { Button } from '../ui/Button';
+import { TeacherGate } from '../ui/TeacherGate';
 import { Card } from '../ui/Card';
 import { Shell } from '../ui/Shell';
 
@@ -25,12 +26,17 @@ export default function Settings() {
   const [name, setName] = useState(progress.name);
   const [saved, setSaved] = useState(false);
   const [confirm, setConfirm] = useState(false);
+  const [askCode, setAskCode] = useState(false);
   return (
     <Shell title="الإعدادات">
       <h1 className="mb-4 text-2xl font-black">الإعدادات</h1>
       <Card className="mb-4 space-y-3">
         <Toggle label="🔊 الصوت" on={progress.sound} onChange={v => update(p => ({ ...p, sound: v }))} />
-        <Toggle label="👩‍🏫 وضع المعلّم (يفتح كل الدروس)" on={progress.teacherMode} onChange={v => update(p => ({ ...p, teacherMode: v }))} />
+        <Toggle label="👩‍🏫 وضع المعلّم (يفتح كل الدروس)" on={progress.teacherMode}
+          onChange={v => { if (v) setAskCode(true); else { setAskCode(false); update(p => ({ ...p, teacherMode: false })); } }} />
+        {askCode && !progress.teacherMode && (
+          <TeacherGate onUnlock={() => { setAskCode(false); update(p => ({ ...p, teacherMode: true })); }} onCancel={() => setAskCode(false)} />
+        )}
         <Link to="/teacher" className="flex min-h-12 items-center rounded-2xl px-4 font-bold text-teal-800 underline">إدارة الدروس الإضافية (للمعلّم)</Link>
       </Card>
       <Card className="mb-4">
