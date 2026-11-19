@@ -31,6 +31,7 @@ export function StoryRun({ story, gradeId = 'grade5' }: { story: Story; gradeId?
   const [quizSolved, setQuizSolved] = useState(false);
   const [done, setDone] = useState(false);
   const [bonusGems, setBonusGems] = useState(0);
+  const [storyXp, setStoryXp] = useState(0);
 
   const visible = story.steps.slice(0, idx + 1);
   const current = story.steps[idx];
@@ -48,12 +49,17 @@ export function StoryRun({ story, gradeId = 'grade5' }: { story: Story; gradeId?
     }
     const today = todayStr();
     const d0 = loadDuo(today);
-    const storiesDone = d0.storiesDone.includes(story.id) ? d0.storiesDone : [...d0.storiesDone, story.id];
-    const act = recordActivity({ ...d0, storiesDone }, { xp: STORY_XP, today });
-    saveDuo(act.duo);
-    const gain = STORY_XP + act.bonusGems;
-    update(p => ({ ...p, points: p.points + gain }));
-    setBonusGems(act.bonusGems);
+    // Points are earned the first time only, so replaying a story is practice, not a points farm.
+    const firstTime = !d0.storiesDone.includes(story.id);
+    const xp = firstTime ? STORY_XP : 0;
+    if (firstTime) {
+      const act = recordActivity({ ...d0, storiesDone: [...d0.storiesDone, story.id] }, { xp, today });
+      saveDuo(act.duo);
+      const gain = xp + act.bonusGems;
+      update(p => ({ ...p, points: p.points + gain }));
+      setBonusGems(act.bonusGems);
+    }
+    setStoryXp(xp);
     setDone(true);
   };
 
@@ -74,7 +80,9 @@ export function StoryRun({ story, gradeId = 'grade5' }: { story: Story; gradeId?
         <p className="text-6xl" aria-hidden>📖🎉</p>
         <h2 className="mt-2 text-3xl font-black text-teal-700">أكملت القصة بنجاح!</h2>
         <p className="mt-1 text-xl font-bold">{story.titleAr} · <span className="en">{story.title}</span></p>
-        <p className="mt-2 text-2xl font-black text-amber-600">+{STORY_XP + bonusGems} 💎</p>
+        {storyXp > 0
+          ? <p className="mt-2 text-2xl font-black text-amber-600">+{storyXp + bonusGems} 💎</p>
+          : <p className="mt-2 font-bold text-gray-700">قراءة رائعة للمراجعة! 👏 (نقاط القصة تُمنح في المرة الأولى فقط)</p>}
         {bonusGems > 0 && <p className="mt-1 font-bold text-green-800">🎁 يشمل +{bonusGems} جواهر من المهام اليومية!</p>}
         <div className="mt-5 flex justify-center">
           <Link to={`/stories/${gradeId}`} className="flex min-h-12 items-center rounded-2xl bg-teal-600 px-6 text-lg font-bold text-white">

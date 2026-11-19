@@ -5,7 +5,14 @@ export const DUO_KEY = 'eq.duo.v1';
 export const FREEZE_COST = 50;
 export const MAX_FREEZES = 2;
 
-export type SavedLearner = { id: string; name: string; avatar: string; progress: Progress; weeklyXp: number };
+/** Everything in DuoState that belongs to one learner (not the device-wide learner list). */
+export type PersonalDuo = Omit<DuoState, 'learners' | 'activeLearnerId'>;
+
+export type SavedLearner = {
+  id: string; name: string; avatar: string; progress: Progress; weeklyXp: number;
+  /** The learner's own quests, freezes, avatars, stories and records. Missing in data saved before v1.1. */
+  duo?: PersonalDuo;
+};
 
 export type DuoState = {
   day: string;
@@ -19,6 +26,8 @@ export type DuoState = {
   storiesDone: string[];
   weekKey: string;
   weeklyXp: number;
+  /** XP earned in the previous calendar week (0 if the learner skipped it): the honest "rival" in the league. */
+  lastWeekXp: number;
   learners: SavedLearner[];
   activeLearnerId: string;
 };
@@ -51,9 +60,11 @@ export function defaultDuo(today = todayStr()): DuoState {
   return {
     day: today, dailyXp: 0, dailyPerfect: 0, bestComboToday: 0, claimed: [],
     freezes: 0, unlockedAvatars: [], bestSpeedScore: 0, storiesDone: [],
-    weekKey: weekOf(today), weeklyXp: 0, learners: [], activeLearnerId: 'me',
+    weekKey: weekOf(today), weeklyXp: 0, lastWeekXp: 0, learners: [], activeLearnerId: 'me',
   };
 }
+
+const isPreviousWeek = (prev: string, cur: string) => Number(prev.slice(1)) + 1 === Number(cur.slice(1));
 
 let memDuo: string | null = null;
 
@@ -71,6 +82,7 @@ function rollOver(d: DuoState, today: string): DuoState {
     claimed: sameDay ? d.claimed : [],
     weekKey: wk,
     weeklyXp: sameWeek ? d.weeklyXp : 0,
+    lastWeekXp: sameWeek ? d.lastWeekXp : (isPreviousWeek(d.weekKey, wk) ? d.weeklyXp : 0),
     learners: sameWeek ? d.learners : d.learners.map(l => ({ ...l, weeklyXp: 0 })),
   };
 }
@@ -95,6 +107,7 @@ export function loadDuo(today = todayStr()): DuoState {
       storiesDone: Array.isArray(p.storiesDone) ? p.storiesDone : [],
       weekKey: typeof p.weekKey === 'string' ? p.weekKey : base.weekKey,
       weeklyXp: typeof p.weeklyXp === 'number' ? p.weeklyXp : 0,
+      lastWeekXp: typeof p.lastWeekXp === 'number' ? p.lastWeekXp : 0,
       learners: Array.isArray(p.learners) ? p.learners : [],
       activeLearnerId: typeof p.activeLearnerId === 'string' ? p.activeLearnerId : 'me',
     }, today);
@@ -171,34 +184,45 @@ export function buyAvatar(p: Progress, d: DuoState, emoji: string): { ok: boolea
   };
 }
 
-const RIVALS = [
-  { name: 'نادية (زميلة)', avatar: '👩‍🎓', xp: 260 },
-  { name: 'يوسف (زميل)', avatar: '🧑‍🚀', xp: 185 },
-  { name: 'سارة (زميلة)', avatar: '👧', xp: 115 },
-  { name: 'علي (زميل)', avatar: '👦', xp: 65 },
-];
+export type LeagueRow = { name: string; avatar: string; xp: number; isMe: boolean; isPast?: boolean; learnerId?: string };
 
-export function leagueTable(p: Progress, d: DuoState) {
+/**
+ * Weekly league of REAL learners only: the active learner, the other learners saved on this device,
+ * and the active learner's own score from last week. No invented classmates.
+ */
+export function leagueTable(p: Progress, d: DuoState): { tierAr: string; tierIcon: string; rows: LeagueRow[]; alone: boolean } {
   const tier = d.weeklyXp >= 250
     ? { tierAr: 'الدوري الذهبي', tierIcon: '🥇' }
     : d.weeklyXp >= 100
       ? { tierAr: 'الدوري الفضي', tierIcon: '🥈' }
       : { tierAr: 'الدوري البرونزي', tierIcon: '🥉' };
 
-  const others = d.learners
+  const others: LeagueRow[] = d.learners
     .filter(l => l.id !== d.activeLearnerId)
     .map(l => ({ name: l.name, avatar: l.avatar || '🙂', xp: l.weeklyXp, isMe: false, learnerId: l.id }));
 
-  const me = { name: p.name || 'أنت', avatar: p.avatar || '🙂', xp: d.weeklyXp, isMe: true, learnerId: d.activeLearnerId };
-  const rivals = RIVALS.map(r => ({ ...r, isMe: false, learnerId: undefined as string | undefined }));
-  const rows = [me, ...others, ...rivals].sort((a, b) => b.xp - a.xp);
-  return { ...tier, rows };
+  const me: LeagueRow = { name: p.name || 'أنت', avatar: p.avatar || '🙂', xp: d.weeklyXp, isMe: true };
+  const past: LeagueRow[] = d.lastWeekXp > 0
+    ? [{ name: 'أنت في الأسبوع الماضي', avatar: '🕰️', xp: d.lastWeekXp, isMe: false, isPast: true }]
+    : [];
+  const rows = [me, ...others, ...past].sort((a, b) => b.xp - a.xp || Number(b.isMe) - Number(a.isMe));
+  return { ...tier, rows, alone: others.length === 0 };
 }
 
+function personalOf(d: DuoState): PersonalDuo {
+  const { learners: _l, activeLearnerId: _a, ...rest } = d;
+  return rest;
+}
+
+/**
+ * Saves the active learner (progress AND personal quest/shop state) and switches to another learner,
+ * or creates a new one. Each learner keeps their own freezes, avatars, stories, records and quests.
+ */
 export function switchOrAddLearner(
   currentProgress: Progress,
   d: DuoState,
   target: { id: string } | { newName: string; avatar: string; mode: 'student' | 'self' },
+  today = todayStr(),
 ): { progress: Progress; duo: DuoState } {
   const savedCurrent: SavedLearner = {
     id: d.activeLearnerId,
@@ -206,22 +230,24 @@ export function switchOrAddLearner(
     avatar: currentProgress.avatar || '🙂',
     progress: currentProgress,
     weeklyXp: d.weeklyXp,
+    duo: personalOf(d),
   };
   const pool = [...d.learners.filter(l => l.id !== d.activeLearnerId), ...(currentProgress.name ? [savedCurrent] : [])];
 
   if ('id' in target) {
     const found = pool.find(l => l.id === target.id);
     if (!found) return { progress: currentProgress, duo: d };
+    const personal: PersonalDuo = found.duo ?? { ...personalOf(defaultDuo(today)), weeklyXp: found.weeklyXp };
     return {
       progress: found.progress,
-      duo: { ...d, learners: pool, activeLearnerId: found.id, weeklyXp: found.weeklyXp },
+      duo: rollOver({ ...personal, learners: pool, activeLearnerId: found.id }, today),
     };
   }
   const newId = `l-${Date.now()}-${pool.length + 1}`;
   const fresh: Progress = { ...defaultProgress(), name: target.newName.trim().slice(0, 20), avatar: target.avatar, mode: target.mode };
-  const nextPool = [...pool, { id: newId, name: fresh.name, avatar: fresh.avatar, progress: fresh, weeklyXp: 0 }];
+  const nextPool = [...pool, { id: newId, name: fresh.name, avatar: fresh.avatar, progress: fresh, weeklyXp: 0, duo: personalOf(defaultDuo(today)) }];
   return {
     progress: fresh,
-    duo: { ...d, learners: nextPool, activeLearnerId: newId, dailyXp: 0, dailyPerfect: 0, bestComboToday: 0, claimed: [], weeklyXp: 0 },
+    duo: { ...defaultDuo(today), learners: nextPool, activeLearnerId: newId },
   };
 }

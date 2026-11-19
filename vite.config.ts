@@ -15,7 +15,7 @@ export default defineConfig({
       manifest: {
         name: 'Hello Libya',
         short_name: 'Hello Libya',
-        description: 'تعلّم الإنجليزية للصف الرابع بالدروس القصيرة والألعاب',
+        description: 'تعلّم الإنجليزية للصفين الرابع والخامس بالدروس القصيرة والألعاب',
         lang: 'ar',
         dir: 'rtl',
         start_url: './',
@@ -30,16 +30,17 @@ export default defineConfig({
         ],
       },
       workbox: {
-        // Precache core app shell and lesson JSONs so SW updates install in <1s on mobile; cache audio on demand.
-        globPatterns: ['**/*.{js,css,html,svg,png,json,webp}'],
+        // Precache the app shell, lesson JSONs and every lesson mp3 so the whole app (sound included)
+        // works offline after the first visit. Workbox only re-downloads files whose content changed.
+        globPatterns: ['**/*.{js,css,html,svg,png,json,webp,mp3}'],
         navigateFallback: 'index.html',
         cleanupOutdatedCaches: true,
         runtimeCaching: [
           {
-            urlPattern: /\/content\/audio\/.*\.(?:wav|mp3)$/i,
+            urlPattern: /\/content\/audio\/.*\.mp3$/i,
             handler: 'CacheFirst',
             options: {
-              cacheName: 'hello-libya-audio-v1',
+              cacheName: 'hello-libya-audio-v2',
               expiration: { maxEntries: 1000, maxAgeSeconds: 60 * 60 * 24 * 365 },
             },
           },

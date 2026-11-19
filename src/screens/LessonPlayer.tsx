@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import type { GameResult, GradeIndex, Lesson, Question, Word } from '../types';
+import type { GameResult, GradeIndex, Lesson, Progress, Question, Word } from '../types';
 import { buildChallenge, buildQuestions } from '../engine/questions';
 import { makeRng } from '../engine/rng';
 import { pointsFor, starsFor } from '../engine/scoring';
@@ -83,21 +83,25 @@ export function LessonRun({ lesson, grade, rng: rngProp, onFinish, onNext }: {
       const miss = [...new Set(missed.current)];
       const today = todayStr();
       const st = starsFor(firstRight.current, total);
-      let bonus = { bonusGems: 0, titles: [] as string[], usedFreeze: false };
+      // Quest/freeze state is computed and saved once, outside the React state updater:
+      // updaters must stay pure (React may run them twice), or quests would be counted twice.
+      let extra: { streak: Progress['streak']; gems: number } | null = null;
+      if (duoEnabled) {
+        const d0 = loadDuo(today);
+        const after = completeLesson(progress, { lessonId: lesson.id, correct: firstRight.current, total, points: 0,
+          learned: [], missed: [], today });
+        const fr = applyStreakFreeze(progress.streak, after.streak, d0.freezes, today);
+        const act = recordActivity({ ...d0, freezes: fr.freezes }, { xp: points.current, perfect: st === 3, maxCombo: maxCombo.current, today });
+        saveDuo(act.duo);
+        extra = { streak: fr.streak, gems: act.bonusGems };
+        setQuestInfo({ bonusGems: act.bonusGems, titles: act.justCompleted, usedFreeze: fr.usedFreeze });
+      }
       update(p => {
         let n = completeLesson(p, { lessonId: lesson.id, correct: firstRight.current, total, points: points.current,
           learned: lesson.words.map(w => w.en).filter(en => !miss.includes(en)), missed: miss, today });
-        if (duoEnabled) {
-          const d0 = loadDuo(today);
-          const fr = applyStreakFreeze(p.streak, n.streak, d0.freezes, today);
-          const act = recordActivity({ ...d0, freezes: fr.freezes }, { xp: points.current, perfect: st === 3, maxCombo: maxCombo.current, today });
-          saveDuo(act.duo);
-          n = { ...n, streak: fr.streak, points: n.points + act.bonusGems };
-          bonus = { bonusGems: act.bonusGems, titles: act.justCompleted, usedFreeze: fr.usedFreeze };
-        }
+        if (extra) n = { ...n, streak: extra.streak, points: n.points + extra.gems };
         return grade ? { ...n, badges: awardBadges(n, grade) } : n;
       });
-      if (duoEnabled) setQuestInfo(bonus);
       onFinish?.({ lessonId: lesson.id, correct: firstRight.current, total });
     }
     setPhase('result');

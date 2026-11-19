@@ -58,3 +58,20 @@ test('all 4 Grade 5 stories in public/content/grade5/stories.json are valid', ()
     }
   }
 });
+
+test('replaying a finished story gives no extra points', async () => {
+  const play = async () => {
+    const view = render(<MemoryRouter><ProgressProvider><StoryRun story={sample} gradeId="grade5" /></ProgressProvider></MemoryRouter>);
+    await userEvent.click(screen.getByRole('button', { name: 'تابع' }));
+    await userEvent.click(screen.getByRole('button', { name: 'عن كاحله' }));
+    await userEvent.click(screen.getByRole('button', { name: 'تابع' }));
+    await userEvent.click(screen.getByRole('button', { name: 'أنهِ القصة' }));
+    view.unmount();
+  };
+  await play();
+  const afterFirst = loadProgress().points;
+  expect(afterFirst).toBeGreaterThanOrEqual(25);
+  await play();
+  expect(loadProgress().points).toBe(afterFirst);
+  expect(loadDuo().dailyXp).toBe(25);
+});

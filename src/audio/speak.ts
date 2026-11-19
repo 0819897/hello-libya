@@ -49,34 +49,24 @@ export function audioFileFor(en: string): string {
     h = Math.imul(h, 16777619);
   }
   const slug = s.replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 24) || 'w';
-  return `${slug}-${(h >>> 0).toString(36)}.wav`;
+  return `${slug}-${(h >>> 0).toString(36)}.mp3`;
 }
 
-async function playWavViaWebAudio(url: string): Promise<boolean> {
+function decode(ac: AudioContext, buf: ArrayBuffer): Promise<AudioBuffer> {
+  // Older Safari only supports the callback form of decodeAudioData.
+  return new Promise((resolve, reject) => {
+    const r = ac.decodeAudioData(buf, resolve, reject);
+    if (r && typeof (r as Promise<AudioBuffer>).then === 'function') (r as Promise<AudioBuffer>).then(resolve, reject);
+  });
+}
+
+async function playViaWebAudio(url: string): Promise<boolean> {
   try {
     const ac = getCtx();
-    if (!ac || typeof fetch !== 'function' || typeof ac.createBuffer !== 'function') return false;
+    if (!ac || typeof fetch !== 'function' || typeof ac.decodeAudioData !== 'function') return false;
     const res = await fetch(url);
     if (!res.ok) return false;
-    const buf = await res.arrayBuffer();
-    const bytes = new Uint8Array(buf);
-    if (bytes.length <= 44 || bytes[0] !== 0x52 || bytes[1] !== 0x49 || bytes[8] !== 0x57) return false;
-    const view = new DataView(buf);
-    const channels = view.getUint16(22, true) || 1;
-    const sampleRate = view.getUint32(24, true) || 11025;
-    const bits = view.getUint16(34, true) || 8;
-    const pcmOffset = 44;
-    const frameCount = bits === 16
-      ? Math.floor((bytes.length - pcmOffset) / (2 * channels))
-      : Math.floor((bytes.length - pcmOffset) / channels);
-    if (frameCount <= 0) return false;
-    const audioBuf = ac.createBuffer(1, frameCount, sampleRate);
-    const ch = audioBuf.getChannelData(0);
-    if (bits === 16) {
-      for (let i = 0; i < frameCount; i++) ch[i] = view.getInt16(pcmOffset + i * 2 * channels, true) / 32768;
-    } else {
-      for (let i = 0; i < frameCount; i++) ch[i] = (bytes[pcmOffset + i * channels] - 128) / 128;
-    }
+    const audioBuf = await decode(ac, await res.arrayBuffer());
     if (ac.state === 'suspended') await ac.resume?.();
     if (ac.state && ac.state !== 'running') return false;
     try { activeSource?.stop?.(); } catch { /* already stopped */ }
@@ -117,7 +107,7 @@ export async function speak(w: { en: string; audio?: string }, enabled: boolean)
         return;
       } catch { /* blocked by autoplay or unsupported -> try WebAudio */ }
     }
-    if (await playWavViaWebAudio(url)) return;
+    if (await playViaWebAudio(url)) return;
     const synth = globalThis.speechSynthesis;
     if (!synth || typeof SpeechSynthesisUtterance === 'undefined') return;
     let voice = pickEnglishVoice(synth);

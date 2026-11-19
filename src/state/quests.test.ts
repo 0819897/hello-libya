@@ -86,3 +86,49 @@ test('league table ranks learner by weekly XP and supports multi-learner switchi
   expect(back.progress.points).toBe(80);
   expect(back.duo.weeklyXp).toBe(130);
 });
+
+test('league contains only real learners: no invented classmates', () => {
+  const me = { ...defaultProgress(), name: 'سالم', avatar: '🦁' };
+  const table = leagueTable(me, { ...defaultDuo('2026-11-18'), weeklyXp: 10 });
+  expect(table.rows).toHaveLength(1);
+  expect(table.rows[0]).toMatchObject({ name: 'سالم', isMe: true, xp: 10 });
+  expect(table.alone).toBe(true);
+  expect(table.rows.some(r => /زميل/.test(r.name))).toBe(false);
+});
+
+test("last week's own score appears as a clearly-labelled past row", () => {
+  const d0 = { ...defaultDuo('2026-11-18'), weeklyXp: 140 }; // Wednesday
+  saveDuo(d0);
+  const nextWeek = loadDuo('2026-11-24'); // the following Tuesday
+  expect(nextWeek.weeklyXp).toBe(0);
+  expect(nextWeek.lastWeekXp).toBe(140);
+  const rows = leagueTable({ ...defaultProgress(), name: 'سالم' }, nextWeek).rows;
+  expect(rows.find(r => r.isPast)).toMatchObject({ xp: 140, isMe: false });
+
+  saveDuo(nextWeek);
+  const skipped = loadDuo('2026-12-08'); // two weeks later: nothing earned last week
+  expect(skipped.lastWeekXp).toBe(0);
+});
+
+test('each learner on the device keeps their own freezes, avatars, stories, records and quests', () => {
+  const today = '2026-11-18';
+  const reem = { ...defaultProgress(), name: 'ريم', avatar: '🦉', points: 30 };
+  const reemDuo = { ...defaultDuo(today), freezes: 2, unlockedAvatars: ['🦉'], storiesDone: ['g5-s1'],
+    bestSpeedScore: 17, dailyXp: 45, claimed: ['xp-40'], weeklyXp: 120 };
+
+  const kareem = switchOrAddLearner(reem, reemDuo, { newName: 'كريم', avatar: '👦', mode: 'student' }, today);
+  expect(kareem.duo).toMatchObject({ freezes: 0, unlockedAvatars: [], storiesDone: [], bestSpeedScore: 0,
+    dailyXp: 0, claimed: [], weeklyXp: 0 });
+
+  const kDuo = { ...kareem.duo, freezes: 1, weeklyXp: 30 };
+  const reemId = kDuo.learners.find(l => l.name === 'ريم')!.id;
+  const back = switchOrAddLearner(kareem.progress, kDuo, { id: reemId }, today);
+  expect(back.progress.name).toBe('ريم');
+  expect(back.duo).toMatchObject({ freezes: 2, unlockedAvatars: ['🦉'], storiesDone: ['g5-s1'], bestSpeedScore: 17,
+    dailyXp: 45, claimed: ['xp-40'], weeklyXp: 120 });
+  expect(back.duo.learners.find(l => l.name === 'كريم')).toMatchObject({ weeklyXp: 30 });
+
+  const kareemId = back.duo.learners.find(l => l.name === 'كريم')!.id;
+  const again = switchOrAddLearner(back.progress, back.duo, { id: kareemId }, today);
+  expect(again.duo.freezes).toBe(1);
+});

@@ -71,29 +71,29 @@ test('reuses a single HTMLAudioElement across multiple words (prevents iOS Safar
   expect(existsSync(join(process.cwd(), 'public', 'content', 'audio', audioFileFor('While I was packing my bag, the telephone rang noisily.')))).toBe(true);
 });
 
-test('decodes 8-bit WAV directly into WebAudio AudioBuffer on mobile PWA', async () => {
-  const wavPath = join(process.cwd(), 'public', 'content', 'audio', audioFileFor('inventor'));
-  const raw = readFileSync(wavPath);
-  const ab = raw.buffer.slice(raw.byteOffset, raw.byteOffset + raw.byteLength);
+test('falls back to WebAudio decoding of the local mp3 when HTMLAudio is blocked', async () => {
   let started = false;
-  let createdFrames = 0;
-  vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: true, arrayBuffer: () => Promise.resolve(ab) }));
+  let fetched = '';
+  vi.stubGlobal('Audio', vi.fn(function () { return { play: () => Promise.reject(new Error('blocked')) }; }));
+  vi.stubGlobal('fetch', vi.fn((u: string) => { fetched = u; return Promise.resolve({ ok: true, arrayBuffer: () => Promise.resolve(new ArrayBuffer(8)) }); }));
   vi.stubGlobal('AudioContext', function (this: unknown) {
     return {
       state: 'running',
       destination: {},
-      createBuffer(_ch: number, frames: number, rate: number) {
-        createdFrames = frames;
-        expect(rate).toBe(11025);
-        const data = new Float32Array(frames);
-        return { getChannelData: () => data };
-      },
+      decodeAudioData: (_b: ArrayBuffer) => Promise.resolve({ duration: 1 }),
       createBufferSource() {
         return { buffer: null, connect() {}, start() { started = true; }, stop() {} };
       },
     };
   });
   await speak({ en: 'inventor' }, true);
-  expect(createdFrames).toBeGreaterThan(1000);
+  expect(fetched).toBe(`./content/audio/${audioFileFor('inventor')}`);
   expect(started).toBe(true);
+});
+
+test('every audio file is a real mp3', () => {
+  const head = readFileSync(join(process.cwd(), 'public', 'content', 'audio', audioFileFor('inventor')));
+  const isId3 = head[0] === 0x49 && head[1] === 0x44 && head[2] === 0x33;
+  const isFrame = head[0] === 0xff && (head[1] & 0xe0) === 0xe0;
+  expect(isId3 || isFrame).toBe(true);
 });

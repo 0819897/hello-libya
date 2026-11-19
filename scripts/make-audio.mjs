@@ -1,5 +1,15 @@
+// Generates one natural-sounding MP3 per English word/sentence in public/content with the
+// Kokoro-82M neural voice (Apache-2.0), fully offline after the first model download.
+//
+//   npm i --no-save kokoro-js@1.2.1 --onnxruntime-node-install-cuda=skip
+//   node scripts/make-audio.mjs            # only missing files
+//   node scripts/make-audio.mjs --force    # regenerate everything (e.g. after changing the voice)
+//
+// Options (env): VOICE (default af_heart; British: bf_emma), SPEED (default 0.85, a little slow for learners).
+// Needs ffmpeg on PATH. Files no lesson uses any more are deleted.
 import { execFileSync } from 'node:child_process';
-import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 
 const MASS = new Set([
@@ -22,7 +32,7 @@ export function audioFileFor(en) {
     h = Math.imul(h, 16777619);
   }
   const slug = s.replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 24) || 'w';
-  return `${slug}-${(h >>> 0).toString(36)}.wav`;
+  return `${slug}-${(h >>> 0).toString(36)}.mp3`;
 }
 
 const texts = new Set();
@@ -52,68 +62,35 @@ function walk(dir) {
 
 walk(join(process.cwd(), 'public', 'content'));
 
+const VOICE = process.env.VOICE || 'af_heart';
+const SPEED = Number(process.env.SPEED || 0.85);
+const force = process.argv.includes('--force');
 const outDir = join(process.cwd(), 'public', 'content', 'audio');
 mkdirSync(outDir, { recursive: true });
 
-const items = [];
-for (const text of texts) {
-  const file = join(outDir, audioFileFor(text));
-  if (!existsSync(file)) items.push({ text, file });
+const wanted = new Map([...texts].map(t => [audioFileFor(t), t]));
+const todo = [...wanted].filter(([f]) => force || !existsSync(join(outDir, f)));
+console.log(`Spoken items: ${wanted.size}, to generate: ${todo.length} (voice ${VOICE}, speed ${SPEED})`);
+
+if (todo.length > 0) {
+  const { KokoroTTS } = await import('kokoro-js');
+  const tts = await KokoroTTS.from_pretrained('onnx-community/Kokoro-82M-v1.0-ONNX', { dtype: 'fp32', device: 'cpu' });
+  const tmp = join(tmpdir(), `hello-libya-tts-${process.pid}.wav`);
+  let n = 0;
+  for (const [file, text] of todo) {
+    const audio = await tts.generate(text, { voice: VOICE, speed: SPEED });
+    audio.save(tmp);
+    // Trim leading/trailing silence, keep a short natural pad, normalise loudness, mono 24 kHz 48 kbps MP3.
+    execFileSync('ffmpeg', ['-nostdin', '-loglevel', 'error', '-y', '-i', tmp, '-af',
+      'silenceremove=start_periods=1:start_threshold=-50dB,areverse,silenceremove=start_periods=1:start_threshold=-50dB,areverse,adelay=60,apad=pad_dur=0.12,loudnorm=I=-16:TP=-1.5:LRA=11',
+      '-ac', '1', '-ar', '24000', '-b:a', '48k', join(outDir, file)]);
+    if (++n % 25 === 0 || n === todo.length) console.log(`  ${n}/${todo.length}`);
+  }
+  rmSync(tmp, { force: true });
+  writeFileSync(join(outDir, '..', 'audio-voice.json'), JSON.stringify({ engine: 'Kokoro-82M v1.0', voice: VOICE, speed: SPEED }, null, 2) + '\n');
 }
 
-console.log(`Total spoken items: ${texts.size}, to generate: ${items.length}`);
-
-if (items.length > 0) {
-  const manifestPath = join(outDir, '_manifest.json');
-  writeFileSync(manifestPath, JSON.stringify(items), 'utf8');
-
-  const psScript = `
-    $ManifestPath = '${manifestPath.replace(/'/g, "''")}'
-    Add-Type -AssemblyName System.Speech
-    $synth = New-Object System.Speech.Synthesis.SpeechSynthesizer
-    $synth.SelectVoice("Microsoft Zira Desktop")
-    $synth.Rate = -1
-    $sampleRate = 11025
-    $fmt = New-Object System.Speech.AudioFormat.SpeechAudioFormatInfo($sampleRate, [System.Speech.AudioFormat.AudioBitsPerSample]::Eight, [System.Speech.AudioFormat.AudioChannel]::Mono)
-    $items = Get-Content -Raw -Encoding UTF8 $ManifestPath | ConvertFrom-Json
-
-    foreach ($item in $items) {
-      $ms = New-Object System.IO.MemoryStream
-      $synth.SetOutputToAudioStream($ms, $fmt)
-      $synth.Speak([string]$item.text)
-      $raw = $ms.ToArray()
-      $ms.Dispose()
-
-      $start = 0
-      while ($start -lt $raw.Length -and [Math]::Abs($raw[$start] - 128) -le 2) { $start++ }
-      $end = $raw.Length - 1
-      while ($end -gt $start -and [Math]::Abs($raw[$end] - 128) -le 2) { $end-- }
-      $pad = 400
-      $start = [Math]::Max(0, $start - $pad)
-      $end = [Math]::Min($raw.Length - 1, $end + $pad)
-      $dataLen = [Math]::Max(1, $end - $start + 1)
-
-      $fs = [System.IO.File]::Open($item.file, [System.IO.FileMode]::Create)
-      $bw = New-Object System.IO.BinaryWriter($fs)
-      $bw.Write([System.Text.Encoding]::ASCII.GetBytes("RIFF"))
-      $bw.Write([int](36 + $dataLen))
-      $bw.Write([System.Text.Encoding]::ASCII.GetBytes("WAVEfmt "))
-      $bw.Write([int]16)
-      $bw.Write([int16]1)
-      $bw.Write([int16]1)
-      $bw.Write([int]$sampleRate)
-      $bw.Write([int]$sampleRate)
-      $bw.Write([int16]1)
-      $bw.Write([int16]8)
-      $bw.Write([System.Text.Encoding]::ASCII.GetBytes("data"))
-      $bw.Write([int]$dataLen)
-      $bw.Write($raw, $start, $dataLen)
-      $bw.Close()
-      $fs.Close()
-    }
-    Remove-Item $ManifestPath -Force
-  `;
-
-  execFileSync('powershell.exe', ['-NoProfile', '-Command', psScript], { stdio: 'inherit' });
+for (const f of readdirSync(outDir)) {
+  if (!wanted.has(f)) { rmSync(join(outDir, f)); console.log(`removed unused ${f}`); }
 }
 console.log('Audio generation complete.');
